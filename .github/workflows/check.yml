@@ -1,0 +1,31 @@
+# Builds and checks every app, and checks the published catalogue against Meterbit's public key. Runs on every pull
+# request and push. It never signs: the signing key is not on GitHub.
+name: Check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install the WASI SDK 34
+        run: |
+          curl -sSfL -o /tmp/wasi-sdk.tar.gz \
+            https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-34/wasi-sdk-34.0-x86_64-linux.tar.gz
+          mkdir -p "$HOME/.pixlpal-tools"
+          tar -xzf /tmp/wasi-sdk.tar.gz -C "$HOME/.pixlpal-tools"
+          mv "$HOME/.pixlpal-tools/wasi-sdk-34.0-x86_64-linux" "$HOME/.pixlpal-tools/wasi-sdk"
+
+      - name: Build and check every app
+        run: python3 tools/publish.py check
+
+      - name: Check the published catalogue
+        run: python3 tools/publish.py verify

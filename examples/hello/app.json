@@ -1,0 +1,8 @@
+{
+  "id": "com.meterbit.hello",
+  "name": "Hello",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.2",
+  "about": "A first personal app: a ball you steer with the knob, and a click counter."
+}

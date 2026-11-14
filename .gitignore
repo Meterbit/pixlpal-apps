@@ -1,0 +1,12 @@
+# Builds: the catalogue's packages are made by tools/publish.py, in catalogue/packages/ only.
+*.wasm
+*.pxa
+!catalogue/packages/**/*.pxa
+__pycache__/
+.DS_Store
+
+# Signing keys never go in this repository: only Meterbit's public key does.
+*.pem
+!catalogue/public_key.pem
+*signing_key*
+*.key

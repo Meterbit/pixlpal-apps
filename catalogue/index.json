@@ -1,0 +1,34 @@
+{
+  "format": 1,
+  "sequence": 1,
+  "generated": "2026-11-14T16:31:18Z",
+  "baseUrl": "https://raw.githubusercontent.com/Meterbit/pixlpal-apps/main/catalogue/",
+  "categories": {
+    "games": "Games",
+    "kids": "Kids",
+    "learning": "Learning",
+    "clocks": "Clocks & Timers",
+    "art": "Art & Display",
+    "productivity": "Productivity",
+    "tools": "Tools",
+    "maker": "Maker",
+    "other": "Other"
+  },
+  "apps": [
+    {
+      "id": "com.meterbit.pixel-arcade-wasm",
+      "name": "Pixel Arcade (WebAssembly)",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Worm, Brick Breaker and Comet Dodge: the built-in Pixel Arcade, as an installable app.",
+      "category": "games",
+      "appID": "100/0",
+      "api": "0.2",
+      "size": 27445,
+      "sha256": "6fe0f95f70fcd721340bf2cc1f11e7a24b530a9d51ddf5d9fa985161a95c9c1c",
+      "package": "packages/com.meterbit.pixel-arcade-wasm/1.0.0.pxa",
+      "icon": "icons/com.meterbit.pixel-arcade-wasm.png",
+      "source": "apps/com.meterbit.pixel-arcade-wasm"
+    }
+  ]
+}
