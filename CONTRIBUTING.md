@@ -15,11 +15,12 @@ owner through this catalogue. Meterbit reviews each app, then builds it from you
   | `name` | What owners see (at most 39 bytes) | `Moon Phase` |
   | `version` | Numbers and dots | `1.0.0` |
   | `author` | You or your team (at most 31 bytes) | `Ana Silva` |
-  | `api` | The Pixlpal App API version you wrote it for | `0.2` |
-  | `category` | One of `games`, `kids`, `learning`, `clocks`, `art`, `productivity`, `tools`, `maker`, `other` | `art` |
+  | `api` | The Pixlpal App API version you wrote it for | `0.3` |
+  | `category` | Where the phone lists it, beside the built-in apps of that category: `clocks`, `calendars`, `news`, `weather`, `sports`, `audio`, `kids`, `games`, `productivity`, `ai`, `notifications`, `markets`, `art`, `maker`, `home`, `learning`, `travel`, `faith`, `health`, `tools` or `other` (only under Installed on Pixlpal) | `art` |
   | `about` | One or two sentences on what it does (at most 300 characters) | `Tonight's moon, drawn to scale.` |
 
-  Leave out `appID`: Meterbit gives the app its number.
+  Add `net`, the hosts it reaches, if it uses the internet: `["api.example.com"]`. Leave out `appID`: Meterbit gives
+  the app its number.
 - **`icon.png`:** square, 128 × 128 pixels is best (64 to 512 allowed), at most 32 KB. Pixlpal's own app icons are
   teal (`#008080`) line drawings on white, and that style fits the store best.
 - **A folder named after the `id`:** `apps/io.github.ana.moon-phase/`.
@@ -53,7 +54,10 @@ An app is accepted if it:
   someone else's game, characters, art or brand;
 - is suitable for a device in homes and classrooms: no adult content, hate, harassment or gambling;
 - doesn't imitate Pixlpal's system screens, or another app, to mislead owners;
-- saves only what it needs, and uses the phone page only for the app itself.
+- saves only what it needs, and uses the phone page only for the app itself;
+- if it uses the internet: lists only the hosts it needs in `net`, sends them only what the app needs to work (no
+  tracking or analytics), uses services whose terms allow it, and asks owners for their own API key rather than
+  shipping one.
 
 Reviews are done by people and take time. Small, clear apps are reviewed fastest.
 

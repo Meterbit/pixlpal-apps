@@ -1,0 +1,20 @@
+{
+  "id": "com.meterbit.my-first-computer",
+  "name": "My First Computer",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "19/8",
+  "category": "kids",
+  "screen": "full",
+  "kit": "compat",
+  "about": "A pretend computer for children of 4 to 12, to learn the mouse, the keyboard, windows, files and staying safe online, with nothing that can go wrong. Plug a USB mouse and keyboard into Pixlpal.",
+  "dataGroup": "com.meterbit.kids",
+  "sharedNvs": [
+    "kidSettings"
+  ],
+  "migrateNvs": [
+    "kidSettings",
+    "mfcSet"
+  ]
+}

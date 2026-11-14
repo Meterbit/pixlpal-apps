@@ -42,20 +42,29 @@ KIND = {0: "function", 1: "table", 2: "memory", 3: "global"}
 
 # The Pixlpal App API (sdk/pixlpal.h): the only functions an app may import.
 API = {"fill", "rect", "frame", "pixel", "circle", "triangle", "text", "text_width", "millis", "random", "sound",
-       "sound_stop", "save_read", "save_write", "phone_ui", "phone_values", "json_int", "json_str", "log"}
+       "sound_stop", "save_read", "save_write", "phone_ui", "phone_values", "json_int", "json_str", "log",
+       # 0.3
+       "time", "clock_24h", "line", "round_rect", "bitmap", "bitmap_mono", "say", "silent", "http_request", "json_float", "json_count",
+       # 0.4
+       "yield", "sound_busy", "open_app", "open_previous_app", "usb_state", "brightness", "set_brightness",
+       "brightness_step", "file_read", "file_write", "file_remove", "file_list", "phone_search", "phone_send", "phone_data", "status_text"}
+# The WASI functions Pixlpal provides, for the C library (the time, random numbers, stdout into the log).
+WASI = {"clock_time_get", "fd_write", "fd_close", "fd_seek", "fd_fdstat_get", "fd_prestat_get", "fd_prestat_dir_name",
+        "environ_sizes_get", "environ_get", "args_sizes_get", "args_get", "random_get", "sched_yield", "proc_exit"}
 
 
 def problems(path):
     """Why the module would not run on Pixlpal, as a list of sentences (empty: it would)."""
     imports, exports = info(path)
     out = []
-    outside = [f"{m}.{f}" for m, f, k in imports if m != "pixlpal"]
+    outside = [f"{m}.{f}" for m, f, k in imports if m != "pixlpal" and not (m == "wasi_snapshot_preview1" and f in WASI)]
     if outside: out.append("it imports from outside the Pixlpal App API: " + ", ".join(outside)
-                           + " (a C library function? Apps are built with -nostdlib: write a small helper instead)")
+                           + " (a C library function that needs files, sockets or threads: Pixlpal has none of those)")
     unknown = [f for m, f, k in imports if m == "pixlpal" and (f not in API or k != 0)]
     if unknown: out.append("it imports pixlpal functions that don't exist: " + ", ".join(unknown))
     names = {f for f, k in exports}
-    if "pxl_frame" not in names: out.append("it doesn't export pxl_frame (PXL_EXPORT(\"pxl_frame\"))")
+    if "pxl_frame" not in names and "pxl_main" not in names:
+        out.append("it exports neither pxl_frame nor pxl_main (PXL_EXPORT(\"pxl_frame\"))")
     if "memory" not in names: out.append("it doesn't export its memory (link with -Wl,--export-memory)")
     return out
 

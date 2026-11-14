@@ -1,0 +1,20 @@
+{
+  "id": "com.meterbit.sky-tonight",
+  "name": "Sky Tonight",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "3/5",
+  "category": "weather",
+  "screen": "full",
+  "kit": "compat",
+  "about": "Tonight's sky where you are: sunrise and sunset, the moon's phase, the space station passing over, and the chance of the northern lights.",
+  "net": [
+    "api.wheretheiss.at",
+    "geocoding-api.open-meteo.com",
+    "services.swpc.noaa.gov"
+  ],
+  "migrateNvs": [
+    "skySave"
+  ]
+}

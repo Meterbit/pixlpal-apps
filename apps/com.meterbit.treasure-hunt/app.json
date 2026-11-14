@@ -1,0 +1,20 @@
+{
+  "id": "com.meterbit.treasure-hunt",
+  "name": "Treasure Hunt",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "19/3",
+  "category": "kids",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "For children of 5 to 12: a treasure hunt round the house. Write the clues on the phone, hide a card with each clue's code, and children enter each code with the knob to open the next clue.",
+  "dataGroup": "com.meterbit.kids",
+  "sharedNvs": [
+    "kidSettings"
+  ],
+  "migrateNvs": [
+    "kidSettings",
+    "trhSet"
+  ]
+}

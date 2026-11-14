@@ -1,0 +1,19 @@
+{
+  "id": "com.meterbit.currency-exchange",
+  "name": "Currency Exchange",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "4/2",
+  "category": "markets",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "Exchange rates between the currencies you pick, with a converter and the change since yesterday.",
+  "net": [
+    "open.er-api.com",
+    "v6.exchangerate-api.com"
+  ],
+  "migrateNvs": [
+    "currencyCfg"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "com.meterbit.focus-list",
+  "name": "Focus List",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "21/0",
+  "category": "productivity",
+  "screen": "full",
+  "kit": "compat",
+  "about": "Today's to-do list with a focus timer: work on one task for a set time, then take a break. Pixlpal counts the minutes on each task. Write the tasks on the phone; tick them off with the knob.",
+  "migrateNvs": [
+    "fclSave"
+  ]
+}

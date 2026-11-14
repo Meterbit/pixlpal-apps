@@ -32,10 +32,8 @@ WITHDRAWN, WITHDRAWN_SIG = os.path.join(CAT, "withdrawn.json"), os.path.join(CAT
 PUBLIC_KEY = os.path.join(CAT, "public_key.pem")
 BASE_URL = "https://raw.githubusercontent.com/Meterbit/pixlpal-apps/main/catalogue/"
 
-# The store's categories (the phone app shows these names).
-CATEGORIES = {"games": "Games", "kids": "Kids", "learning": "Learning", "clocks": "Clocks & Timers",
-              "art": "Art & Display", "productivity": "Productivity", "tools": "Tools", "maker": "Maker",
-              "other": "Other"}
+# The store's categories: the phone app's own (it lists an installed app beside the built-in apps of its category).
+CATEGORIES = pxa.CATEGORIES
 ICON_MIN, ICON_MAX, ICON_BYTES = 64, 512, 32 * 1024
 ABOUT_MAX = 300
 
@@ -262,11 +260,12 @@ def publish(key, quiet=False):
         entries.append({
             "id": app_id, "name": manifest["name"], "version": manifest["version"], "author": manifest["author"],
             "about": manifest["about"], "category": manifest["category"], "appID": manifest["appID"],
-            "api": manifest["api"], "size": len(package), "sha256": hashlib.sha256(package).hexdigest(),
+            "api": manifest["api"], "net": manifest.get("net", []),
+            "size": len(package), "sha256": hashlib.sha256(package).hexdigest(),
             "package": rel, "icon": icon, "source": f"apps/{app_id}",
         })
     entries.sort(key=lambda e: e["name"].lower())
-    if entries == index.get("apps") and os.path.exists(INDEX_SIG):
+    if entries == index.get("apps") and index.get("categories") == CATEGORIES and os.path.exists(INDEX_SIG):
         if not quiet: print(f"index {index['sequence']}: no change")
         return
     index = {"format": 1, "sequence": index.get("sequence", 0) + 1,

@@ -1,0 +1,18 @@
+{
+  "id": "com.meterbit.oil-price-api",
+  "name": "Oil Price API",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "4/5",
+  "category": "markets",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "Crude oil, gas and fuel prices as they move, with charts, from OilPriceAPI. Needs your OilPriceAPI key.",
+  "net": [
+    "api.oilpriceapi.com"
+  ],
+  "migrateNvs": [
+    "oilPriceApiCfg"
+  ]
+}

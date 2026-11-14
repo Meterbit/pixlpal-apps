@@ -1,0 +1,18 @@
+{
+  "id": "com.meterbit.fx-markets",
+  "name": "FX Markets",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "4/3",
+  "category": "markets",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "Live currency pairs and their day's moves, from Massive (formerly Polygon.io). Needs your Massive key.",
+  "net": [
+    "api.massive.com"
+  ],
+  "migrateNvs": [
+    "polygonFxCfg"
+  ]
+}

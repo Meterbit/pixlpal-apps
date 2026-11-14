@@ -1,0 +1,15 @@
+{
+  "id": "com.meterbit.studio-light",
+  "name": "Studio Light",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "6/0",
+  "category": "art",
+  "screen": "full",
+  "kit": "compat",
+  "about": "The whole panel as a light: a colour, two colours, white for photos and video calls, effects and a sunrise wake light.",
+  "migrateNvs": [
+    "studioLightCfg"
+  ]
+}

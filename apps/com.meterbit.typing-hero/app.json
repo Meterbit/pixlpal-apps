@@ -1,0 +1,20 @@
+{
+  "id": "com.meterbit.typing-hero",
+  "name": "Typing Hero",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "19/5",
+  "category": "kids",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "For children of 7 to 12: learn to type with ten fingers on a USB keyboard. 13 lessons from the home row to sentences, a falling-letters game, and a one-minute word race.",
+  "dataGroup": "com.meterbit.kids",
+  "sharedNvs": [
+    "kidSettings"
+  ],
+  "migrateNvs": [
+    "kidSettings",
+    "typSet"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "com.meterbit.open-meteo",
+  "name": "Open-Meteo",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "3/1",
+  "category": "weather",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "The weather now and the coming days from Open-Meteo, free and with no key: temperature, rain, wind, UV and air quality where you are.",
+  "net": [
+    "api.open-meteo.com",
+    "air-quality-api.open-meteo.com",
+    "geocoding-api.open-meteo.com"
+  ],
+  "migrateNvs": [
+    "openMeteoCfg"
+  ]
+}

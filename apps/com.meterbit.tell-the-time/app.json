@@ -1,0 +1,20 @@
+{
+  "id": "com.meterbit.tell-the-time",
+  "name": "Tell the Time",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "19/1",
+  "category": "kids",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "For children of 5 to 8: a big clock with the time in words and the family's day, and games to learn the clock: set the hands, read the clock, work out what time it will be. Six levels that follow how your child does.",
+  "dataGroup": "com.meterbit.kids",
+  "sharedNvs": [
+    "kidSettings"
+  ],
+  "migrateNvs": [
+    "kidSettings",
+    "ttmSet"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "com.meterbit.code-quest",
+  "name": "Code Quest",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "19/4",
+  "category": "kids",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "For children of 6 to 12: a first taste of programming. Build a program from blocks with the knob, then watch the robot run it. 16 levels, each needing a new idea.",
+  "dataGroup": "com.meterbit.kids",
+  "sharedNvs": [
+    "kidSettings"
+  ],
+  "migrateNvs": [
+    "cdqSet",
+    "kidSettings"
+  ]
+}

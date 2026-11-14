@@ -1,0 +1,23 @@
+{
+  "id": "com.meterbit.business-counters",
+  "name": "Business Counters",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "16/0",
+  "category": "productivity",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "Your numbers on the desk: YouTube subscribers, GitHub stars, and sales from Stripe, Paystack or Shopify.",
+  "net": [
+    "api.github.com",
+    "www.googleapis.com",
+    "api.stripe.com",
+    "api.paystack.co",
+    "*.myshopify.com"
+  ],
+  "migrateNvs": [
+    "bccLog",
+    "bccSet"
+  ]
+}

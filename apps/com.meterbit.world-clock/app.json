@@ -1,0 +1,18 @@
+{
+  "id": "com.meterbit.world-clock",
+  "name": "World Clock",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "0/2",
+  "category": "clocks",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "The time in the cities you choose, with day and night, each city's flag and how far ahead or behind it is.",
+  "net": [
+    "raw.githubusercontent.com"
+  ],
+  "migrateNvs": [
+    "worldClockCfg"
+  ]
+}

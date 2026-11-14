@@ -1,0 +1,21 @@
+{
+  "id": "com.meterbit.motorsport",
+  "name": "Motorsport Live",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "5/1",
+  "category": "sports",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "Formula 1 live: the race order, the gaps, the weekend's sessions and the standings, from OpenF1.",
+  "net": [
+    "api.openf1.org",
+    "ntfy.sh",
+    "api.telegram.org",
+    "api.callmebot.com"
+  ],
+  "migrateNvs": [
+    "mtsSet"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "com.meterbit.gnews",
+  "name": "GNews Headlines",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "1/0",
+  "category": "news",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "Headlines by topic or country from GNews, as cards or a list. Needs your free GNews key.",
+  "net": [
+    "gnews.io"
+  ],
+  "migrateNvs": [
+    "gnewsCfg"
+  ]
+}

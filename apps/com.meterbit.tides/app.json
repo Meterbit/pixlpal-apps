@@ -1,0 +1,24 @@
+{
+  "id": "com.meterbit.tides",
+  "name": "Tides & Water",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "3/3",
+  "category": "weather",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "The tide's height and times, the sea and river levels, and alerts, from Open-Meteo, NOAA, Stormglass or WorldTides.",
+  "net": [
+    "*.open-meteo.com",
+    "api.stormglass.io",
+    "api.tidesandcurrents.noaa.gov",
+    "www.worldtides.info",
+    "ntfy.sh",
+    "api.telegram.org",
+    "api.callmebot.com"
+  ],
+  "migrateNvs": [
+    "tdwSet"
+  ]
+}

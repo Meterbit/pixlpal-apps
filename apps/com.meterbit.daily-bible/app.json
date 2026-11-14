@@ -1,0 +1,19 @@
+{
+  "id": "com.meterbit.daily-bible",
+  "name": "Daily Bible",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "13/1",
+  "category": "faith",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "A Bible verse every day, a reading plan with a streak, the church year from Advent to Pentecost, and reminders for your devotions and Sunday service.",
+  "net": [
+    "bible-api.com"
+  ],
+  "migrateNvs": [
+    "dblSettings",
+    "dblVerse"
+  ]
+}

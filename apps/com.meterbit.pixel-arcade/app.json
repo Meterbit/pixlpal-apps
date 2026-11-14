@@ -1,0 +1,15 @@
+{
+  "id": "com.meterbit.pixel-arcade",
+  "name": "Pixel Arcade",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "20/0",
+  "category": "games",
+  "screen": "full",
+  "kit": "compat",
+  "about": "Worm, Brick Breaker and Comet Dodge: three quick arcade games. Play with the knob, a USB keyboard or mouse, or the phone as a game pad.",
+  "migrateNvs": [
+    "arcSave"
+  ]
+}

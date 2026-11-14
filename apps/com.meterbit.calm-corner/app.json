@@ -1,0 +1,25 @@
+{
+  "id": "com.meterbit.calm-corner",
+  "name": "Calm Corner",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "19/2",
+  "category": "kids",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "For children of 4 to 10: a quiet place to say how they feel, and to calm down with breathing, things to see and hear, slow stretches, or calm lights with soft notes. You can see their feelings on the phone.",
+  "net": [
+    "ntfy.sh",
+    "api.telegram.org",
+    "api.callmebot.com"
+  ],
+  "dataGroup": "com.meterbit.kids",
+  "sharedNvs": [
+    "kidSettings"
+  ],
+  "migrateNvs": [
+    "clmSet",
+    "kidSettings"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "com.meterbit.oil-price",
+  "name": "Oil Price",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "4/4",
+  "category": "markets",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "Brent and WTI crude prices with their charts and the week's news, from the U.S. Energy Information Administration. Needs your free EIA key.",
+  "net": [
+    "api.eia.gov"
+  ],
+  "migrateNvs": [
+    "oilPriceCfg"
+  ]
+}

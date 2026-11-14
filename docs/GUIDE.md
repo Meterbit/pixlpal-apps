@@ -10,10 +10,11 @@ to know a little C. You don't need to know WebAssembly or anything about Pixlpal
 5. [What Pixlpal calls in your app](#what-pixlpal-calls-in-your-app)
 6. [What your app can call](#what-your-app-can-call)
 7. [The phone page](#the-phone-page)
-8. [Limits](#limits)
-9. [Writing C without a C library](#writing-c-without-a-c-library)
-10. [When something goes wrong](#when-something-goes-wrong)
-11. [app.json](#appjson)
+8. [The internet](#the-internet)
+9. [Limits](#limits)
+10. [Writing C without a C library](#writing-c-without-a-c-library), [or with one, and C++](#c-the-c-library-and-loop-style-apps)
+11. [When something goes wrong](#when-something-goes-wrong)
+12. [app.json](#appjson)
 
 ## How an app works
 
@@ -71,7 +72,7 @@ Copy `examples/hello` to a new folder, for example `my-apps/clock`. It holds two
   "name": "My Clock",
   "version": "1.0.0",
   "author": "Your Name",
-  "api": "0.2",
+  "api": "0.3",
   "about": "A big clock."
 }
 ```
@@ -104,8 +105,8 @@ PXL_EXPORT("pxl_frame") void pxl_frame(uint32_t ms, uint32_t dt){
 }
 ```
 
-It shows the time since Pixlpal started, and the knob changes the size of the text. (Pixlpal's real clock time isn't
-in the API yet.)
+It shows the time since Pixlpal started, and the knob changes the size of the text. For the real time of day, use
+`pxl_time` ([below](#what-your-app-can-call)).
 
 Build it:
 
@@ -182,8 +183,15 @@ makes one from 0–255 values, and `PXL_BLACK` and `PXL_WHITE` are there. Anythi
 | `pxl_pixel(x, y, color)` | One pixel |
 | `pxl_circle(x, y, r, color)` | A filled circle |
 | `pxl_triangle(x0, y0, x1, y1, x2, y2, color)` | A filled triangle |
-| `pxl_text(x, y, font, align, color, background, text)` | Text, at most 64 characters, on a background colour. `font`: `PXL_FONT_SMALL` (4 × 6), `PXL_FONT_NORMAL` (6 × 8), `PXL_FONT_LARGE` (8 × 12). `align`: `PXL_LEFT` (x is the left edge), `PXL_CENTRE` or `PXL_RIGHT`. Returns the text's left edge. |
+| `pxl_text(x, y, font, align, color, background, text)` | Text, at most 64 characters. `font`: `PXL_FONT_SMALL` (4 × 6), `PXL_FONT_NORMAL` (6 × 8), `PXL_FONT_LARGE` (8 × 12). `align`: `PXL_LEFT` (x is the left edge), `PXL_CENTRE` or `PXL_RIGHT`. `background`: a colour for the box behind the text, or `PXL_CLEAR` to draw on what is there. Returns the text's left edge. |
 | `pxl_text_width(font, text)` | How wide that text would be, in pixels |
+| `pxl_line(x0, y0, x1, y1, color)` | A line (0.3) |
+| `pxl_round_rect(x, y, w, h, radius, color)` | A filled rectangle with rounded corners (0.3) |
+| `pxl_bitmap(x, y, w, h, pixels)` | A picture: `w × h` RGB565 colours from a `uint16_t` array, row by row (0.3) |
+| `pxl_bitmap_mono(x, y, w, h, bits, color, background)` | A one-colour picture: rows of `(w + 7) / 8` bytes, bit 0 of each byte the leftmost pixel. `background` a colour, or `PXL_CLEAR` to leave the screen as it is (0.3) |
+
+Pictures are how an app brings icons, sprites and fonts of its own: put them in `static const` arrays. A
+one-colour picture takes an eighth of the space of a colour one, and can be drawn in any colour.
 
 Each call costs time, so draw big areas with `pxl_rect` rather than many `pxl_pixel`s. Clearing the screen with
 `pxl_fill` takes about 1.5 ms of the 20 ms a frame has.
@@ -197,6 +205,18 @@ in `pixlpal.h` and cost nothing.
 |---|---|
 | `pxl_millis()` | Milliseconds since Pixlpal started |
 | `pxl_random()` | A random 32-bit number |
+| `pxl_time(&t)` | The time of day in the owner's time zone (0.3): `t.year`, `month` (1–12), `day`, `hour` (0–23), `minute`, `second`, `weekday` (0 is Sunday), `yearday`, `utc_offset_minutes` and `unix` (seconds since 1970, UTC). Returns `t.valid`: 0 until Pixlpal has had the time from the internet, so show something like `--:--` until then. |
+| `pxl_clock_24h()` | 1 if the owner chose a 24-hour clock, 0 for 12-hour (0.3) |
+
+```c
+pxl_time_t t;
+if (pxl_time(&t)){
+    char hm[6] = "00:00";
+    int h = pxl_clock_24h() ? t.hour : (t.hour + 11) % 12 + 1;
+    hm[0] += h / 10; hm[1] += h % 10; hm[3] += t.minute / 10; hm[4] += t.minute % 10;
+    pxl_text(PXL_W / 2, 50, PXL_FONT_LARGE, PXL_CENTRE, PXL_WHITE, PXL_CLEAR, hm);
+}
+```
 
 **Sound**
 
@@ -204,6 +224,8 @@ in `pixlpal.h` and cost nothing.
 |---|---|
 | `pxl_sound(notes, count)` | Plays notes, an array of `pxl_note_t {hz, ms}` (at most 40; `hz` 0 is a rest). It plays while your app carries on. Nothing plays if Pixlpal is in Silent Mode. |
 | `pxl_sound_stop()` | Stops it |
+| `pxl_say(text, language)` | Speaks up to 200 characters in a language (`"en"`, `"fr"`, `"es"`...), with Google's text to speech (0.3). It needs the internet, the text goes to Google, and it plays at most once every 2 seconds. Returns 1 if it started. |
+| `pxl_silent()` | 1 while Pixlpal is in Silent Mode, when sounds and speech don't play (0.3) |
 
 ```c
 static const pxl_note_t win[] = {{523, 80}, {659, 80}, {784, 160}};
@@ -253,6 +275,10 @@ Pixlpal calls `pxl_command(N, length)` with the JSON in your inbox, for the slid
 |---|---|
 | `pxl_json_int(json, key, fallback)` | The whole number under `key`, or `fallback` |
 | `pxl_json_str(json, key, out, outSize)` | Copies the text under `key` into `out`, cut to fit and 0-terminated. Returns its length, or −1 if there is none. |
+| `pxl_json_float(json, key, fallback)` | A number with decimals (0.3) |
+| `pxl_json_count(json, key)` | How many entries the array or object under `key` has, or −1 (0.3) |
+
+`key` can also be a path, such as `"settings.size"` (0.3): see [The internet](#the-internet).
 
 ```c
 PXL_EXPORT("pxl_command") int pxl_command(int command, int length){
@@ -281,7 +307,7 @@ whenever something changes. Two kinds of field:
 | `switch` | `title`, `default` | `{arg: 1\|0}` |
 | `slider` | `title`, `min`, `max`, `default`, `step`, `suffix`, `decimals` | `{arg: number}` |
 | `radioGroup` | `title`, `default`, `options`: `[{label, value}]` | `{arg: value}` |
-| `textField` | `title`, `emptyHint`, `filledHint` | `{arg: text}` when sent |
+| `textField` | `title`, `emptyHint`, `filledHint`, `secret` (hides what is typed, for keys and passwords) | `{arg: text}` when sent |
 | `textColorField` | `title`, `defaultText`, `defaultColor`; args `[text, color]` | `{text, color: "0xAARRGGBB"}` |
 | `timeRange` | `title`, `mode` (`range` or `single`), `defaultFrom`, `defaultTo`; args `[from, to]` | `{from: "22:00", to: "07:00"}` |
 | `statusPanel` | `title`, `source` (a value holding rows), `emptyText` | nothing |
@@ -296,6 +322,54 @@ status panels, a game choice and a game pad.
 
 Size limits: the manifest 2 KB, the widgets 12 KB, the values 4 KB.
 
+## The internet
+
+An app can fetch data from the internet (0.3): weather, prices, scores, news. It can only reach the hosts its
+`app.json` lists, over https:
+
+```json
+{ "...": "...", "api": "0.3", "net": ["api.open-meteo.com", "*.example.org"] }
+```
+
+`"*.example.org"` allows any subdomain of `example.org`, but not `example.org` itself; list that separately if you
+need it. Owners see the list on the app's page in the App Store, and the review checks it. A redirect to a host
+that isn't listed is not followed.
+
+A request doesn't stop your app: it returns at once, and Pixlpal calls your `pxl_http_done` when the answer is in.
+
+```c
+static char answer[4096];
+static float temperature;
+
+static void ask(void){
+    int id = pxl_http_get("https://api.open-meteo.com/v1/forecast?latitude=6.5&longitude=3.4&current=temperature_2m",
+                          "", answer, sizeof(answer));
+    if (id < 0) pxl_log("didn't start");      /* PXL_HTTP_BUSY, _NOT_ALLOWED, _BAD, _OFFLINE or _TOO_OFTEN */
+}
+
+PXL_EXPORT("pxl_http_done") void pxl_http_done(int id, int status, int length){
+    if (status != 200) return;                 /* or PXL_HTTP_FAILED (no answer), PXL_HTTP_TOO_BIG (cut short) */
+    /* answer holds length bytes, then a 0 if there was room: {"current": {"temperature_2m": 27.4, ...}, ...} */
+    temperature = pxl_json_float(answer, "current.temperature_2m", temperature);
+}
+```
+
+| Call | What it does |
+|---|---|
+| `pxl_http_get(url, headers, buffer, size)` | Starts a GET. `headers` is `""` or lines of `"Name: value"` (at most 4), such as `"X-Api-Key: abc"`. Returns the request's number, or a negative reason. |
+| `pxl_http_post(url, headers, body, bytes, buffer, size)` | Starts a POST with a body of up to 8 KB. Give its `Content-Type` among the headers. |
+
+- One request at a time, at most 30 a minute. Ask when you need fresh data, every few minutes, not every frame.
+- Answers of up to 64 KB: make `buffer` as big as the answers you expect. Many APIs can return less, such as only the
+  fields you ask for.
+- **Reading JSON:** `pxl_json_int`, `pxl_json_float`, `pxl_json_str` and `pxl_json_count` take a path through objects
+  and arrays, such as `"current.temperature_2m"` or `"list.0.name"` (`"list.0"` is the first entry). Each call reads
+  the whole answer again, so read the values you need once, when the answer arrives, and keep them.
+- **API keys.** If a service needs the owner's own key, ask for it on your phone page with a `textField` with
+  `"secret": true`, which hides it and never keeps it on the phone. Keep it with `pxl_save_write`, and send it in a
+  header or the URL. It can only ever reach the hosts you listed. Never put your own key in an app's source: anyone
+  can read it there.
+
 ## Limits
 
 | What | Limit |
@@ -308,6 +382,8 @@ Size limits: the manifest 2 KB, the widgets 12 KB, the values 4 KB.
 | Sound | 40 notes per `pxl_sound` |
 | Phone command JSON | 512 bytes |
 | Installed apps | 24 on one Pixlpal |
+| Internet | one request at a time, 30 a minute, answers up to 64 KB, POST bodies up to 8 KB, only the hosts in `net` |
+| Speech | 200 characters, once every 2 seconds |
 
 A frame has 20 ms. If yours take longer, the app still works, but runs slower.
 
@@ -329,14 +405,49 @@ What to do instead:
 
 You can split an app into several `.c` files in its folder: `build.py` compiles them all.
 
+## C++, the C library, and loop-style apps
+
+An app can also use the C and C++ libraries (`malloc`, `snprintf`, `strtol`, maths, `new`, containers): write `.cpp`
+files, or put `"libc": true` in `app.json` for a C app. `build.py` then builds it for WASI, and Pixlpal provides the few
+WASI functions the libraries need (the time, random numbers, and `printf` into its log). Files, sockets and threads
+are not there: use the API's files (`pxl_file_*`) and internet (`pxl_http_*`). Exceptions and RTTI are off. Such an
+app is bigger (about 50 KB more), and its memory can grow to 4 MB.
+
+**Loop-style apps (0.4).** Instead of `pxl_frame`, an app can export `pxl_main` and run as one loop, waiting with
+`pxl_yield(ms)`. Pixlpal shows the frame at each yield, and calls your `pxl_input` and `pxl_command` from inside it.
+When `pxl_yield` returns 0, return from `pxl_main`: the app is closing.
+
+```c
+PXL_EXPORT("pxl_main") void pxl_main(void){
+    while (pxl_yield(20)){
+        pxl_fill(PXL_BLACK);
+        /* draw, as in a frame */
+    }
+}
+```
+
+**Files (0.4)**: `pxl_file_read`, `pxl_file_write`, `pxl_file_remove`, `pxl_file_list`. Up to 64 KB a file and 256 KB
+in all, kept across updates and removed with the app.
+
+**The device (0.4)**: `pxl_usb_state()` (bit 0 a keyboard, bit 1 a mouse), `pxl_brightness()` and
+`pxl_set_brightness(percent)`, `pxl_brightness_step(direction)` (what the knob usually does),
+`pxl_open_app(group, number)`, `pxl_open_previous_app()`, `pxl_sound_busy()`, `pxl_status_text(text, color)` (a notice
+along the status bar of a `"screen": "statusbar"` app). `PXL_IN_CLICK` carries how many clicks (2 for a double).
+
+**The phone (0.4)**: `pxl_phone_data` (the datasets list widgets name), `pxl_phone_search` (a searchPicker's results),
+`pxl_phone_send` (a message of your own on your app's route).
+
+**Apps written for Pixlpal's firmware** build almost unchanged with `"kit": "compat"`: the compat layer provides the
+firmware's app framework on the API. [sdk/compat/README.md](../sdk/compat/README.md) explains it; the catalogue's
+`com.meterbit.*` apps are all built that way.
+
 ## When something goes wrong
 
 - **Pixlpal shows a problem screen** when an app stops. It says why: an out-of-bounds memory access, an endless
   loop, or Developer Mode being off.
 - **App Manager's Status panel** in the phone app shows why an install failed, such as "could not download it"
   (check the address and that both are on the same network) or "the app does not load".
-- **The serial log.** With Pixlpal connected to your computer by USB, a serial monitor shows your `pxl_log` lines. Every 30 seconds it also shows your app's frame time, split into your code and Pixlpal's
-  drawing, with the drawing broken down by function.
+- **The serial log.** With Pixlpal connected to your computer by USB, a serial monitor shows your `pxl_log` lines.
 - **Inspect a build:** `python3 tools/build.py my-apps/clock --keep-wasm` also keeps `clock.wasm`, and
   `python3 tools/wasm_info.py my-apps/clock/clock.wasm` lists what it imports and exports.
 
@@ -348,9 +459,14 @@ You can split an app into several `.c` files in its folder: `build.py` compiles 
 | `name` | yes | What owners see (at most 39 bytes) |
 | `version` | yes | Numbers and dots, like `1.2.0`. Raise it with every change you publish. |
 | `author` | yes | You or your team (at most 31 bytes) |
-| `api` | yes | The Pixlpal App API version the app was written for: `0.2` |
+| `api` | yes | The Pixlpal App API version the app was written for: `0.4` (or older, for an app that uses nothing newer). A Pixlpal with older software refuses an app that needs a newer API, and asks its owner to update. |
 | `about` | catalogue | One or two sentences on what it does |
-| `category` | catalogue | `games`, `kids`, `learning`, `clocks`, `art`, `productivity`, `tools`, `maker` or `other` |
+| `category` | catalogue | Where the phone app lists it, beside the built-in apps of that category: `clocks`, `calendars`, `news`, `weather`, `sports`, `audio`, `kids`, `games`, `productivity`, `ai`, `notifications`, `markets`, `art`, `maker`, `home`, `learning`, `travel`, `faith`, `health`, `tools` or `other` (only under Installed on Pixlpal). Personal apps can have one too. |
+| `net` | no | The hosts the app reaches over the internet, at most 8: `["api.example.com", "*.example.org"]` |
+| `screen` | no | `"full"` (the default) or `"statusbar"`: the app runs below Pixlpal's status bar (rows 10 and down are its) |
+| `libc` | no | `true`: a C app built with the C library (C++ apps always are) |
+| `kit` | no | `"compat"`: built with the compat layer, the firmware's app framework |
+| `dataGroup` | no | Catalogue apps: a folder shared with your other apps in the group, `"com.example.games"`, under your own id's developer part |
 | `appID` | no | Given by Meterbit to catalogue apps (100/0 to 199/255). Leave it out. |
 
 Ready to share your app? See [CONTRIBUTING.md](../CONTRIBUTING.md).

@@ -1,0 +1,19 @@
+{
+  "id": "com.meterbit.kids-learning",
+  "name": "Kids Learning",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "19/0",
+  "category": "kids",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "Maths that follows how your child is doing, a times-tables race, spelling they hear and spell, a reading timer, and games they earn by learning. For ages 4 to 12, with a time limit and bedtime you set.",
+  "dataGroup": "com.meterbit.kids",
+  "sharedNvs": [
+    "kidSettings"
+  ],
+  "migrateNvs": [
+    "kidSettings"
+  ]
+}

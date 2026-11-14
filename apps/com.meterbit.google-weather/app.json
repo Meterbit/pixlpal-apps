@@ -1,0 +1,19 @@
+{
+  "id": "com.meterbit.google-weather",
+  "name": "Google Weather",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "3/2",
+  "category": "weather",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "The weather from Google: now, by the hour and the coming days, with alerts. Needs your Google Maps Platform key.",
+  "net": [
+    "weather.googleapis.com",
+    "maps.googleapis.com"
+  ],
+  "migrateNvs": [
+    "gWeatherCfg"
+  ]
+}

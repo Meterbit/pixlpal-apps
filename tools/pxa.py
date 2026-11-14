@@ -27,8 +27,18 @@ REQUIRED = ("id", "name", "version", "author", "api")
 MAX_WASM = 512 * 1024
 # The device keeps these in fixed fields (mtb_app_package.h): longer ones would be cut.
 LIMITS = {"id": 47, "name": 39, "version": 15, "author": 31}
+HOST_FORMAT = re.compile(r"^(\*\.)?[a-z0-9-]+(\.[a-z0-9-]+)+$")    # api.example.com, *.example.org
+API_VERSION = "0.4"                                                  # the newest Pixlpal App API
 ID_FORMAT = re.compile(r"^[a-z0-9]+(\.[a-z0-9][a-z0-9-]*)+$")      # com.example.weather
 VERSION_FORMAT = re.compile(r"^\d+(\.\d+){0,3}$")                 # 1.0.0
+# "category": where the phone app lists the app, beside the built-in apps of that category (the phone's
+# app_categories.dart has the same keys). "other": only under Installed on Pixlpal.
+CATEGORIES = {"clocks": "Clocks & Timers", "calendars": "Calendars", "news": "News", "weather": "Weather & Sky",
+              "sports": "Sports", "audio": "Audio Media", "kids": "Kids", "games": "Games",
+              "productivity": "Productivity", "ai": "Artificial Intelligence", "notifications": "Notifications",
+              "markets": "Markets", "art": "Art & Display", "maker": "Maker & Developer", "home": "Home & Family",
+              "learning": "Learning", "travel": "Travel", "faith": "Faith", "health": "Health & Fitness",
+              "tools": "Tools", "other": "Other"}
 
 
 def refuse_key_in_repo(key):
@@ -88,12 +98,40 @@ def manifest_problems(m):
         out.append("\"id\" is a reverse domain name in lower case, like \"com.example.weather\"")
     if isinstance(m.get("version"), str) and not VERSION_FORMAT.match(m["version"]):
         out.append("\"version\" is numbers and dots, like \"1.2.0\"")
-    if isinstance(m.get("api"), str) and not m["api"].startswith("0."):
-        out.append("\"api\" is the Pixlpal App API version the app was written for, like \"0.2\"")
+    if "category" in m and m["category"] not in CATEGORIES:
+        out.append("\"category\" is one of " + ", ".join(CATEGORIES))
+    if isinstance(m.get("api"), str) and (not VERSION_FORMAT.match(m["api"]) or version_key(m["api"]) > version_key(API_VERSION)):
+        out.append(f"\"api\" is the Pixlpal App API version the app was written for, up to \"{API_VERSION}\"")
+    if "net" in m:
+        net = m["net"]
+        if not isinstance(net, list) or not 1 <= len(net) <= 8 or not all(isinstance(h, str) and HOST_FORMAT.match(h) for h in net):
+            out.append("\"net\" lists the hosts the app reaches (1 to 8, lower case): [\"api.example.com\", \"*.example.org\"]")
+        elif len(",".join(net)) > 250:
+            out.append("\"net\" is too long (250 characters in all)")
+        elif "net" in m and m.get("api") and version_key(m["api"]) < version_key("0.3"):
+            out.append("\"net\" needs \"api\": \"0.3\" or newer")
     if "appID" in m:
         g, _, s = str(m["appID"]).partition("/")
-        if not (g.isdigit() and s.isdigit() and 100 <= int(g) <= 199 and int(s) <= 255):
+        # 100-199: catalogue apps. Below 99 (not 11): a built-in app moved out of the firmware keeps its number.
+        if not (g.isdigit() and s.isdigit() and int(s) <= 255 and (100 <= int(g) <= 199 or (int(g) < 99 and int(g) != 11))):
             out.append("\"appID\" is a catalogue number like \"100/3\" (100-199); leave it out for a personal app")
+    if "screen" in m and m["screen"] not in ("full", "statusbar"):
+        out.append("\"screen\" is \"full\" (the default) or \"statusbar\" (below Pixlpal's status bar)")
+    if "kit" in m and m["kit"] != "compat":
+        out.append("\"kit\" is \"compat\" (the firmware's app framework) or left out")
+    if "libc" in m and not isinstance(m["libc"], bool):
+        out.append("\"libc\" is true or false")
+    if "dataGroup" in m:
+        g = m["dataGroup"]
+        if not isinstance(g, str) or not ID_FORMAT.match(g) or len(g) > 40 or g.count(".") < 2:
+            out.append("\"dataGroup\" is a name like \"com.example.games\" (its apps share a folder)")
+        elif isinstance(m.get("id"), str) and not m["id"].startswith(g.rsplit(".", 1)[0] + "."):
+            out.append(f"\"dataGroup\" must be under the app's own developer: {m['id'].rsplit('.', 1)[0]}.something")
+    if "migrateNvs" in m and (not isinstance(m["migrateNvs"], list) or not all(isinstance(k, str) and re.match(r"^[A-Za-z0-9_ ]{1,15}$", k) for k in m["migrateNvs"])):
+        out.append("\"migrateNvs\" lists the settings keys a built-in app moved to the catalogue kept (15 characters at most)")
+    if "sharedNvs" in m and (not isinstance(m["sharedNvs"], list) or "dataGroup" not in m
+                             or not all(isinstance(k, str) and re.match(r"^[A-Za-z0-9_ ]{1,15}$", k) for k in m["sharedNvs"])):
+        out.append("\"sharedNvs\" lists settings keys (15 characters at most) kept in the \"dataGroup\" folder")
     return out
 
 

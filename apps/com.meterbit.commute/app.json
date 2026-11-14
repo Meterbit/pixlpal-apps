@@ -1,0 +1,22 @@
+{
+  "id": "com.meterbit.commute",
+  "name": "Commute",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "10/0",
+  "category": "travel",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "How long the drive or the ride to work takes now, from TomTom, Google or transit timetables, with when to leave.",
+  "net": [
+    "api.tomtom.com",
+    "routes.googleapis.com",
+    "maps.googleapis.com",
+    "transit.land"
+  ],
+  "migrateNvs": [
+    "cmtSettings",
+    "cmtUsage"
+  ]
+}

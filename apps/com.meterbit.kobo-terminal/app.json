@@ -1,0 +1,18 @@
+{
+  "id": "com.meterbit.kobo-terminal",
+  "name": "Kobo Terminal",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "4/7",
+  "category": "markets",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "Nigerian stocks and their news from Kobo Terminal, with the market's movers. Needs your Kobo Terminal key.",
+  "net": [
+    "koboterminal.com"
+  ],
+  "migrateNvs": [
+    "kbtSet"
+  ]
+}

@@ -20,7 +20,9 @@ The key's public half is `catalogue/public_key.pem`. The same public key is buil
 2. **Read the code.** Look for:
    - anything the app does that its description doesn't say;
    - phone page text or links that mislead;
-   - content that breaks the rules in [CONTRIBUTING.md](../CONTRIBUTING.md#what-the-review-looks-for).
+   - content that breaks the rules in [CONTRIBUTING.md](../CONTRIBUTING.md#what-the-review-looks-for);
+   - for an app with `net`: that each host is one the app needs, what each request sends (search for
+     `pxl_http_get` and `pxl_http_post`), and that no key of the developer's is in the source.
 
    The sandbox already stops apps from reaching anything outside the API, so the review is about honesty, content
    and quality, not about the device's safety.

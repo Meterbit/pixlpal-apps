@@ -1,0 +1,18 @@
+{
+  "id": "com.meterbit.message-board",
+  "name": "Message Board",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.4",
+  "appID": "22/1",
+  "category": "maker",
+  "screen": "full",
+  "kit": "compat",
+  "about": "Messages sent to a topic of yours on ntfy appear on Pixlpal, from your phone, a script or a home automation.",
+  "net": [
+    "ntfy.sh"
+  ],
+  "migrateNvs": [
+    "mbdSave"
+  ]
+}
