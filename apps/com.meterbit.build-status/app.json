@@ -1,0 +1,16 @@
+{
+  "id": "com.meterbit.build-status",
+  "name": "Build Status",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "maker",
+  "screen": "full",
+  "kit": "compat",
+  "about": "Your team's GitHub Actions and GitLab pipelines at a glance: passing, failing or running, on which branch, by whom and when. A broken build sounds an alarm; fixing it gets a cheer.",
+  "net": [
+    "api.github.com",
+    "gitlab.com"
+  ],
+  "appID": "100/0"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "com.meterbit.team-world",
+  "name": "Team Around the World",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "productivity",
+  "screen": "full",
+  "kit": "compat",
+  "about": "For teams across time zones: each teammate's local time and whether they are working, off for the evening, asleep, on a weekend or a public holiday, the hours when everyone is at work, and each person's next holiday.",
+  "net": [
+    "date.nager.at"
+  ],
+  "appID": "100/4"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "com.meterbit.room-sign",
+  "name": "Room Sign",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "productivity",
+  "screen": "full",
+  "kit": "compat",
+  "about": "Turns Pixlpal into a meeting-room sign: free or in use, until when, what is on now and next, from the room's calendar. Works with Google, Outlook and any calendar that shares an iCal (.ics) link.",
+  "net": [
+    "calendar.google.com",
+    "outlook.office365.com",
+    "outlook.live.com"
+  ],
+  "ownerNet": true,
+  "appID": "100/1"
+}

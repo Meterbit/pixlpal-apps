@@ -1,0 +1,12 @@
+{
+  "id": "com.meterbit.standup-host",
+  "name": "Stand-up Host",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "productivity",
+  "screen": "full",
+  "kit": "compat",
+  "about": "Runs the team's daily stand-up: it shuffles who speaks when, gives each person the same time with a warning near the end, and moves on at a click. At the end it shows how long the meeting took and who went over.",
+  "appID": "100/3"
+}

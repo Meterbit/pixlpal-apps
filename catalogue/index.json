@@ -1,7 +1,7 @@
 {
   "format": 1,
-  "sequence": 6,
-  "generated": "2026-11-15T01:02:53Z",
+  "sequence": 7,
+  "generated": "2026-11-15T10:29:22Z",
   "baseUrl": "https://raw.githubusercontent.com/Meterbit/pixlpal-apps/main/catalogue/",
   "categories": {
     "clocks": "Clocks & Timers",
@@ -42,6 +42,25 @@
       "package": "packages/com.meterbit.big-clock/1.0.0.pxa",
       "icon": "icons/com.meterbit.big-clock.png",
       "source": "apps/com.meterbit.big-clock"
+    },
+    {
+      "id": "com.meterbit.build-status",
+      "name": "Build Status",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Your team's GitHub Actions and GitLab pipelines at a glance: passing, failing or running, on which branch, by whom and when. A broken build sounds an alarm; fixing it gets a cheer.",
+      "category": "maker",
+      "appID": "100/0",
+      "api": "0.6",
+      "net": [
+        "api.github.com",
+        "gitlab.com"
+      ],
+      "size": 132880,
+      "sha256": "8dca4a8309a1e779447e63b4d04c9f4f6e3fced47e1f43375f0fd4d474b516f1",
+      "package": "packages/com.meterbit.build-status/1.0.0.pxa",
+      "icon": "icons/com.meterbit.build-status.png",
+      "source": "apps/com.meterbit.build-status"
     },
     {
       "id": "com.meterbit.business-counters",
@@ -578,6 +597,27 @@
       "source": "apps/com.meterbit.pixel-arcade"
     },
     {
+      "id": "com.meterbit.room-sign",
+      "name": "Room Sign",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Turns Pixlpal into a meeting-room sign: free or in use, until when, what is on now and next, from the room's calendar. Works with Google, Outlook and any calendar that shares an iCal (.ics) link.",
+      "category": "productivity",
+      "appID": "100/1",
+      "api": "0.6",
+      "net": [
+        "calendar.google.com",
+        "outlook.office365.com",
+        "outlook.live.com"
+      ],
+      "size": 129079,
+      "sha256": "48acb43e018cb5d3a038f64c899e79e228a1ed9f4b47ef1a076d5fe7a7a87572",
+      "package": "packages/com.meterbit.room-sign/1.0.0.pxa",
+      "icon": "icons/com.meterbit.room-sign.png",
+      "source": "apps/com.meterbit.room-sign",
+      "ownerNet": true
+    },
+    {
       "id": "com.meterbit.rss-reader",
       "name": "RSS Reader",
       "version": "1.1.0",
@@ -616,6 +656,26 @@
       "ownerNet": true
     },
     {
+      "id": "com.meterbit.sales-gong",
+      "name": "Sales Gong",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "The team's goal board: this month's total against the target, whether you're ahead of the pace, and who is leading. Every new deal rings the gong. Reads a Google Sheet published as CSV, any CSV or JSON link, or deals you add from the phone.",
+      "category": "productivity",
+      "appID": "100/2",
+      "api": "0.6",
+      "net": [
+        "docs.google.com",
+        "*.googleusercontent.com"
+      ],
+      "size": 145502,
+      "sha256": "c07b910f5001e70ac877825b044bd8e01bee84afd69b6396def4ef92ca340580",
+      "package": "packages/com.meterbit.sales-gong/1.0.0.pxa",
+      "icon": "icons/com.meterbit.sales-gong.png",
+      "source": "apps/com.meterbit.sales-gong",
+      "ownerNet": true
+    },
+    {
       "id": "com.meterbit.sky-tonight",
       "name": "Sky Tonight",
       "version": "1.1.0",
@@ -636,6 +696,22 @@
       "source": "apps/com.meterbit.sky-tonight"
     },
     {
+      "id": "com.meterbit.standup-host",
+      "name": "Stand-up Host",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Runs the team's daily stand-up: it shuffles who speaks when, gives each person the same time with a warning near the end, and moves on at a click. At the end it shows how long the meeting took and who went over.",
+      "category": "productivity",
+      "appID": "100/3",
+      "api": "0.6",
+      "net": [],
+      "size": 104209,
+      "sha256": "39e17e495601f982a43ac30e3e65050bdfe97b865cd9d10a6a8815a10c6c461d",
+      "package": "packages/com.meterbit.standup-host/1.0.0.pxa",
+      "icon": "icons/com.meterbit.standup-host.png",
+      "source": "apps/com.meterbit.standup-host"
+    },
+    {
       "id": "com.meterbit.studio-light",
       "name": "Studio Light",
       "version": "1.1.0",
@@ -650,6 +726,24 @@
       "package": "packages/com.meterbit.studio-light/1.1.0.pxa",
       "icon": "icons/com.meterbit.studio-light.png",
       "source": "apps/com.meterbit.studio-light"
+    },
+    {
+      "id": "com.meterbit.team-world",
+      "name": "Team Around the World",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "For teams across time zones: each teammate's local time and whether they are working, off for the evening, asleep, on a weekend or a public holiday, the hours when everyone is at work, and each person's next holiday.",
+      "category": "productivity",
+      "appID": "100/4",
+      "api": "0.6",
+      "net": [
+        "date.nager.at"
+      ],
+      "size": 134212,
+      "sha256": "66e0e83e4745167bc7713cec388738e55d9baf225ed196e01dc71727247ae055",
+      "package": "packages/com.meterbit.team-world/1.0.0.pxa",
+      "icon": "icons/com.meterbit.team-world.png",
+      "source": "apps/com.meterbit.team-world"
     },
     {
       "id": "com.meterbit.tell-the-time",
