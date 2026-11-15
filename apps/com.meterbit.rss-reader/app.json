@@ -1,9 +1,9 @@
 {
   "id": "com.meterbit.rss-reader",
   "name": "RSS Reader",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Meterbit Cyb",
-  "api": "0.5",
+  "api": "0.6",
   "appID": "1/1",
   "category": "news",
   "screen": "statusbar",

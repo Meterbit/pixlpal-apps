@@ -1,8 +1,8 @@
 /**
  * @file pixlpal.h
- * @brief The Pixlpal App API for WebAssembly apps, draft version 0.5. An app includes this file only; it reaches
+ * @brief The Pixlpal App API for WebAssembly apps, draft version 0.6. An app includes this file only; it reaches
  *        Pixlpal through nothing else. Set "api" in app.json to the version whose additions it uses (marked "0.3",
- *        "0.4", "0.5" below); apps written for an older version run unchanged.
+ *        "0.4", "0.5", "0.6" below); apps written for an older version run unchanged.
  *
  * The screen is 256 x 128 pixels. Colours are RGB565 (PXL_RGB(r, g, b) makes one). Coordinates outside the screen
  * are clipped.
@@ -234,6 +234,21 @@ PXL_IMPORT("image_size")   int pxl_image_size(const void* data, int bytes);
 PXL_IMPORT("image_pixels") int pxl_image_pixels(const void* data, int bytes, int w, int h, void* out, int outBytes);
 static inline int pxl_image_w(int result){ return result >> 16; }
 static inline int pxl_image_h(int result){ return result & 0xFFFF; }
+
+/* Tasks (0.6): work that waits (an internet request, a slow file) without stopping the app's own loop. A task runs
+ * fn(arg) with stack (a region of the app's memory, at least 4 KB, 16-byte aligned; it must stay valid until fn
+ * returns) as its C stack. At most three at a time; start them from the app's main code (not from a task).
+ *
+ * A task and the app's main code take turns: never both at once, so they share data without locks. The turn changes
+ * only while one of them waits: the main code in pxl_yield (or between frames), a task in pxl_task_wait. So a task
+ * should wait now and then (while its request is out, or every few thousand items of work): a task that runs about
+ * a second without waiting stops the app. pxl_task_wait returns 0 when the app is closing: the task should return.
+ * Tasks draw like the main code does, but their drawing shows with the main code's next frame. Internet answers still
+ * arrive through pxl_http_done, in the main code. */
+PXL_IMPORT("task_start") int pxl_task_start(void (*fn)(void* arg), void* arg, void* stack, int stackBytes);
+PXL_IMPORT("task_wait")  int pxl_task_wait(int ms);
+/** 0 in the app's main code, the task's number (1, 2) in a task. */
+PXL_IMPORT("task_id")    int pxl_task_id(void);
 
 /* A line in Pixlpal's log (the serial monitor). */
 PXL_IMPORT("log")       void pxl_log(const char* text);

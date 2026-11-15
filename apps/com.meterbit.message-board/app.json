@@ -1,9 +1,9 @@
 {
   "id": "com.meterbit.message-board",
   "name": "Message Board",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Meterbit Cyb",
-  "api": "0.4",
+  "api": "0.6",
   "appID": "22/1",
   "category": "maker",
   "screen": "full",
@@ -12,6 +12,7 @@
   "net": [
     "ntfy.sh"
   ],
+  "ownerNet": true,
   "migrateNvs": [
     "mbdSave"
   ]

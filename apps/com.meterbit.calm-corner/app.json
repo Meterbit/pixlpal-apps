@@ -1,9 +1,9 @@
 {
   "id": "com.meterbit.calm-corner",
   "name": "Calm Corner",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Meterbit Cyb",
-  "api": "0.4",
+  "api": "0.6",
   "appID": "19/2",
   "category": "kids",
   "screen": "statusbar",
@@ -14,6 +14,7 @@
     "api.telegram.org",
     "api.callmebot.com"
   ],
+  "ownerNet": true,
   "dataGroup": "com.meterbit.kids",
   "sharedNvs": [
     "kidSettings"

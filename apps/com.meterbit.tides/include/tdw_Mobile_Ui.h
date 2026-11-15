@@ -79,7 +79,7 @@ static const char TDW_UI_API[] = R"json({
           "pickCommand": { "app_command": 3, "args": ["riverPlace"] }
         },
         { "type": "richTextBlock", "blocks": [
-          { "type": "note", "text": "River flow is from the GloFAS flood model (5 km), judged against the same spot's last 10 years: High is the top 10% of days, Very high the top 1%." }
+          { "type": "note", "text": "River flow is from the GloFAS flood model (5 km), judged against the same spot's last 5 years: High is the top 10% of days, Very high the top 1%." }
         ] }
       ]
     },

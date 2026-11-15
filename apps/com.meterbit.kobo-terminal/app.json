@@ -1,9 +1,9 @@
 {
   "id": "com.meterbit.kobo-terminal",
   "name": "Kobo Terminal",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Meterbit Cyb",
-  "api": "0.4",
+  "api": "0.6",
   "appID": "4/7",
   "category": "markets",
   "screen": "statusbar",

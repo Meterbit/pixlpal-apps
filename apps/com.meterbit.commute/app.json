@@ -1,9 +1,9 @@
 {
   "id": "com.meterbit.commute",
   "name": "Commute",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Meterbit Cyb",
-  "api": "0.4",
+  "api": "0.6",
   "appID": "10/0",
   "category": "travel",
   "screen": "statusbar",

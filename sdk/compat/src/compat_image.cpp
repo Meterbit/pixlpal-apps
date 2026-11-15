@@ -1,7 +1,4 @@
 // Pixlpal compat: pictures (mtb_kit_image.h, mtb_Draw_Local_*) and the GitHub file download (mtb_github.h).
-// The picture kit's functions are weak: an app that carries its own copy of the kit (as World Clock does, from before
-// API 0.5) keeps it.
-#define WEAK __attribute__((weak))
 #include "mtb_kit_image.h"
 #include "mtb_graphics.h"
 #include "mtb_github.h"
@@ -22,12 +19,12 @@ static bool draw(const void* d, size_t n, Mtb_Kit_Box_t box, uint16_t background
     return true;
 }
 
-WEAK bool mtb_Kit_Draw_Svg(const char* svg, size_t length, Mtb_Kit_Box_t box, uint16_t background, Mtb_Kit_Box_t* drawn){ return draw(svg, length, box, background, drawn); }
-WEAK bool mtb_Kit_Draw_Png(const uint8_t* png, size_t length, Mtb_Kit_Box_t box, uint16_t background, Mtb_Kit_Box_t* drawn){ return draw(png, length, box, background, drawn); }
-WEAK bool mtb_Kit_Draw_Jpg(const uint8_t* jpg, size_t length, Mtb_Kit_Box_t box, Mtb_Kit_Box_t* drawn){ return draw(jpg, length, box, 0, drawn); }
-WEAK bool mtb_Kit_Draw_Image(const uint8_t* d, size_t n, Mtb_Kit_Box_t box, uint16_t background, Mtb_Kit_Box_t* drawn){ return draw(d, n, box, background, drawn); }
+bool mtb_Kit_Draw_Svg(const char* svg, size_t length, Mtb_Kit_Box_t box, uint16_t background, Mtb_Kit_Box_t* drawn){ return draw(svg, length, box, background, drawn); }
+bool mtb_Kit_Draw_Png(const uint8_t* png, size_t length, Mtb_Kit_Box_t box, uint16_t background, Mtb_Kit_Box_t* drawn){ return draw(png, length, box, background, drawn); }
+bool mtb_Kit_Draw_Jpg(const uint8_t* jpg, size_t length, Mtb_Kit_Box_t box, Mtb_Kit_Box_t* drawn){ return draw(jpg, length, box, 0, drawn); }
+bool mtb_Kit_Draw_Image(const uint8_t* d, size_t n, Mtb_Kit_Box_t box, uint16_t background, Mtb_Kit_Box_t* drawn){ return draw(d, n, box, background, drawn); }
 
-WEAK int mtb_Kit_Fit_Scale(int w, int h, int boxW, int boxH){
+int mtb_Kit_Fit_Scale(int w, int h, int boxW, int boxH){
     if (w <= 0 || h <= 0 || boxW <= 0 || boxH <= 0) return 1;
     if (w <= boxW && h <= boxH){
         const int sx = boxW / w, sy = boxH / h;
@@ -38,7 +35,7 @@ WEAK int mtb_Kit_Fit_Scale(int w, int h, int boxW, int boxH){
     return -d;
 }
 
-WEAK uint8_t* mtb_Kit_Decode_Image(const uint8_t* d, size_t n, int boxW, int boxH, int* w, int* h){
+uint8_t* mtb_Kit_Decode_Image(const uint8_t* d, size_t n, int boxW, int boxH, int* w, int* h){
     if (boxW <= 0 || boxH <= 0 || boxW > 256 || boxH > 256) return nullptr;
     const size_t bytes = (size_t)boxW * boxH * 4;
     uint8_t* out = (uint8_t*)malloc(bytes);
@@ -50,7 +47,7 @@ WEAK uint8_t* mtb_Kit_Decode_Image(const uint8_t* d, size_t n, int boxW, int box
     return out;
 }
 
-WEAK bool mtb_Kit_Image_Size(const uint8_t* d, size_t n, int* w, int* h){
+bool mtb_Kit_Image_Size(const uint8_t* d, size_t n, int* w, int* h){
     const int r = pxl_image_size(d, (int)n);
     if (!r) return false;
     if (w) *w = pxl_image_w(r);

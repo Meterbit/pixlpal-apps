@@ -13,6 +13,7 @@
 #include "pixlpal.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/semphr.h"
+#include "mtb_task_map.h"        // the task priorities, as the firmware's engine header brings them
 #include "esp_heap_caps.h"
 #include "esp_attr.h"
 #include "esp_log.h"

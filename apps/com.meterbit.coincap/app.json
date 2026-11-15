@@ -1,9 +1,9 @@
 {
   "id": "com.meterbit.coincap",
   "name": "CoinCap Crypto",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Meterbit Cyb",
-  "api": "0.5",
+  "api": "0.6",
   "appID": "4/1",
   "category": "markets",
   "screen": "statusbar",

@@ -1,0 +1,26 @@
+{
+  "id": "com.meterbit.glucose",
+  "name": "Glucose Display",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "appID": "14/2",
+  "category": "health",
+  "screen": "full",
+  "kit": "compat",
+  "about": "Your glucose from Dexcom, FreeStyle Libre (LibreLinkUp) or your own Nightscout site, with its trend and alarms on Pixlpal and your phone.",
+  "net": [
+    "api.libreview.io",
+    "*.libreview.io",
+    "share2.dexcom.com",
+    "shareous1.dexcom.com",
+    "share.dexcom.jp",
+    "ntfy.sh",
+    "api.telegram.org",
+    "api.callmebot.com"
+  ],
+  "ownerNet": true,
+  "migrateNvs": [
+    "gluSet"
+  ]
+}

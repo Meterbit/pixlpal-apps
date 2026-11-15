@@ -143,7 +143,7 @@ struct Tdw_River_t {
     uint8_t n, today;
     float peak;                         /**< the most from today on */
     uint32_t peakDay;
-    bool climate;                       /**< the last 10 years are known */
+    bool climate;                       /**< the last 5 years are known */
     float p10, p50, p90, p99, max;
     float cellKm;
     uint32_t updated;

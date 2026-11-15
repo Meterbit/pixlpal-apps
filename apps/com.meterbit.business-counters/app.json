@@ -1,9 +1,9 @@
 {
   "id": "com.meterbit.business-counters",
   "name": "Business Counters",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Meterbit Cyb",
-  "api": "0.4",
+  "api": "0.6",
   "appID": "16/0",
   "category": "productivity",
   "screen": "statusbar",
@@ -16,6 +16,7 @@
     "api.paystack.co",
     "*.myshopify.com"
   ],
+  "ownerNet": true,
   "migrateNvs": [
     "bccLog",
     "bccSet"

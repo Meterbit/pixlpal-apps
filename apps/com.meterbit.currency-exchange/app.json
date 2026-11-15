@@ -1,9 +1,9 @@
 {
   "id": "com.meterbit.currency-exchange",
   "name": "Currency Exchange",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Meterbit Cyb",
-  "api": "0.4",
+  "api": "0.6",
   "appID": "4/2",
   "category": "markets",
   "screen": "statusbar",

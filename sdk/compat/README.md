@@ -24,25 +24,38 @@ with the C and C++ libraries, this layer (`include/`, `src/`) and ArduinoJson.
 | `snd_Play`, `snd_Say`, `mtb_Silent_Mode`, `mtb_Clock_24h`, time, `localtime_r` | `pxl_sound`, `pxl_say`, `pxl_silent`, `pxl_clock_24h`, `pxl_time` |
 | USB keyboard and mouse (`mtb_Usb_Input_Read`...) | A queue `pxl_input` fills |
 | Brightness, opening other apps, `statusBarNotif`, `Mtb_ScrollText_t`, `Mtb_FixedText_t` | `pxl_brightness*`, `pxl_open_app`, `pxl_status_text`; the ticker and text widget drawn by the layer |
-| FreeRTOS queues, semaphores, critical sections | Work within one thread (a queue wait yields) |
+| Tasks (`xTaskCreatePinnedToCore`) | Pixlpal tasks (`pxl_task_start`, API 0.6): see below |
+| FreeRTOS queues, semaphores, critical sections, task notifications | Work as the tasks take turns (a wait hands the turn on) |
 | FreeRTOS software timers (`xTimerCreate`...) | Their callbacks run at the app's waits once due |
 | `mtb_kit_image` (`mtb_Kit_Draw_Svg`, `_Png`, `_Image`, `mtb_Kit_Decode_Image`), `mtb_Draw_Local_Png` | Pixlpal's decoders (`pxl_image`, `pxl_image_pixels`, API 0.5) |
 | `mtb_Download_Github_File_To_SPIFFS` / `_To_PSRAM` | A public file from raw.githubusercontent.com (in `net`), into the app's files or memory |
 
-## One thread
+## Tasks
 
-An installed app is one thread, so other tasks don't run beside it:
+An installed app runs on Pixlpal tasks (API 0.6) that take turns: the app's loop, and up to three tasks. App code
+never runs on two of them at once; the turn changes only while one waits (its `delay()`, a queue or notification
+wait, an internet request). So the firmware's code needs no change for this, and its locks do nothing.
 
-- **A task that does one job and ends** (a fetch): `xTaskCreatePinnedToCore` queues it, and it runs to its end at the
-  app's next wait. The app's loop pauses meanwhile, which for a fetch is a second or two.
-- **A worker that loops forever** must be cut into steps. Register a step with `pxl_compat_add_background(step)`; the
-  layer runs it at each of the app's waits, never inside another step. The catalogue's apps did this mechanically:
-  the worker's prologue became `worker_Begin`, its loop body `worker_Step` (inside `do { } while (0)`, so its
-  `continue`s end the step), its variables statics, and long waits a wake-up time.
+- **A task the app starts** (`xTaskCreatePinnedToCore`) gets a Pixlpal task of its own, if one of two is free, with a C
+  stack of about twice the firmware task's size (16 to 64 KB). Its loop may run forever, as on the firmware; when the
+  app closes, its next wait ends it.
+- **Otherwise it waits its turn in the background task**, which also runs the workers' steps
+  (`pxl_compat_add_background`, from apps ported before 0.6) and the timers. Tasks there run one after another, so a
+  task that never ends would hold the rest up.
+- **The scrolling text** (`statusBarNotif`, `Mtb_ScrollText_t`) is drawn with the loop's frames.
+- **Internet requests** wait in whichever task made them; the loop keeps drawing meanwhile. Pixlpal has one request
+  out at a time per app, so a second waits for the first. A request that didn't start has its reason as the code
+  (`PXL_HTTP_NOT_ALLOWED`: a site its owner hasn't allowed yet).
+- **Drawing from a task** shows with the loop's next frame.
+- **Big answers:** an installed app is interpreted, and ArduinoJson takes it about a second for every 30 KB of JSON
+  (a task stops after about two seconds without waiting). For long arrays of numbers, ask for less or read the
+  numbers straight from the text, as Tides does for its river history; answers are at most 64 KB.
 
 ## Not here
 
-- **Raw audio** (`mtb_Audio_Pcm_*`): `mtb_Audio_Pcm_Begin` returns false. Play notes or speech instead.
+- **Raw audio** (`mtb_Audio_Pcm_*`, the audio player): `mtb_Audio_Pcm_Begin` returns false. Play notes or speech
+  instead. (Prayer Times and Workout Focus stay built in for this.)
+- **Other connections** than HTTP: SMTP email, MQTT, WebSockets. (Medicine stays built in for its email.)
 - **Raw JPEG pixels:** `mtb_Decode_Jpg_RGB888` fails. Draw a JPEG (or PNG, SVG) with `mtb_Kit_Draw_Image`, or get
   its pixels fitted to a box with `mtb_Kit_Decode_Image`: Pixlpal decodes them.
 - **Response headers** from HTTP, and methods other than GET and POST.
@@ -56,8 +69,8 @@ An installed app is one thread, so other tasks don't run beside it:
    `"kit": "compat"`, `"screen": "statusbar"` for a status-bar app, `net` for the hosts it reaches, and
    `migrateNvs` for the NVS keys its settings were in (Pixlpal copies them into its files when it is installed, so
    owners keep their settings).
-2. Build it: `python3 tools/build.py apps/<id>`. The usual changes: a forever worker cut into steps, a file layer for
-   apps that used folders, raw audio replaced by notes.
+2. Build it: `python3 tools/build.py apps/<id>`. The usual changes: a file layer for apps that used folders, and
+   build settings (`sdkconfig.h`) an app's kits read.
 3. Remove it from the firmware, and from `meterbit_engine`'s requirements.
 
 The originals of this layer are in the firmware repository (`components/meterbit_wasm/compat`); the catalogue has a

@@ -49,7 +49,9 @@ API = {"fill", "rect", "frame", "pixel", "circle", "triangle", "text", "text_wid
        "yield", "sound_busy", "open_app", "open_previous_app", "usb_state", "brightness", "set_brightness",
        "brightness_step", "file_read", "file_write", "file_remove", "file_list", "phone_search", "phone_send", "phone_data", "status_text",
        # 0.5
-       "image", "image_size", "image_pixels"}
+       "image", "image_size", "image_pixels",
+       # 0.6
+       "task_start", "task_wait", "task_id"}
 # The WASI functions Pixlpal provides, for the C library (the time, random numbers, stdout into the log).
 WASI = {"clock_time_get", "fd_write", "fd_close", "fd_seek", "fd_fdstat_get", "fd_prestat_get", "fd_prestat_dir_name",
         "environ_sizes_get", "environ_get", "args_sizes_get", "args_get", "random_get", "sched_yield", "proc_exit"}

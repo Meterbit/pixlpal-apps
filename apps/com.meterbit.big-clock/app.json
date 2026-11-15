@@ -1,0 +1,15 @@
+{
+  "id": "com.meterbit.big-clock",
+  "name": "Big Clock",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "appID": "0/3",
+  "category": "clocks",
+  "screen": "full",
+  "kit": "compat",
+  "about": "The time in big digits, in a style you choose, with the date, seconds and your alarms.",
+  "migrateNvs": [
+    "bigClockCfg"
+  ]
+}

@@ -5,6 +5,7 @@
 #include <stddef.h>
 #include <string.h>
 #include "WString.h"
+#include "freertos/FreeRTOS.h"
 #include "WiFiClientSecure.h"
 #define HTTP_CODE_OK 200
 #define HTTP_CODE_NO_CONTENT 204
@@ -32,10 +33,10 @@ enum followRedirects_t { HTTPC_DISABLE_FOLLOW_REDIRECTS, HTTPC_STRICT_FOLLOW_RED
 class Pxl_Body_Stream {
 public:
     const char* data = nullptr; size_t length = 0, at = 0;
-    int available(){ return (int)(length - at); }
+    int available(){ pxl_compat_breathe(); return (int)(length - at); }
     bool connected(){ return at < length; }
     int read(){ return at < length ? (uint8_t)data[at++] : -1; }
-    size_t read(uint8_t* b, size_t n){ if (n > length - at) n = length - at; memcpy(b, data + at, n); at += n; return n; }
+    size_t read(uint8_t* b, size_t n){ pxl_compat_breathe(); if (n > length - at) n = length - at; memcpy(b, data + at, n); at += n; return n; }
     size_t readBytes(char* b, size_t n){ return read((uint8_t*)b, n); }
     int peek(){ return at < length ? (uint8_t)data[at] : -1; }
     void setTimeout(unsigned long){}

@@ -1,0 +1,15 @@
+{
+  "id": "com.meterbit.timers",
+  "name": "Timers",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "appID": "0/4",
+  "category": "clocks",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "A stopwatch with laps, countdown timers and an interval timer, with sounds when they end.",
+  "migrateNvs": [
+    "stopwatchCfg"
+  ]
+}

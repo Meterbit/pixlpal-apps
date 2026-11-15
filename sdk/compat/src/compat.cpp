@@ -3,6 +3,10 @@
 // The module holds one app, registered with MTB_REGISTER_APP. pxl_start makes its descriptor (which sets its phone
 // page), pxl_main runs its task function, whose loop's delay() is pxl_yield. The knob, USB input and phone commands
 // arrive (inside pxl_yield) as the callbacks the app registered.
+//
+// What the firmware ran on tasks of their own (workers cut into steps, timers, the tasks the app starts) runs on one
+// Pixlpal task (pxl_task_start, API 0.6), so their waits, such as a fetch, leave the app's loop drawing. The task and
+// the loop take turns, changing only when one of them waits, as the firmware's tasks did between their delays.
 #include "mtb_engine.h"
 #include "mtb_device_prefs.h"
 #include "mtb_usb_hid.h"
@@ -27,6 +31,7 @@ static bool commandRejected = false;
 extern "C" uint32_t pxl_compat_millis(void){ return pxl_millis(); }
 
 static void (*background[8])(void);
+static void (*frameSteps[4])(void);   // drawn with the loop's frames (the scrolling text), in the loop itself
 static bool inBackground = false;
 struct Pending_Task_t { void (*fn)(void*); void* parameter; };
 static Pending_Task_t tasks[8];
@@ -38,29 +43,111 @@ extern "C" void pxl_compat_add_background(void (*step)(void)){
 extern "C" void pxl_compat_remove_background(void (*step)(void)){
     for (auto& b : background) if (b == step) b = nullptr;
 }
+static void add_Frame_Step(void (*step)(void)){
+    for (auto& f : frameSteps) if (f == step) return;
+    for (auto& f : frameSteps) if (!f){ f = step; return; }
+}
+
+// One round of the background: the workers' steps, then the tasks the app started, one at a time.
+static void background_Round(void){
+    for (auto& b : background) if (b && active) b();
+    while (active && taskCount > 0){
+        const Pending_Task_t t = tasks[0];
+        taskCount--;
+        memmove(tasks, tasks + 1, sizeof(tasks[0]) * (size_t)taskCount);
+        t.fn(t.parameter);
+    }
+}
+static bool background_Due(void){
+    if (taskCount > 0) return true;
+    for (auto& b : background) if (b) return true;
+    return false;
+}
+
+// The background's Pixlpal task: started the first time there is background work, it runs until the app closes.
+static const int BG_STACK = 64 * 1024;
+static uint8_t* bgStack = nullptr;
+static bool bgRunning = false;
+static int bgTaskId = -1;              // the background's task number
+static void background_Task(void*){
+    while (active){
+        inBackground = true;
+        background_Round();
+        inBackground = false;
+        if (!pxl_task_wait(10)) break;
+    }
+    active = false;
+}
+static bool background_Start(void){
+    if (bgRunning) return true;
+    if (!bgStack) bgStack = (uint8_t*)aligned_alloc(16, BG_STACK);
+    if (!bgStack) return false;
+    bgTaskId = pxl_task_start(background_Task, nullptr, bgStack, BG_STACK);
+    bgRunning = bgTaskId > 0;
+    return bgRunning;
+}
 
 extern "C" void pxl_compat_delay(uint32_t ms){
+    if (pxl_task_id() != 0){                                // in a task: the loop runs meanwhile
+        if (!pxl_task_wait((int)ms)){
+            active = false;
+            // The app is closing. The background task returns by itself; a task of the app's own may loop forever
+            // (its firmware owner deleted it), so it ends here.
+            if (pxl_task_id() != bgTaskId) __builtin_trap();
+        }
+        lastYieldMs = pxl_millis();
+        return;
+    }
     if (!active){ pxl_yield((int)ms); return; }            // closing: Pixlpal still lets a short wait pass, a while
     active = pxl_yield((int)ms) != 0;
     lastYieldMs = pxl_millis();
-    // The workers' steps and the tasks the app started: here, between the app's frames, one at a time (a step or task
-    // may itself wait, which comes back here without starting another).
-    if (active && !inBackground){
+    for (auto& f : frameSteps) if (f && active) f();
+    if (active && !inBackground && background_Due() && !background_Start()){
+        // No task to be had: the background runs here, between the app's frames (a step or task may itself wait,
+        // which comes back here without starting another).
         inBackground = true;
-        for (auto& b : background) if (b && active) b();
-        while (active && taskCount > 0){
-            const Pending_Task_t t = tasks[0];
-            taskCount--;
-            memmove(tasks, tasks + 1, sizeof(tasks[0]) * (size_t)taskCount);
-            t.fn(t.parameter);
-        }
+        background_Round();
         inBackground = false;
     }
 }
 
-BaseType_t xTaskCreatePinnedToCore(void (*task)(void*), const char*, uint32_t, void* parameter, UBaseType_t, TaskHandle_t* handle, BaseType_t){
+// A task the app starts gets a Pixlpal task of its own when one is free (its loop may run forever, as on the
+// firmware), with a C stack of about twice the firmware task's (16 to 64 KB). Otherwise it waits its turn in the
+// background task, which runs such tasks one after another.
+struct Own_Task_t { void (*fn)(void*); void* parameter; uint8_t* stack; bool used; volatile bool done; int id; volatile uint32_t notified; };
+static Own_Task_t ownTasks[2];
+static void own_Task_Entry(void* p){
+    Own_Task_t* t = (Own_Task_t*)p;
+    t->fn(t->parameter);
+    t->done = true;
+}
+static void own_Tasks_Reap(void){      // the main code only: a task that ended has let go of its stack
+    for (auto& t : ownTasks) if (t.used && t.done){ free(t.stack); t = {}; }
+}
+
+BaseType_t xTaskCreatePinnedToCore(void (*task)(void*), const char*, uint32_t stack, void* parameter, UBaseType_t, TaskHandle_t* handle, BaseType_t){
     if (handle) *handle = nullptr;
-    if (!task || taskCount >= 8) return pdFAIL;
+    if (!task) return pdFAIL;
+    if (pxl_task_id() == 0){
+        own_Tasks_Reap();
+        for (auto& t : ownTasks){
+            if (t.used) continue;
+            uint32_t size = stack * 2;
+            size = size < 16384 ? 16384 : size > 65536 ? 65536 : (size + 15) & ~15u;
+            t.stack = (uint8_t*)aligned_alloc(16, size);
+            if (!t.stack) break;
+            t.fn = task; t.parameter = parameter; t.done = false; t.used = true;
+            t.id = pxl_task_start(own_Task_Entry, &t, t.stack, (int)size);
+            if (t.id > 0){
+                if (handle) *handle = (TaskHandle_t)&t;
+                return pdPASS;
+            }
+            free(t.stack);
+            t = {};
+            break;
+        }
+    }
+    if (taskCount >= 8) return pdFAIL;
     tasks[taskCount].fn = task;
     tasks[taskCount].parameter = parameter;
     taskCount++;
@@ -68,10 +155,48 @@ BaseType_t xTaskCreatePinnedToCore(void (*task)(void*), const char*, uint32_t, v
     return pdPASS;
 }
 
+// Task notifications: the app's loop and the background task have a count of their own, each task of the app's its own.
+static volatile uint32_t mainNotified = 0, bgNotified = 0;
+static volatile uint32_t* notified_Of(TaskHandle_t h){
+    if (h == (TaskHandle_t)&mainNotified) return &mainNotified;
+    if (h == (TaskHandle_t)&bgNotified) return &bgNotified;
+    for (auto& t : ownTasks) if (h == (TaskHandle_t)&t) return &t.notified;
+    return nullptr;
+}
+TaskHandle_t xTaskGetCurrentTaskHandle(void){
+    const int id = pxl_task_id();
+    if (id == 0) return (TaskHandle_t)&mainNotified;
+    for (auto& t : ownTasks) if (t.used && t.id == id) return (TaskHandle_t)&t;
+    return (TaskHandle_t)&bgNotified;
+}
+BaseType_t xTaskNotifyGive(TaskHandle_t task){
+    volatile uint32_t* n = notified_Of(task);
+    if (!n) return pdFAIL;
+    (*n)++;
+    return pdPASS;
+}
+uint32_t ulTaskNotifyTake(BaseType_t clearOnExit, TickType_t wait){
+    volatile uint32_t* n = notified_Of(xTaskGetCurrentTaskHandle());
+    const uint32_t start = pxl_millis();
+    for (;;){
+        if (*n){
+            const uint32_t v = *n;
+            *n = clearOnExit ? 0 : v - 1;
+            return v;
+        }
+        if (!active || pxl_millis() - start >= wait) return 0;
+        const uint32_t left = wait - (pxl_millis() - start);
+        pxl_compat_delay(left < 10 ? left : 10);
+    }
+}
+
 // THIS_APP_IS_ACTIVE: a loop that checks it often enough but forgets to wait still lets Pixlpal show its frames and
 // pass input on (and gets a fresh instruction budget).
-uint8_t mtb_App_Checkpoint(Mtb_Applications*){
+extern "C" void pxl_compat_breathe(void){
     if (active && pxl_millis() - lastYieldMs > 50) pxl_compat_delay(0);
+}
+uint8_t mtb_App_Checkpoint(Mtb_Applications*){
+    pxl_compat_breathe();
     return active ? pdTRUE : pdFALSE;
 }
 
@@ -428,22 +553,46 @@ extern "C" int mbedtls_base64_decode(unsigned char* dst, size_t dlen, size_t* ol
 
 // HTTP: one request at a time, waited for (pxl_http_done arrives inside pxl_yield) ----------------------------------------
 #include "mtb_kit_http.h"
-static volatile int httpId = 0, httpStatus = 0, httpLength = 0;
+// The answers that came in, by request number: the loop and the background task may each be waiting for one.
+struct Http_Done_t { int id, status, length; };
+static volatile Http_Done_t httpDone[4];
+static int httpDoneNext = 0;
 PXL_EXPORT("pxl_http_done") void pxl_http_done(int id, int status, int length){
-    if (id == httpId){ httpStatus = status; httpLength = length; httpId = -id; }
+    httpDone[httpDoneNext].status = status;
+    httpDone[httpDoneNext].length = length;
+    httpDone[httpDoneNext].id = id;
+    httpDoneNext = (httpDoneNext + 1) % 4;
 }
+// Starts a request, waiting while another (the loop's or the background's) is out: Pixlpal has one at a time per app.
+static int http_Start(int method, const char* url, const char* headers, const void* body, int bodyBytes, char* buffer, int size){
+    const uint32_t start = pxl_millis();
+    for (;;){
+        const int id = pxl_http_request_raw(method, url, headers, body, bodyBytes, buffer, size);
+        if (id != PXL_HTTP_BUSY || !active || pxl_millis() - start > 30000) return id;
+        pxl_compat_delay(50);
+    }
+}
+
+// Waits for request @p id's answer. One that didn't start has its reason as the code (PXL_HTTP_NOT_ALLOWED...).
 static char* http_Wait(int id, size_t maxBytes, char* buffer, Mtb_Kit_Http_t& result){
     memset(&result, 0, sizeof(result));
-    if (id <= 0){ free(buffer); result.code = -1; return nullptr; }
-    httpId = id;
+    if (id <= 0){ free(buffer); result.code = id < 0 ? id : -1; return nullptr; }
     const uint32_t start = pxl_millis();
-    while (httpId == id && active && pxl_millis() - start < 30000) pxl_compat_delay(20);
-    if (httpId != -id){ httpId = 0; free(buffer); result.code = -11; return nullptr; }       // closed, or no answer
-    httpId = 0;
-    result.code = httpStatus == PXL_HTTP_TOO_BIG ? 200 : httpStatus;
-    result.truncated = httpStatus == PXL_HTTP_TOO_BIG;
-    result.length = httpLength > 0 ? (size_t)httpLength : 0;
-    if (httpStatus < 0 && httpStatus != PXL_HTTP_TOO_BIG){ free(buffer); result.length = 0; return nullptr; }
+    int status = 0, length = 0;
+    bool answered = false;
+    while (!answered && active && pxl_millis() - start < 30000){
+        for (auto& d : httpDone){
+            if (d.id != id) continue;
+            status = d.status; length = d.length; d.id = 0;
+            answered = true;
+        }
+        if (!answered) pxl_compat_delay(20);
+    }
+    if (!answered){ free(buffer); result.code = -11; return nullptr; }       // closed, or no answer
+    result.code = status == PXL_HTTP_TOO_BIG ? 200 : status;
+    result.truncated = status == PXL_HTTP_TOO_BIG;
+    result.length = length > 0 ? (size_t)length : 0;
+    if (status < 0 && status != PXL_HTTP_TOO_BIG){ free(buffer); result.length = 0; return nullptr; }
     if (result.length > maxBytes) result.length = maxBytes;
     buffer[result.length] = 0;
     return buffer;
@@ -464,19 +613,7 @@ char* mtb_Kit_Http_Get(const char* url, const char* const* requestHeaders, const
     char headers[512];
     char* buffer = (char*)malloc(maxBytes + 1);
     if (!buffer || headers_Text(requestHeaders, headers, sizeof(headers)) < 0){ free(buffer); memset(&result, 0, sizeof(result)); result.code = -1; return nullptr; }
-    return http_Wait(pxl_http_get(url, headers, buffer, (int)maxBytes + 1), maxBytes, buffer, result);
-}
-// As mtb_Kit_Http_Get, but a request that didn't start has its reason as the code: PXL_HTTP_NOT_ALLOWED (a site its
-// owner hasn't allowed yet), _OFFLINE... (Its own function, so that the apps already published build as they did.)
-char* mtb_Kit_Http_Get_Why(const char* url, const char* const* requestHeaders, size_t maxBytes, Mtb_Kit_Http_t& result){
-    if (maxBytes > 65535) maxBytes = 65535;
-    char headers[512];
-    char* buffer = (char*)malloc(maxBytes + 1);
-    memset(&result, 0, sizeof(result));
-    if (!buffer || headers_Text(requestHeaders, headers, sizeof(headers)) < 0){ free(buffer); result.code = -1; return nullptr; }
-    const int id = pxl_http_get(url, headers, buffer, (int)maxBytes + 1);
-    if (id < 0){ free(buffer); result.code = id; return nullptr; }
-    return http_Wait(id, maxBytes, buffer, result);
+    return http_Wait(http_Start(0, url, headers, nullptr, 0, buffer, (int)maxBytes + 1), maxBytes, buffer, result);
 }
 char* mtb_Kit_Http_Send(const char* method, const char* url, const char* const* requestHeaders, const void* body, size_t length,
                         const char* const* collect, size_t count, size_t maxBytes, Mtb_Kit_Http_t& result, const char* agent){
@@ -487,7 +624,7 @@ char* mtb_Kit_Http_Send(const char* method, const char* url, const char* const* 
     char headers[512];
     char* buffer = (char*)malloc(room + 1);
     if (!buffer || headers_Text(requestHeaders, headers, sizeof(headers)) < 0){ free(buffer); result.code = -1; return nullptr; }
-    char* r = http_Wait(pxl_http_post(url, headers, body, (int)length, buffer, (int)room + 1), room, buffer, result);
+    char* r = http_Wait(http_Start(1, url, headers, body, (int)length, buffer, (int)room + 1), room, buffer, result);
     if (maxBytes == 0 && r){ free(r); return nullptr; }       // the status was all that was wanted
     return r;
 }
@@ -692,7 +829,7 @@ void Mtb_ScrollText_t::mtb_Scroll_This_Text(const char* text, uint16_t c){
     bool listed = false;
     for (auto t : tickers) listed |= t == this;
     for (auto& t : tickers) if (!listed && !t){ t = this; listed = true; }
-    pxl_compat_add_background(tickers_Step);
+    add_Frame_Step(tickers_Step);
 }
 bool Mtb_ScrollText_t::mtb_Scroll_Active(uint8_t check_or_stop){
     if (check_or_stop == STOP_SCROLL){

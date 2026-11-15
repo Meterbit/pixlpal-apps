@@ -1,0 +1,27 @@
+{
+  "id": "com.meterbit.busy-light",
+  "name": "Busy Light",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "appID": "2/2",
+  "category": "productivity",
+  "screen": "full",
+  "kit": "compat",
+  "about": "A sign for your door: busy, free or in a meeting, by hand or from your Google or Outlook calendar and your Teams status.",
+  "net": [
+    "www.googleapis.com",
+    "oauth2.googleapis.com",
+    "graph.microsoft.com",
+    "login.microsoftonline.com",
+    "ntfy.sh",
+    "api.telegram.org",
+    "api.callmebot.com"
+  ],
+  "ownerNet": true,
+  "migrateNvs": [
+    "bsySet",
+    "gcalToken",
+    "olkToken"
+  ]
+}

@@ -28,7 +28,7 @@ MAX_WASM = 512 * 1024
 # The device keeps these in fixed fields (mtb_app_package.h): longer ones would be cut.
 LIMITS = {"id": 47, "name": 39, "version": 15, "author": 31}
 HOST_FORMAT = re.compile(r"^(http://)?(\*\.)?[a-z0-9-]+(\.[a-z0-9-]+)+$")    # api.example.com, *.example.org, http://plain.example.net
-API_VERSION = "0.5"                                                  # the newest Pixlpal App API
+API_VERSION = "0.6"                                                  # the newest Pixlpal App API
 ID_FORMAT = re.compile(r"^[a-z0-9]+(\.[a-z0-9][a-z0-9-]*)+$")      # com.example.weather
 VERSION_FORMAT = re.compile(r"^\d+(\.\d+){0,3}$")                 # 1.0.0
 # "category": where the phone app lists the app, beside the built-in apps of that category (the phone's
@@ -127,6 +127,8 @@ def manifest_problems(m):
         out.append("\"screen\" is \"full\" (the default) or \"statusbar\" (below Pixlpal's status bar)")
     if "kit" in m and m["kit"] != "compat":
         out.append("\"kit\" is \"compat\" (the firmware's app framework) or left out")
+    elif m.get("kit") == "compat" and isinstance(m.get("api"), str) and VERSION_FORMAT.match(m["api"]) and version_key(m["api"]) < version_key("0.6"):
+        out.append("\"kit\": \"compat\" needs \"api\": \"0.6\" or newer (the compat layer runs on Pixlpal tasks)")
     if "libc" in m and not isinstance(m["libc"], bool):
         out.append("\"libc\" is true or false")
     if "dataGroup" in m:

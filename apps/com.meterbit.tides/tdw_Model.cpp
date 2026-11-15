@@ -151,7 +151,7 @@ bool tdw_Url_Flood(char* url, size_t size, double lat, double lon){
 
 bool tdw_Url_Flood_Climate(char* url, size_t size, double lat, double lon, uint32_t now){
     char from[12], to[12];
-    utc_Date(now - 3653u * 86400u, from, sizeof(from), true);
+    utc_Date(now - 1827u * 86400u, from, sizeof(from), true);      // 5 years: one answer of about 36 KB
     utc_Date(now - 2u * 86400u, to, sizeof(to), true);
     return fits(snprintf(url, size, "https://flood-api.open-meteo.com/v1/flood?latitude=%.4f&longitude=%.4f"
         "&daily=river_discharge&start_date=%s&end_date=%s", lat, lon, from, to), size);
@@ -346,13 +346,25 @@ bool tdw_Parse_Flood(const char* body, size_t length, int httpCode, uint32_t now
     return true;
 }
 
+// The discharge numbers are read straight from the text: a JSON document of thousands of values would take an
+// installed app (interpreted) a few seconds to build.
 bool tdw_Parse_Flood_Climate(const char* body, size_t length, int httpCode, Tdw_River_t& r, float* scratch, size_t scratchCount){
-    JsonDocument doc(tdw_Json_Allocator());
-    if (!parse(doc, body, length) || httpCode != 200 || doc["error"].as<bool>()) return false;
+    if (!body || !length || httpCode != 200) return false;
+    static const char KEY[] = "\"river_discharge\":[";
+    const char* end = body + length;
+    const char* p = nullptr;
+    for (const char* q = body; q + sizeof(KEY) - 1 <= end; q++) if (memcmp(q, KEY, sizeof(KEY) - 1) == 0){ p = q + sizeof(KEY) - 1; break; }
+    if (!p) return false;
     size_t n = 0;
-    for (JsonVariantConst v : doc["daily"]["river_discharge"].as<JsonArrayConst>()){
-        const float f = num(v);
+    while (p < end && *p != ']'){
+        while (p < end && (*p == ' ' || *p == ',')) p++;
+        if (p >= end || *p == ']') break;
+        if (*p == 'n'){ p += 4; continue; }                                  // null: a missing day
+        char* stop;
+        const float f = strtof(p, &stop);
+        if (stop == p) return false;
         if (!isnan(f) && n < scratchCount) scratch[n++] = f;
+        p = stop;
     }
     if (n < 365) return false;
     std::sort(scratch, scratch + n);

@@ -32,6 +32,9 @@ uint32_t pxl_compat_millis(void);
  *  firmware app did in a task of its own (fetching data...), cut into steps that return. At most 8. */
 void pxl_compat_add_background(void (*step)(void));
 void pxl_compat_remove_background(void (*step)(void));
+/** A short wait if the app hasn't waited for 50 ms: for loops that read data already in memory, which on the
+ *  firmware waited for the network. Gives the turn to the loop or the app's tasks, and a fresh instruction budget. */
+void pxl_compat_breathe(void);
 #ifdef __cplusplus
 }
 #endif
@@ -46,6 +49,10 @@ BaseType_t xTaskCreatePinnedToCore(void (*task)(void*), const char* name, uint32
 static inline BaseType_t xTaskCreate(void (*task)(void*), const char* name, uint32_t stack, void* parameter, UBaseType_t priority, TaskHandle_t* handle){
     return xTaskCreatePinnedToCore(task, name, stack, parameter, priority, handle, tskNO_AFFINITY);
 }
+/* Task notifications, as counts: a task's wait hands the turn to the app's loop and its other tasks. */
+TaskHandle_t xTaskGetCurrentTaskHandle(void);
+uint32_t ulTaskNotifyTake(BaseType_t clearOnExit, TickType_t wait);
+BaseType_t xTaskNotifyGive(TaskHandle_t task);
 static inline void vTaskSuspend(TaskHandle_t){}
 static inline void vTaskResume(TaskHandle_t){}
 

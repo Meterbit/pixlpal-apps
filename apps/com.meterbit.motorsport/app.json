@@ -1,9 +1,9 @@
 {
   "id": "com.meterbit.motorsport",
   "name": "Motorsport Live",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Meterbit Cyb",
-  "api": "0.4",
+  "api": "0.6",
   "appID": "5/1",
   "category": "sports",
   "screen": "statusbar",
@@ -15,6 +15,7 @@
     "api.telegram.org",
     "api.callmebot.com"
   ],
+  "ownerNet": true,
   "migrateNvs": [
     "mtsSet"
   ]
