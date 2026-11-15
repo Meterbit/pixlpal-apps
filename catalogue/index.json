@@ -1,7 +1,7 @@
 {
   "format": 1,
-  "sequence": 10,
-  "generated": "2026-11-15T15:50:39Z",
+  "sequence": 11,
+  "generated": "2026-11-15T21:49:48Z",
   "baseUrl": "https://raw.githubusercontent.com/Meterbit/pixlpal-apps/main/catalogue/",
   "categories": {
     "clocks": "Clocks & Timers",
@@ -27,6 +27,24 @@
     "other": "Other"
   },
   "apps": [
+    {
+      "id": "com.meterbit.airport-weather",
+      "name": "Airport Weather",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "An airport's official weather, decoded: the flight category (VFR, MVFR, IFR, LIFR), wind on a compass with gusts, visibility, clouds, temperature and pressure, the forecast (TAF) ahead, and the raw reports. From aviationweather.gov, free, for up to three airports.",
+      "category": "travel",
+      "appID": "100/13",
+      "api": "0.6",
+      "net": [
+        "aviationweather.gov"
+      ],
+      "size": 117227,
+      "sha256": "e549a0c86359cbe0fe0dab8074413346c9048b021056318e3dacd2b2481e04d6",
+      "package": "packages/com.meterbit.airport-weather/1.0.0.pxa",
+      "icon": "icons/com.meterbit.airport-weather.png",
+      "source": "apps/com.meterbit.airport-weather"
+    },
     {
       "id": "com.meterbit.bell-schedule",
       "name": "Bell Schedule",
@@ -332,6 +350,24 @@
       "source": "apps/com.meterbit.finnhub"
     },
     {
+      "id": "com.meterbit.flight-board",
+      "name": "Flight Board",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "An airport's departures or arrivals on a split-flap board: time, flight, destination, gate and status (on time, delayed, boarding, departed, cancelled). From AeroDataBox, with your own RapidAPI key (its free plan updates the board a few times a day).",
+      "category": "travel",
+      "appID": "100/14",
+      "api": "0.6",
+      "net": [
+        "aerodatabox.p.rapidapi.com"
+      ],
+      "size": 118810,
+      "sha256": "551de10758a43422976fd7bf321e93ab308b9edc5b65c258ed6af997f2a9d608",
+      "package": "packages/com.meterbit.flight-board/1.0.0.pxa",
+      "icon": "icons/com.meterbit.flight-board.png",
+      "source": "apps/com.meterbit.flight-board"
+    },
+    {
       "id": "com.meterbit.focus-list",
       "name": "Focus List",
       "version": "1.1.0",
@@ -364,6 +400,22 @@
       "package": "packages/com.meterbit.fx-markets/1.1.0.pxa",
       "icon": "icons/com.meterbit.fx-markets.png",
       "source": "apps/com.meterbit.fx-markets"
+    },
+    {
+      "id": "com.meterbit.gate-display",
+      "name": "Gate Display",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "A gate or check-in sign for airline staff: the flight, destination, time and gate, and the call in large letters (boarding by group, final call, gate closed, delayed) with a chime at each change. One click moves boarding along. No internet needed.",
+      "category": "travel",
+      "appID": "100/15",
+      "api": "0.6",
+      "net": [],
+      "size": 104550,
+      "sha256": "e6f1d49223daadc2ce74e447dbf301145d6721f2616daceb652f6b74796e794f",
+      "package": "packages/com.meterbit.gate-display/1.0.0.pxa",
+      "icon": "icons/com.meterbit.gate-display.png",
+      "source": "apps/com.meterbit.gate-display"
     },
     {
       "id": "com.meterbit.glucose",
@@ -569,6 +621,24 @@
       "package": "packages/com.meterbit.my-first-computer/1.1.0.pxa",
       "icon": "icons/com.meterbit.my-first-computer.png",
       "source": "apps/com.meterbit.my-first-computer"
+    },
+    {
+      "id": "com.meterbit.my-flight",
+      "name": "My Flight",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Follows your flight from home or the hotel: status, terminal and gate, any delay, when to leave for the airport, the countdown to boarding, the flight's progress in the air, and the baggage belt when it lands. From AeroDataBox, with your own RapidAPI key.",
+      "category": "travel",
+      "appID": "100/16",
+      "api": "0.6",
+      "net": [
+        "aerodatabox.p.rapidapi.com"
+      ],
+      "size": 126187,
+      "sha256": "8ec879ccb5351c5a670304de8baa28de5c39176a673aa5e6016abc574705ac01",
+      "package": "packages/com.meterbit.my-flight/1.0.0.pxa",
+      "icon": "icons/com.meterbit.my-flight.png",
+      "source": "apps/com.meterbit.my-flight"
     },
     {
       "id": "com.meterbit.name-picker",

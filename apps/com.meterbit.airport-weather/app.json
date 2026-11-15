@@ -1,0 +1,15 @@
+{
+  "id": "com.meterbit.airport-weather",
+  "name": "Airport Weather",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "travel",
+  "screen": "full",
+  "kit": "compat",
+  "about": "An airport's official weather, decoded: the flight category (VFR, MVFR, IFR, LIFR), wind on a compass with gusts, visibility, clouds, temperature and pressure, the forecast (TAF) ahead, and the raw reports. From aviationweather.gov, free, for up to three airports.",
+  "net": [
+    "aviationweather.gov"
+  ],
+  "appID": "100/13"
+}

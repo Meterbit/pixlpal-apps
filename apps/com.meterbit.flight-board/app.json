@@ -1,0 +1,15 @@
+{
+  "id": "com.meterbit.flight-board",
+  "name": "Flight Board",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "travel",
+  "screen": "full",
+  "kit": "compat",
+  "about": "An airport's departures or arrivals on a split-flap board: time, flight, destination, gate and status (on time, delayed, boarding, departed, cancelled). From AeroDataBox, with your own RapidAPI key (its free plan updates the board a few times a day).",
+  "net": [
+    "aerodatabox.p.rapidapi.com"
+  ],
+  "appID": "100/14"
+}

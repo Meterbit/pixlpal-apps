@@ -1,0 +1,12 @@
+{
+  "id": "com.meterbit.gate-display",
+  "name": "Gate Display",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "travel",
+  "screen": "full",
+  "kit": "compat",
+  "about": "A gate or check-in sign for airline staff: the flight, destination, time and gate, and the call in large letters (boarding by group, final call, gate closed, delayed) with a chime at each change. One click moves boarding along. No internet needed.",
+  "appID": "100/15"
+}

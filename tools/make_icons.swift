@@ -93,6 +93,26 @@ let icons: [String: (CGContext) -> Void] = [
     circle(c, 295, 315, 12, fill: true)
     arc(c, 250, 175, 30, 225, 315); arc(c, 250, 175, 70, 225, 315); arc(c, 250, 175, 110, 225, 315); circle(c, 250, 175, 10, fill: true)
   },
+  "airwx": { c in   // a windsock on its pole
+    line(c, [(130, 410), (130, 110)])
+    c.move(to: CGPoint(x: 140, y: 130)); c.addLine(to: CGPoint(x: 380, y: 165)); c.addLine(to: CGPoint(x: 380, y: 225)); c.addLine(to: CGPoint(x: 140, y: 260)); c.closePath(); c.strokePath()
+    line(c, [(220, 142), (220, 248)]); line(c, [(300, 153), (300, 237)]); line(c, [(90, 410), (170, 410)])
+  },
+  "board": { c in   // a board of rows
+    c.addPath(CGPath(roundedRect: CGRect(x: 80, y: 120, width: 340, height: 260), cornerWidth: 16, cornerHeight: 16, transform: nil)); c.strokePath()
+    for y: CGFloat in [180, 245, 310] { line(c, [(120, y), (180, y)]); line(c, [(215, y), (330, y)]); circle(c, 375, y, 10, fill: true) }
+  },
+  "myflight": { c in   // a plane on its route
+    c.move(to: CGPoint(x: 110, y: 380)); c.addCurve(to: CGPoint(x: 390, y: 380), control1: CGPoint(x: 150, y: 150), control2: CGPoint(x: 350, y: 150)); c.setLineDash(phase: 0, lengths: [2, 34]); c.strokePath(); c.setLineDash(phase: 0, lengths: [])
+    circle(c, 110, 385, 18, fill: true); circle(c, 390, 385, 18, fill: true)
+    line(c, [(205, 230), (305, 180)]); line(c, [(250, 208), (225, 140)]); line(c, [(250, 208), (290, 250)]); line(c, [(212, 226), (195, 205)])
+  },
+  "gate": { c in   // a gate sign, with a plane taking off
+    c.addPath(CGPath(roundedRect: CGRect(x: 90, y: 100, width: 320, height: 170), cornerWidth: 18, cornerHeight: 18, transform: nil)); c.strokePath()
+    line(c, [(250, 270), (250, 400)]); line(c, [(190, 400), (310, 400)])
+    line(c, [(150, 215), (290, 160)]); line(c, [(225, 186), (200, 130)]); line(c, [(225, 186), (255, 235)]); line(c, [(160, 211), (150, 190)])
+    line(c, [(310, 160), (360, 160)]); line(c, [(310, 210), (350, 210)])
+  },
 ]
 let out = CommandLine.arguments[1]
 for (name, draw) in icons { save("\(out)/\(name)_128.png", size: 128, draw); save("\(out)/\(name)_500.png", size: 500, draw) }

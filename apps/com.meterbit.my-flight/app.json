@@ -1,0 +1,15 @@
+{
+  "id": "com.meterbit.my-flight",
+  "name": "My Flight",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "travel",
+  "screen": "full",
+  "kit": "compat",
+  "about": "Follows your flight from home or the hotel: status, terminal and gate, any delay, when to leave for the airport, the countdown to boarding, the flight's progress in the air, and the baggage belt when it lands. From AeroDataBox, with your own RapidAPI key.",
+  "net": [
+    "aerodatabox.p.rapidapi.com"
+  ],
+  "appID": "100/16"
+}
