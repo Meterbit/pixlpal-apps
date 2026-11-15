@@ -1,0 +1,12 @@
+{
+  "id": "com.meterbit.bell-schedule",
+  "name": "Bell Schedule",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "learning",
+  "screen": "full",
+  "kit": "compat",
+  "about": "The school day at a glance: the lesson now with the time left, what comes next, and how long until break, lunch or home time. A timetable for each weekday, with a chime at each bell.",
+  "appID": "100/5"
+}

@@ -1,0 +1,12 @@
+{
+  "id": "com.meterbit.now-next",
+  "name": "Now & Next",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "learning",
+  "screen": "full",
+  "kit": "compat",
+  "about": "A picture routine for young pupils and special-needs classrooms: what we are doing now, in a large picture with a bar of the time left, and what comes next. Calm, clear changes from one activity to the next.",
+  "appID": "100/10"
+}

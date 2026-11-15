@@ -52,6 +52,37 @@ let icons: [String: (CGContext) -> Void] = [
     for a in stride(from: 180.0, through: 360.0, by: 30.0){ let r = a * .pi / 180; line(c, [(250 + 118 * cos(r), 320 + 118 * sin(r)), (250 + 96 * cos(r), 320 + 96 * sin(r))]) }
     line(c, [(250, 320), (314, 256)]); circle(c, 250, 320, 22, fill: true); line(c, [(130, 390), (370, 390)])
   },
+  "bell": { c in   // a school bell
+    c.move(to: CGPoint(x: 140, y: 340)); c.addCurve(to: CGPoint(x: 170, y: 190), control1: CGPoint(x: 165, y: 310), control2: CGPoint(x: 160, y: 240))
+    c.addCurve(to: CGPoint(x: 330, y: 190), control1: CGPoint(x: 185, y: 110), control2: CGPoint(x: 315, y: 110))
+    c.addCurve(to: CGPoint(x: 360, y: 340), control1: CGPoint(x: 340, y: 240), control2: CGPoint(x: 335, y: 310)); c.strokePath()
+    line(c, [(115, 340), (385, 340)]); line(c, [(250, 120), (250, 95)]); circle(c, 250, 382, 26, fill: true)
+  },
+  "picker": { c in   // a name card on a reel, arrows above and below
+    c.addPath(CGPath(roundedRect: CGRect(x: 100, y: 195, width: 300, height: 110), cornerWidth: 24, cornerHeight: 24, transform: nil)); c.strokePath()
+    line(c, [(160, 250), (340, 250)]); line(c, [(200, 140), (250, 95), (300, 140)]); line(c, [(200, 360), (250, 405), (300, 360)])
+  },
+  "points": { c in   // podium bars, the leader crowned
+    line(c, [(100, 400), (400, 400)])
+    c.stroke(CGRect(x: 120, y: 290, width: 70, height: 110)); c.stroke(CGRect(x: 215, y: 210, width: 70, height: 190)); c.stroke(CGRect(x: 310, y: 330, width: 70, height: 70))
+    line(c, [(215, 175), (215, 120), (235, 145), (250, 110), (265, 145), (285, 120), (285, 175), (215, 175)])
+  },
+  "exam": { c in   // a paper and pencil, and a stopwatch
+    c.addPath(CGPath(roundedRect: CGRect(x: 90, y: 110, width: 190, height: 260), cornerWidth: 16, cornerHeight: 16, transform: nil)); c.strokePath()
+    line(c, [(130, 170), (240, 170)]); line(c, [(130, 220), (240, 220)]); line(c, [(130, 270), (200, 270)])
+    circle(c, 330, 320, 70); line(c, [(330, 320), (330, 280)]); line(c, [(330, 320), (360, 340)]); line(c, [(310, 235), (350, 235)])
+  },
+  "nownext": { c in   // now, an arrow, next
+    c.addPath(CGPath(roundedRect: CGRect(x: 70, y: 140, width: 160, height: 220), cornerWidth: 20, cornerHeight: 20, transform: nil)); c.strokePath()
+    circle(c, 150, 220, 40, fill: true); line(c, [(110, 310), (190, 310)])
+    c.addPath(CGPath(roundedRect: CGRect(x: 320, y: 180, width: 110, height: 150), cornerWidth: 16, cornerHeight: 16, transform: nil)); c.strokePath()
+    line(c, [(255, 255), (300, 255)]); line(c, [(285, 235), (305, 255), (285, 275)])
+  },
+  "brainbreak": { c in   // a figure doing a star jump
+    circle(c, 250, 130, 34); line(c, [(250, 168), (250, 290)])
+    line(c, [(250, 200), (150, 120)]); line(c, [(250, 200), (350, 120)]); line(c, [(250, 290), (165, 400)]); line(c, [(250, 290), (335, 400)])
+    line(c, [(110, 240), (140, 250)]); line(c, [(390, 240), (360, 250)])
+  },
 ]
 let out = CommandLine.arguments[1]
 for (name, draw) in icons { save("\(out)/\(name)_128.png", size: 128, draw); save("\(out)/\(name)_500.png", size: 500, draw) }

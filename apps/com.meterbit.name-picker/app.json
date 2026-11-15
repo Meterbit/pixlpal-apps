@@ -1,0 +1,12 @@
+{
+  "id": "com.meterbit.name-picker",
+  "name": "Name Picker",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "learning",
+  "screen": "full",
+  "kit": "compat",
+  "about": "Picks who answers next: the class's names spin and land on one, and nobody is picked twice until everyone has had a turn. It also splits the class into random groups or pairs.",
+  "appID": "100/9"
+}

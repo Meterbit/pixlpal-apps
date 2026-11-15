@@ -1,0 +1,12 @@
+{
+  "id": "com.meterbit.exam-clock",
+  "name": "Exam Clock",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "learning",
+  "screen": "full",
+  "kit": "compat",
+  "about": "For tests and exams: the time left in large figures, the start and finish times, reading time, warnings at 30, 15 and 5 minutes, extra time for those who have it, and the room's rules in turn. Pause it if the exam is interrupted.",
+  "appID": "100/7"
+}

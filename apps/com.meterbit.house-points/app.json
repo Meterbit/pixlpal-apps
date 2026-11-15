@@ -1,0 +1,12 @@
+{
+  "id": "com.meterbit.house-points",
+  "name": "House Points",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "learning",
+  "screen": "full",
+  "kit": "compat",
+  "about": "A live scoreboard for houses or teams: each house's colour bar and total, the leader crowned, and a cheer whenever points are given. Give points from the phone or with the knob; this week's points and the term's are kept.",
+  "appID": "100/8"
+}

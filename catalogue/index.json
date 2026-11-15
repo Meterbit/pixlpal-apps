@@ -1,7 +1,7 @@
 {
   "format": 1,
-  "sequence": 7,
-  "generated": "2026-11-15T10:29:22Z",
+  "sequence": 8,
+  "generated": "2026-11-15T13:17:39Z",
   "baseUrl": "https://raw.githubusercontent.com/Meterbit/pixlpal-apps/main/catalogue/",
   "categories": {
     "clocks": "Clocks & Timers",
@@ -28,6 +28,22 @@
   },
   "apps": [
     {
+      "id": "com.meterbit.bell-schedule",
+      "name": "Bell Schedule",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "The school day at a glance: the lesson now with the time left, what comes next, and how long until break, lunch or home time. A timetable for each weekday, with a chime at each bell.",
+      "category": "learning",
+      "appID": "100/5",
+      "api": "0.6",
+      "net": [],
+      "size": 99484,
+      "sha256": "7c4b23eb179c54d3eb739fb24633ae1e5ec3e7c77990a1443c06890c82a72dba",
+      "package": "packages/com.meterbit.bell-schedule/1.0.0.pxa",
+      "icon": "icons/com.meterbit.bell-schedule.png",
+      "source": "apps/com.meterbit.bell-schedule"
+    },
+    {
       "id": "com.meterbit.big-clock",
       "name": "Big Clock",
       "version": "1.0.0",
@@ -42,6 +58,22 @@
       "package": "packages/com.meterbit.big-clock/1.0.0.pxa",
       "icon": "icons/com.meterbit.big-clock.png",
       "source": "apps/com.meterbit.big-clock"
+    },
+    {
+      "id": "com.meterbit.brain-break",
+      "name": "Brain Break",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "A short movement break when the class needs one: a moving figure shows each activity (star jumps, stretches, dance and freeze) with a countdown, and the break ends with slow breathing. Seated activities for small rooms.",
+      "category": "learning",
+      "appID": "100/6",
+      "api": "0.6",
+      "net": [],
+      "size": 105174,
+      "sha256": "f3c214f5e43515f7690cd73a06f74b519ec1cd863313e16c40da8d29d39bf53a",
+      "package": "packages/com.meterbit.brain-break/1.0.0.pxa",
+      "icon": "icons/com.meterbit.brain-break.png",
+      "source": "apps/com.meterbit.brain-break"
     },
     {
       "id": "com.meterbit.build-status",
@@ -244,6 +276,22 @@
       "source": "apps/com.meterbit.daily-bible"
     },
     {
+      "id": "com.meterbit.exam-clock",
+      "name": "Exam Clock",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "For tests and exams: the time left in large figures, the start and finish times, reading time, warnings at 30, 15 and 5 minutes, extra time for those who have it, and the room's rules in turn. Pause it if the exam is interrupted.",
+      "category": "learning",
+      "appID": "100/7",
+      "api": "0.6",
+      "net": [],
+      "size": 106384,
+      "sha256": "021e8782126e4f43fe6c2bb6ab2bd66b002ac427e0595ba9518f895cac7a9751",
+      "package": "packages/com.meterbit.exam-clock/1.0.0.pxa",
+      "icon": "icons/com.meterbit.exam-clock.png",
+      "source": "apps/com.meterbit.exam-clock"
+    },
+    {
       "id": "com.meterbit.finnhub",
       "name": "Finnhub Stocks",
       "version": "1.1.0",
@@ -360,6 +408,22 @@
       "source": "apps/com.meterbit.google-weather"
     },
     {
+      "id": "com.meterbit.house-points",
+      "name": "House Points",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "A live scoreboard for houses or teams: each house's colour bar and total, the leader crowned, and a cheer whenever points are given. Give points from the phone or with the knob; this week's points and the term's are kept.",
+      "category": "learning",
+      "appID": "100/8",
+      "api": "0.6",
+      "net": [],
+      "size": 89738,
+      "sha256": "899a22113cf7f440efc504288ce4702d666cfb9e91fdfa199c1d38b749e65db6",
+      "package": "packages/com.meterbit.house-points/1.0.0.pxa",
+      "icon": "icons/com.meterbit.house-points.png",
+      "source": "apps/com.meterbit.house-points"
+    },
+    {
       "id": "com.meterbit.kids-learning",
       "name": "Kids Learning",
       "version": "1.1.0",
@@ -470,6 +534,22 @@
       "source": "apps/com.meterbit.my-first-computer"
     },
     {
+      "id": "com.meterbit.name-picker",
+      "name": "Name Picker",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Picks who answers next: the class's names spin and land on one, and nobody is picked twice until everyone has had a turn. It also splits the class into random groups or pairs.",
+      "category": "learning",
+      "appID": "100/9",
+      "api": "0.6",
+      "net": [],
+      "size": 109140,
+      "sha256": "dfa15753b2acda1eba3649a3487cc10e6f24da26e4546d3483cec089d5ab7a3d",
+      "package": "packages/com.meterbit.name-picker/1.0.0.pxa",
+      "icon": "icons/com.meterbit.name-picker.png",
+      "source": "apps/com.meterbit.name-picker"
+    },
+    {
       "id": "com.meterbit.news-api",
       "name": "News API",
       "version": "1.1.0",
@@ -504,6 +584,22 @@
       "package": "packages/com.meterbit.ngx-market/1.1.0.pxa",
       "icon": "icons/com.meterbit.ngx-market.png",
       "source": "apps/com.meterbit.ngx-market"
+    },
+    {
+      "id": "com.meterbit.now-next",
+      "name": "Now & Next",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "A picture routine for young pupils and special-needs classrooms: what we are doing now, in a large picture with a bar of the time left, and what comes next. Calm, clear changes from one activity to the next.",
+      "category": "learning",
+      "appID": "100/10",
+      "api": "0.6",
+      "net": [],
+      "size": 98955,
+      "sha256": "d6edbc775cdc7c8b9c5212eb8171414fa212436515b8294f7e4c875ee022613e",
+      "package": "packages/com.meterbit.now-next/1.0.0.pxa",
+      "icon": "icons/com.meterbit.now-next.png",
+      "source": "apps/com.meterbit.now-next"
     },
     {
       "id": "com.meterbit.oil-price",
