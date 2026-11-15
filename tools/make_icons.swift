@@ -83,6 +83,16 @@ let icons: [String: (CGContext) -> Void] = [
     line(c, [(250, 200), (150, 120)]); line(c, [(250, 200), (350, 120)]); line(c, [(250, 290), (165, 400)]); line(c, [(250, 290), (335, 400)])
     line(c, [(110, 240), (140, 250)]); line(c, [(390, 240), (360, 250)])
   },
+  "events": { c in   // a signpost
+    line(c, [(250, 110), (250, 410)]); line(c, [(190, 410), (310, 410)])
+    line(c, [(130, 140), (330, 140), (370, 175), (330, 210), (130, 210), (130, 140)])
+    line(c, [(370, 245), (170, 245), (130, 280), (170, 315), (370, 315), (370, 245)])
+  },
+  "welcome": { c in   // a door, and the Wi-Fi above it
+    c.addPath(CGPath(roundedRect: CGRect(x: 170, y: 200, width: 160, height: 220), cornerWidth: 10, cornerHeight: 10, transform: nil)); c.strokePath()
+    circle(c, 295, 315, 12, fill: true)
+    arc(c, 250, 175, 30, 225, 315); arc(c, 250, 175, 70, 225, 315); arc(c, 250, 175, 110, 225, 315); circle(c, 250, 175, 10, fill: true)
+  },
 ]
 let out = CommandLine.arguments[1]
 for (name, draw) in icons { save("\(out)/\(name)_128.png", size: 128, draw); save("\(out)/\(name)_500.png", size: 500, draw) }

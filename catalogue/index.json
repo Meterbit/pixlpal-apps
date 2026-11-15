@@ -1,7 +1,7 @@
 {
   "format": 1,
-  "sequence": 8,
-  "generated": "2026-11-15T13:17:39Z",
+  "sequence": 9,
+  "generated": "2026-11-15T15:40:23Z",
   "baseUrl": "https://raw.githubusercontent.com/Meterbit/pixlpal-apps/main/catalogue/",
   "categories": {
     "clocks": "Clocks & Timers",
@@ -276,6 +276,27 @@
       "source": "apps/com.meterbit.daily-bible"
     },
     {
+      "id": "com.meterbit.events-directory",
+      "name": "Events Directory",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Today's events, conferences and weddings for a hotel or venue lobby: each with its time, room and an arrow showing the way, what's on now marked. From the events calendar (an iCal link) or events typed on the phone.",
+      "category": "travel",
+      "appID": "100/11",
+      "api": "0.6",
+      "net": [
+        "calendar.google.com",
+        "outlook.office365.com",
+        "outlook.live.com"
+      ],
+      "size": 128260,
+      "sha256": "d0e3d9a29e8b7da8d2effabd561fc8bcb41ce51d9cbd0ff7f1b0a38c100b5286",
+      "package": "packages/com.meterbit.events-directory/1.0.0.pxa",
+      "icon": "icons/com.meterbit.events-directory.png",
+      "source": "apps/com.meterbit.events-directory",
+      "ownerNet": true
+    },
+    {
       "id": "com.meterbit.exam-clock",
       "name": "Exam Clock",
       "version": "1.0.0",
@@ -406,6 +427,22 @@
       "package": "packages/com.meterbit.google-weather/1.1.0.pxa",
       "icon": "icons/com.meterbit.google-weather.png",
       "source": "apps/com.meterbit.google-weather"
+    },
+    {
+      "id": "com.meterbit.guest-welcome",
+      "name": "Guest Welcome",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "A personal welcome in the guest's room: their name and room number, a Wi-Fi code their phone can scan to join, checkout time, breakfast hours and the hotel's message of the day. It dims to a quiet clock at night.",
+      "category": "travel",
+      "appID": "100/12",
+      "api": "0.6",
+      "net": [],
+      "size": 112141,
+      "sha256": "422e1aa5a698b19a0589ebe86343e74a329dbb1da0de363ff85cf7b2e83a20e5",
+      "package": "packages/com.meterbit.guest-welcome/1.0.0.pxa",
+      "icon": "icons/com.meterbit.guest-welcome.png",
+      "source": "apps/com.meterbit.guest-welcome"
     },
     {
       "id": "com.meterbit.house-points",

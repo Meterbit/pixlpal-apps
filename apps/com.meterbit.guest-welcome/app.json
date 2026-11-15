@@ -1,0 +1,12 @@
+{
+  "id": "com.meterbit.guest-welcome",
+  "name": "Guest Welcome",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "travel",
+  "screen": "full",
+  "kit": "compat",
+  "about": "A personal welcome in the guest's room: their name and room number, a Wi-Fi code their phone can scan to join, checkout time, breakfast hours and the hotel's message of the day. It dims to a quiet clock at night.",
+  "appID": "100/12"
+}
