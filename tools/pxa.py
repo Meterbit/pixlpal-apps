@@ -27,8 +27,8 @@ REQUIRED = ("id", "name", "version", "author", "api")
 MAX_WASM = 512 * 1024
 # The device keeps these in fixed fields (mtb_app_package.h): longer ones would be cut.
 LIMITS = {"id": 47, "name": 39, "version": 15, "author": 31}
-HOST_FORMAT = re.compile(r"^(\*\.)?[a-z0-9-]+(\.[a-z0-9-]+)+$")    # api.example.com, *.example.org
-API_VERSION = "0.4"                                                  # the newest Pixlpal App API
+HOST_FORMAT = re.compile(r"^(http://)?(\*\.)?[a-z0-9-]+(\.[a-z0-9-]+)+$")    # api.example.com, *.example.org, http://plain.example.net
+API_VERSION = "0.5"                                                  # the newest Pixlpal App API
 ID_FORMAT = re.compile(r"^[a-z0-9]+(\.[a-z0-9][a-z0-9-]*)+$")      # com.example.weather
 VERSION_FORMAT = re.compile(r"^\d+(\.\d+){0,3}$")                 # 1.0.0
 # "category": where the phone app lists the app, beside the built-in apps of that category (the phone's
@@ -104,12 +104,20 @@ def manifest_problems(m):
         out.append(f"\"api\" is the Pixlpal App API version the app was written for, up to \"{API_VERSION}\"")
     if "net" in m:
         net = m["net"]
-        if not isinstance(net, list) or not 1 <= len(net) <= 8 or not all(isinstance(h, str) and HOST_FORMAT.match(h) for h in net):
-            out.append("\"net\" lists the hosts the app reaches (1 to 8, lower case): [\"api.example.com\", \"*.example.org\"]")
-        elif len(",".join(net)) > 250:
-            out.append("\"net\" is too long (250 characters in all)")
-        elif "net" in m and m.get("api") and version_key(m["api"]) < version_key("0.3"):
+        if not isinstance(net, list) or not 1 <= len(net) <= 24 or not all(isinstance(h, str) and HOST_FORMAT.match(h) for h in net):
+            out.append("\"net\" lists the hosts the app reaches (1 to 24, lower case): [\"api.example.com\", \"*.example.org\"], "
+                       "or \"http://host\" for one with no https")
+        elif len(",".join(net)) > 500:
+            out.append("\"net\" is too long (500 characters in all)")
+        elif m.get("api") and version_key(m["api"]) < version_key("0.3"):
             out.append("\"net\" needs \"api\": \"0.3\" or newer")
+        elif m.get("api") and version_key(m["api"]) < version_key("0.5") and (any(h.startswith("http://") for h in net) or len(net) > 8):
+            out.append("\"http://\" hosts, and more than 8 hosts, need \"api\": \"0.5\" or newer")
+    if "ownerNet" in m:
+        if not isinstance(m["ownerNet"], bool):
+            out.append("\"ownerNet\" is true (the owner may let the app reach sites they choose) or false")
+        elif m.get("api") and version_key(m["api"]) < version_key("0.5"):
+            out.append("\"ownerNet\" needs \"api\": \"0.5\" or newer")
     if "appID" in m:
         g, _, s = str(m["appID"]).partition("/")
         # 100-199: catalogue apps. Below 99 (not 11): a built-in app moved out of the firmware keeps its number.

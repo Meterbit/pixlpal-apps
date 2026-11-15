@@ -25,6 +25,9 @@ with the C and C++ libraries, this layer (`include/`, `src/`) and ArduinoJson.
 | USB keyboard and mouse (`mtb_Usb_Input_Read`...) | A queue `pxl_input` fills |
 | Brightness, opening other apps, `statusBarNotif`, `Mtb_ScrollText_t`, `Mtb_FixedText_t` | `pxl_brightness*`, `pxl_open_app`, `pxl_status_text`; the ticker and text widget drawn by the layer |
 | FreeRTOS queues, semaphores, critical sections | Work within one thread (a queue wait yields) |
+| FreeRTOS software timers (`xTimerCreate`...) | Their callbacks run at the app's waits once due |
+| `mtb_kit_image` (`mtb_Kit_Draw_Svg`, `_Png`, `_Image`, `mtb_Kit_Decode_Image`), `mtb_Draw_Local_Png` | Pixlpal's decoders (`pxl_image`, `pxl_image_pixels`, API 0.5) |
+| `mtb_Download_Github_File_To_SPIFFS` / `_To_PSRAM` | A public file from raw.githubusercontent.com (in `net`), into the app's files or memory |
 
 ## One thread
 
@@ -40,9 +43,11 @@ An installed app is one thread, so other tasks don't run beside it:
 ## Not here
 
 - **Raw audio** (`mtb_Audio_Pcm_*`): `mtb_Audio_Pcm_Begin` returns false. Play notes or speech instead.
-- **JPEG decoding:** `mtb_Decode_Jpg_RGB888` fails. PNG (lodepng) and SVG (nanosvg) work in the app.
+- **Raw JPEG pixels:** `mtb_Decode_Jpg_RGB888` fails. Draw a JPEG (or PNG, SVG) with `mtb_Kit_Draw_Image`, or get
+  its pixels fitted to a box with `mtb_Kit_Decode_Image`: Pixlpal decodes them.
 - **Response headers** from HTTP, and methods other than GET and POST.
-- **Hosts the owner chooses** (a custom ntfy server, any RSS feed): only app.json's `net` hosts.
+- **Hosts the owner types in freely** without `"ownerNet": true`. With it, the phone app asks the owner before an app
+  reaches a new site; a request to a site not allowed yet returns `PXL_HTTP_NOT_ALLOWED` as its code.
 - **The device's shared files** (the GIFs on Pixlpal, the microSD card).
 
 ## Porting a firmware app

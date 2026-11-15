@@ -1,0 +1,20 @@
+{
+  "id": "com.meterbit.catholic-daily",
+  "name": "Catholic Daily",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.5",
+  "appID": "13/2",
+  "category": "faith",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "Today's liturgical day from the General Roman Calendar in its colour, the Angelus (Regina Caeli in Eastertide), the Hour of Mercy, the Rosary's mysteries of the day and a Douay-Rheims verse.",
+  "net": [
+    "http://calapi.inadiutorium.cz",
+    "bible-api.com"
+  ],
+  "migrateNvs": [
+    "cthSettings",
+    "cthVerse"
+  ]
+}

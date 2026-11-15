@@ -1,8 +1,8 @@
 /**
  * @file pixlpal.h
- * @brief The Pixlpal App API for WebAssembly apps, draft version 0.4. An app includes this file only; it reaches
+ * @brief The Pixlpal App API for WebAssembly apps, draft version 0.5. An app includes this file only; it reaches
  *        Pixlpal through nothing else. Set "api" in app.json to the version whose additions it uses (marked "0.3",
- *        "0.4" below); apps written for an older version run unchanged.
+ *        "0.4", "0.5" below); apps written for an older version run unchanged.
  *
  * The screen is 256 x 128 pixels. Colours are RGB565 (PXL_RGB(r, g, b) makes one). Coordinates outside the screen
  * are clipped.
@@ -191,6 +191,13 @@ PXL_IMPORT("phone_search") void pxl_phone_search(const char* searchId, const cha
 /* The internet (0.3). An app reaches only the hosts its app.json lists in "net" (["api.example.com",
  * "*.example.org"]), over https. Owners see that list in the App Store, and Meterbit reviews it.
  *
+ * (0.5) "http://host" in "net": that host over plain http too, for a service that has no https (the App Store tells
+ * owners it isn't encrypted). POST is https only. "ownerNet": true: the app may also reach sites its owner chooses,
+ * such as an RSS feed or a site to watch. When a phone command of the app's carries an address the app may not reach
+ * yet, the phone app asks the owner, and Pixlpal keeps the sites they allow (up to 16) where the app can't change
+ * them; the owner sees and removes them on the app's page in the App Store. A request to a site not allowed (yet)
+ * returns PXL_HTTP_NOT_ALLOWED.
+ *
  * pxl_http_get starts a request and returns at once: its number (1 and up), or a reason it didn't start (PXL_HTTP_...).
  * Pixlpal fetches the answer while the app keeps drawing, puts it in buffer, and then calls the app's
  * pxl_http_done(id, status, length). status is the HTTP status (200...), PXL_HTTP_FAILED (no answer) or
@@ -211,6 +218,22 @@ static inline int pxl_http_get(const char* url, const char* headers, void* buffe
 static inline int pxl_http_post(const char* url, const char* headers, const void* body, int bodyBytes, void* buffer, int bufferSize){
     return pxl_http_request_raw(1, url, headers, body, bodyBytes, buffer, bufferSize);
 }
+
+/* Pictures (0.5): PNG, JPEG (baseline) or SVG bytes, such as an internet answer or a file, decoded by Pixlpal. A PNG
+ * or JPEG is at most 512 x 512 pixels, any of them at most 256 KB. A picture is fitted into the box: a PNG or JPEG
+ * enlarged by the largest whole factor that fits (pixel art stays sharp) or reduced by the smallest whole divisor,
+ * an SVG drawn at the largest size that fits; centred, its shape kept. The results are width << 16 | height (what
+ * was drawn), or 0 if it isn't a picture Pixlpal can decode. */
+/** Draws a picture fitted into the box (at most 512 x 256), over background where it is transparent. */
+PXL_IMPORT("image")        int pxl_image(int x, int y, int w, int h, const void* data, int bytes, int background);
+/** The picture's own size, from its header (an SVG's from its markup). */
+PXL_IMPORT("image_size")   int pxl_image_size(const void* data, int bytes);
+/** The picture fitted into a box of w x h (at most 256 x 256) as pxl_image fits it, as RGBA rows (4 bytes a pixel:
+ *  red, green, blue, alpha) into out, not drawn: for an app that keeps it, or blends it over what it draws. 0 if
+ *  out is smaller than its width * height * 4 bytes. */
+PXL_IMPORT("image_pixels") int pxl_image_pixels(const void* data, int bytes, int w, int h, void* out, int outBytes);
+static inline int pxl_image_w(int result){ return result >> 16; }
+static inline int pxl_image_h(int result){ return result & 0xFFFF; }
 
 /* A line in Pixlpal's log (the serial monitor). */
 PXL_IMPORT("log")       void pxl_log(const char* text);

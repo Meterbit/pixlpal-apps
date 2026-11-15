@@ -1,0 +1,16 @@
+{
+  "id": "com.meterbit.uptime-monitor",
+  "name": "Uptime Monitor",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.5",
+  "appID": "22/0",
+  "category": "maker",
+  "screen": "full",
+  "kit": "compat",
+  "about": "Pixlpal checks up to eight websites or web services every few minutes: up or down, how fast they answer, and how often they were up. When one goes down, Pixlpal shows it in red and sounds an alarm.",
+  "ownerNet": true,
+  "migrateNvs": [
+    "uptSave"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "com.meterbit.rss-reader",
+  "name": "RSS Reader",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.5",
+  "appID": "1/1",
+  "category": "news",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "Headlines from up to seven news feeds you choose: BBC, Al Jazeera, NPR, the Guardian, tech and Nigerian news, or any RSS or Atom feed by its address.",
+  "net": [
+    "feeds.arstechnica.com",
+    "feeds.bbci.co.uk",
+    "feeds.bloomberg.com",
+    "feeds.npr.org",
+    "feeds.skynews.com",
+    "hnrss.org",
+    "punchng.com",
+    "rss.nytimes.com",
+    "techcrunch.com",
+    "www.aljazeera.com",
+    "www.cnbc.com",
+    "www.engadget.com",
+    "www.espn.com",
+    "www.nasa.gov",
+    "www.premiumtimesng.com",
+    "www.sciencedaily.com",
+    "www.theguardian.com",
+    "www.theverge.com",
+    "www.vanguardngr.com",
+    "www.wired.com"
+  ],
+  "ownerNet": true,
+  "migrateNvs": [
+    "rssCfg"
+  ]
+}

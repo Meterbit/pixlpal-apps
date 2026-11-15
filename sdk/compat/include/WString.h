@@ -1,5 +1,6 @@
 // Pixlpal compat: the few parts of Arduino's String the firmware's apps use (building JSON text to send).
 #pragma once
+#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -37,6 +38,13 @@ public:
     String substring(size_t from, size_t to = (size_t)-1) const { if (to > n_) to = n_; if (from > to) from = to; String r; r.set(c_str() + from, to - from); return r; }
     long toInt() const { return strtol(c_str(), nullptr, 10); }
     float toFloat() const { return strtof(c_str(), nullptr); }
+    bool reserve(size_t){ return true; }
+    void trim(){
+        size_t a = 0, b = n_;
+        while (a < b && isspace((unsigned char)s_[a])) a++;
+        while (b > a && isspace((unsigned char)s_[b - 1])) b--;
+        String t; t.set(c_str() + a, b - a); *this = t;
+    }
 };
 inline String operator+(const String& a, const String& b){ String r(a); r += b; return r; }
 inline String operator+(const String& a, const char* b){ String r(a); r += b; return r; }

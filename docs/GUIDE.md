@@ -335,6 +335,16 @@ An app can fetch data from the internet (0.3): weather, prices, scores, news. It
 need it. Owners see the list on the app's page in the App Store, and the review checks it. A redirect to a host
 that isn't listed is not followed.
 
+- **A service with no https** (0.5): list it as `"http://calendar.example.cz"`. The app may then reach that host over
+  plain http too. The App Store tells owners it isn't encrypted, and the review asks why the service needs it. POST
+  is https only.
+- **Sites the owner chooses** (0.5): with `"ownerNet": true`, the app may also reach the sites its owner allows, such
+  as an RSS feed or a website to watch. When a command from your phone page carries an address your app can't reach
+  yet (a `textField` value, a picked search result), the phone app asks the owner first, and Pixlpal keeps the sites
+  they allow (up to 16) where your app can't change them. Owners see and take them back on the app's page in the App
+  Store. Until a site is allowed, a request to it returns `PXL_HTTP_NOT_ALLOWED`: tell the owner, rather than
+  reporting the site down. Keep the hosts your app always uses (its ready-made feeds) in `net`.
+
 A request doesn't stop your app: it returns at once, and Pixlpal calls your `pxl_http_done` when the answer is in.
 
 ```c
@@ -437,6 +447,14 @@ along the status bar of a `"screen": "statusbar"` app). `PXL_IN_CLICK` carries h
 **The phone (0.4)**: `pxl_phone_data` (the datasets list widgets name), `pxl_phone_search` (a searchPicker's results),
 `pxl_phone_send` (a message of your own on your app's route).
 
+**Pictures (0.5)**: Pixlpal decodes PNG, JPEG (baseline) and SVG for you, from bytes in your app's memory (an
+internet answer, a file): `pxl_image(x, y, w, h, data, bytes, background)` draws a picture fitted into a box, centred,
+over `background` where it is transparent; `pxl_image_size(data, bytes)` gives its own size; and
+`pxl_image_pixels(data, bytes, w, h, out, outBytes)` fits it into a box as RGBA pixels (4 bytes each) without
+drawing, for an app that keeps it (a cache of logos) or blends it itself. Each returns `width << 16 | height`
+(`pxl_image_w`, `pxl_image_h`), or 0. A PNG or JPEG is scaled by whole steps, so pixel art stays sharp; an SVG is drawn
+at the largest size that fits. Pictures up to 256 KB, PNG and JPEG up to 512 x 512 pixels.
+
 **Apps written for Pixlpal's firmware** build almost unchanged with `"kit": "compat"`: the compat layer provides the
 firmware's app framework on the API. [sdk/compat/README.md](../sdk/compat/README.md) explains it; the catalogue's
 `com.meterbit.*` apps are all built that way.
@@ -459,14 +477,16 @@ firmware's app framework on the API. [sdk/compat/README.md](../sdk/compat/README
 | `name` | yes | What owners see (at most 39 bytes) |
 | `version` | yes | Numbers and dots, like `1.2.0`. Raise it with every change you publish. |
 | `author` | yes | You or your team (at most 31 bytes) |
-| `api` | yes | The Pixlpal App API version the app was written for: `0.4` (or older, for an app that uses nothing newer). A Pixlpal with older software refuses an app that needs a newer API, and asks its owner to update. |
+| `api` | yes | The Pixlpal App API version the app was written for: `0.5` (or older, for an app that uses nothing newer). A Pixlpal with older software refuses an app that needs a newer API, and asks its owner to update. |
 | `about` | catalogue | One or two sentences on what it does |
 | `category` | catalogue | Where the phone app lists it, beside the built-in apps of that category: `clocks`, `calendars`, `news`, `weather`, `sports`, `audio`, `kids`, `games`, `productivity`, `ai`, `notifications`, `markets`, `art`, `maker`, `home`, `learning`, `travel`, `faith`, `health`, `tools` or `other` (only under Installed on Pixlpal). Personal apps can have one too. |
-| `net` | no | The hosts the app reaches over the internet, at most 8: `["api.example.com", "*.example.org"]` |
+| `net` | no | The hosts the app reaches over the internet: `["api.example.com", "*.example.org"]`, and (0.5) `"http://host"` for one with no https. Up to 8 (24 with `api` 0.5). |
+| `ownerNet` | no | `true` (0.5): it may also reach the sites its owner allows on the phone ([The internet](#the-internet)) |
 | `screen` | no | `"full"` (the default) or `"statusbar"`: the app runs below Pixlpal's status bar (rows 10 and down are its) |
 | `libc` | no | `true`: a C app built with the C library (C++ apps always are) |
 | `kit` | no | `"compat"`: built with the compat layer, the firmware's app framework |
 | `dataGroup` | no | Catalogue apps: a folder shared with your other apps in the group, `"com.example.games"`, under your own id's developer part |
+| `migrateNvs`, `sharedNvs` | no | Meterbit's apps moved out of the firmware: the settings keys they kept, copied into their files when installed (`migrateNvs`), and those kept in their group's folder (`sharedNvs`) |
 | `appID` | no | Given by Meterbit to catalogue apps (100/0 to 199/255). Leave it out. |
 
 Ready to share your app? See [CONTRIBUTING.md](../CONTRIBUTING.md).

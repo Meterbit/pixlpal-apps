@@ -1,0 +1,21 @@
+{
+  "id": "com.meterbit.coincap",
+  "name": "CoinCap Crypto",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.5",
+  "appID": "4/1",
+  "category": "markets",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "Your crypto watchlist from CoinCap: prices, 24-hour change, a 7-day chart, market numbers, supply, the top gainers and crypto news, paced to your CoinCap plan's credits. Needs your CoinCap key.",
+  "net": [
+    "rest.coincap.io",
+    "raw.githubusercontent.com"
+  ],
+  "migrateNvs": [
+    "coinCapCfg",
+    "cryptoCfg",
+    "cryptoCredits"
+  ]
+}

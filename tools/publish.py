@@ -257,13 +257,15 @@ def publish(key, quiet=False):
         if os.path.exists(os.path.join(folder, "icon.png")):
             icon = f"icons/{app_id}.png"
             shutil.copyfile(os.path.join(folder, "icon.png"), os.path.join(CAT, icon))
-        entries.append({
+        entry = {
             "id": app_id, "name": manifest["name"], "version": manifest["version"], "author": manifest["author"],
             "about": manifest["about"], "category": manifest["category"], "appID": manifest["appID"],
             "api": manifest["api"], "net": manifest.get("net", []),
             "size": len(package), "sha256": hashlib.sha256(package).hexdigest(),
             "package": rel, "icon": icon, "source": f"apps/{app_id}",
-        })
+        }
+        if manifest.get("ownerNet"): entry["ownerNet"] = True     # it may reach sites its owner allows
+        entries.append(entry)
     entries.sort(key=lambda e: e["name"].lower())
     if entries == index.get("apps") and index.get("categories") == CATEGORIES and os.path.exists(INDEX_SIG):
         if not quiet: print(f"index {index['sequence']}: no change")

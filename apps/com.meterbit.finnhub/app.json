@@ -1,0 +1,19 @@
+{
+  "id": "com.meterbit.finnhub",
+  "name": "Finnhub Stocks",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.5",
+  "appID": "4/0",
+  "category": "markets",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "A stock market terminal for your watchlist: live prices, the session chart, returns, fundamentals, the 52-week range, analysts, earnings and news, from Finnhub. Needs your free Finnhub key.",
+  "net": [
+    "finnhub.io",
+    "raw.githubusercontent.com"
+  ],
+  "migrateNvs": [
+    "finnhubCfg"
+  ]
+}

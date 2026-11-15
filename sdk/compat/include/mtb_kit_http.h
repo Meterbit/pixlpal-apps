@@ -17,4 +17,7 @@ char* mtb_Kit_Http_Get(const char* url, const char* const* requestHeaders, const
 char* mtb_Kit_Http_Send(const char* method, const char* url, const char* const* requestHeaders, const void* requestBody,
                         size_t requestLength, const char* const* collect, size_t collectCount,
                         size_t maxBytes, Mtb_Kit_Http_t& result, const char* userAgent);
+/** As mtb_Kit_Http_Get, but a request that didn't start has its reason as the code (PXL_HTTP_NOT_ALLOWED: a host the
+ *  app may not reach, such as a site its owner hasn't allowed yet; PXL_HTTP_OFFLINE...). */
+char* mtb_Kit_Http_Get_Why(const char* url, const char* const* requestHeaders, size_t maxBytes, Mtb_Kit_Http_t& result);
 ArduinoJson::Allocator* mtb_Kit_Json_Allocator(void);

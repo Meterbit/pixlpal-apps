@@ -45,7 +45,19 @@ public:
 private:
     int16_t lastWidth_ = 0;
 };
-/** JPEG decoding is the firmware's (the chip's decoder): installed apps don't have it, so this returns 1 (failed). */
+/** A picture file in the app's files, drawn at (xAxis, yAxis) at its own size, by Pixlpal (pxl_image). */
+struct Mtb_LocalImage_t {
+    char     imagePath[50] = {0};
+    uint16_t xAxis = 0;
+    uint16_t yAxis = 0;
+    int8_t   scale = 1;
+};
+#include "freertos/FreeRTOS.h"
+BaseType_t mtb_Draw_Local_Png(const Mtb_LocalImage_t& image);     /**< 0 when drawn */
+BaseType_t mtb_Draw_Local_Svg(const Mtb_LocalImage_t& image);
+BaseType_t mtb_Draw_Local_Jpg(const Mtb_LocalImage_t& image);
+/** Raw JPEG pixels are the firmware's (the chip's decoder): this returns 1 (failed). To draw a JPEG, use
+ *  mtb_Kit_Draw_Jpg or pxl_image, which Pixlpal decodes. */
 uint8_t mtb_Decode_Jpg_RGB888(const uint8_t* jpg, size_t jpgSize, uint8_t** rgb, uint16_t* width, uint16_t* height, uint16_t* stride);
 /** The panel's brightness, 0-255 (the owner's setting: it is kept). */
 void mtb_Panel_Set_Brightness(uint8_t brightness);

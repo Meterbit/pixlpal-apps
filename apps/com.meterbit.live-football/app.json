@@ -1,0 +1,19 @@
+{
+  "id": "com.meterbit.live-football",
+  "name": "Live Football",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.5",
+  "appID": "5/0",
+  "category": "sports",
+  "screen": "statusbar",
+  "kit": "compat",
+  "about": "Live scores with goal celebrations, today's matches, yesterday's results and your team's next kick-off, from API-Football. Needs your API-Football key.",
+  "net": [
+    "v3.football.api-sports.io",
+    "media.api-sports.io"
+  ],
+  "migrateNvs": [
+    "footballCfg"
+  ]
+}

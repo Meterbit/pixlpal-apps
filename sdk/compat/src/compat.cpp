@@ -466,6 +466,18 @@ char* mtb_Kit_Http_Get(const char* url, const char* const* requestHeaders, const
     if (!buffer || headers_Text(requestHeaders, headers, sizeof(headers)) < 0){ free(buffer); memset(&result, 0, sizeof(result)); result.code = -1; return nullptr; }
     return http_Wait(pxl_http_get(url, headers, buffer, (int)maxBytes + 1), maxBytes, buffer, result);
 }
+// As mtb_Kit_Http_Get, but a request that didn't start has its reason as the code: PXL_HTTP_NOT_ALLOWED (a site its
+// owner hasn't allowed yet), _OFFLINE... (Its own function, so that the apps already published build as they did.)
+char* mtb_Kit_Http_Get_Why(const char* url, const char* const* requestHeaders, size_t maxBytes, Mtb_Kit_Http_t& result){
+    if (maxBytes > 65535) maxBytes = 65535;
+    char headers[512];
+    char* buffer = (char*)malloc(maxBytes + 1);
+    memset(&result, 0, sizeof(result));
+    if (!buffer || headers_Text(requestHeaders, headers, sizeof(headers)) < 0){ free(buffer); result.code = -1; return nullptr; }
+    const int id = pxl_http_get(url, headers, buffer, (int)maxBytes + 1);
+    if (id < 0){ free(buffer); result.code = id; return nullptr; }
+    return http_Wait(id, maxBytes, buffer, result);
+}
 char* mtb_Kit_Http_Send(const char* method, const char* url, const char* const* requestHeaders, const void* body, size_t length,
                         const char* const* collect, size_t count, size_t maxBytes, Mtb_Kit_Http_t& result, const char* agent){
     if (!method || strcmp(method, "GET") == 0) return mtb_Kit_Http_Get(url, requestHeaders, collect, count, maxBytes, result, agent);

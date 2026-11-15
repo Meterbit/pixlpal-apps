@@ -62,3 +62,4 @@ BaseType_t xQueuePeek(QueueHandle_t q, void* item, TickType_t wait);
 UBaseType_t uxQueueMessagesWaiting(QueueHandle_t q);
 BaseType_t xQueueReset(QueueHandle_t q);
 void vQueueDelete(QueueHandle_t q);
+#include "freertos/timers.h"

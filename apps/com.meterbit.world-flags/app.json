@@ -1,0 +1,18 @@
+{
+  "id": "com.meterbit.world-flags",
+  "name": "World Flags",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.5",
+  "appID": "6/1",
+  "category": "art",
+  "screen": "full",
+  "kit": "compat",
+  "about": "The flags of 270 countries and territories with their capitals and continents: one flag, a slideshow (the world, a continent or your favourites), or a flag quiz.",
+  "net": [
+    "raw.githubusercontent.com"
+  ],
+  "migrateNvs": [
+    "worldFlagsCfg"
+  ]
+}

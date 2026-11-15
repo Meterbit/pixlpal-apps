@@ -1,7 +1,7 @@
 {
   "format": 1,
-  "sequence": 4,
-  "generated": "2026-11-14T21:41:36Z",
+  "sequence": 5,
+  "generated": "2026-11-14T23:39:13Z",
   "baseUrl": "https://raw.githubusercontent.com/Meterbit/pixlpal-apps/main/catalogue/",
   "categories": {
     "clocks": "Clocks & Timers",
@@ -70,6 +70,25 @@
       "source": "apps/com.meterbit.calm-corner"
     },
     {
+      "id": "com.meterbit.catholic-daily",
+      "name": "Catholic Daily",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Today's liturgical day from the General Roman Calendar in its colour, the Angelus (Regina Caeli in Eastertide), the Hour of Mercy, the Rosary's mysteries of the day and a Douay-Rheims verse.",
+      "category": "faith",
+      "appID": "13/2",
+      "api": "0.5",
+      "net": [
+        "http://calapi.inadiutorium.cz",
+        "bible-api.com"
+      ],
+      "size": 124337,
+      "sha256": "a4ad64096376278d43e9a09adaac9bdc72c536c7d5d6ca8819ef265bed12525b",
+      "package": "packages/com.meterbit.catholic-daily/1.0.0.pxa",
+      "icon": "icons/com.meterbit.catholic-daily.png",
+      "source": "apps/com.meterbit.catholic-daily"
+    },
+    {
       "id": "com.meterbit.code-quest",
       "name": "Code Quest",
       "version": "1.0.0",
@@ -84,6 +103,25 @@
       "package": "packages/com.meterbit.code-quest/1.0.0.pxa",
       "icon": "icons/com.meterbit.code-quest.png",
       "source": "apps/com.meterbit.code-quest"
+    },
+    {
+      "id": "com.meterbit.coincap",
+      "name": "CoinCap Crypto",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Your crypto watchlist from CoinCap: prices, 24-hour change, a 7-day chart, market numbers, supply, the top gainers and crypto news, paced to your CoinCap plan's credits. Needs your CoinCap key.",
+      "category": "markets",
+      "appID": "4/1",
+      "api": "0.5",
+      "net": [
+        "rest.coincap.io",
+        "raw.githubusercontent.com"
+      ],
+      "size": 177302,
+      "sha256": "063f25ab4f929fb91e034746577a32ac39910098870205119d5e2b898eedc837",
+      "package": "packages/com.meterbit.coincap/1.0.0.pxa",
+      "icon": "icons/com.meterbit.coincap.png",
+      "source": "apps/com.meterbit.coincap"
     },
     {
       "id": "com.meterbit.commute",
@@ -142,6 +180,25 @@
       "package": "packages/com.meterbit.daily-bible/1.0.0.pxa",
       "icon": "icons/com.meterbit.daily-bible.png",
       "source": "apps/com.meterbit.daily-bible"
+    },
+    {
+      "id": "com.meterbit.finnhub",
+      "name": "Finnhub Stocks",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "A stock market terminal for your watchlist: live prices, the session chart, returns, fundamentals, the 52-week range, analysts, earnings and news, from Finnhub. Needs your free Finnhub key.",
+      "category": "markets",
+      "appID": "4/0",
+      "api": "0.5",
+      "net": [
+        "finnhub.io",
+        "raw.githubusercontent.com"
+      ],
+      "size": 191215,
+      "sha256": "39b549e2a9e5163be37ed9b5b677abfbc7c6c356f23df5f7797060d3a3a9f3f0",
+      "package": "packages/com.meterbit.finnhub/1.0.0.pxa",
+      "icon": "icons/com.meterbit.finnhub.png",
+      "source": "apps/com.meterbit.finnhub"
     },
     {
       "id": "com.meterbit.focus-list",
@@ -247,6 +304,25 @@
       "package": "packages/com.meterbit.kobo-terminal/1.0.0.pxa",
       "icon": "icons/com.meterbit.kobo-terminal.png",
       "source": "apps/com.meterbit.kobo-terminal"
+    },
+    {
+      "id": "com.meterbit.live-football",
+      "name": "Live Football",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Live scores with goal celebrations, today's matches, yesterday's results and your team's next kick-off, from API-Football. Needs your API-Football key.",
+      "category": "sports",
+      "appID": "5/0",
+      "api": "0.5",
+      "net": [
+        "v3.football.api-sports.io",
+        "media.api-sports.io"
+      ],
+      "size": 215208,
+      "sha256": "4059a70d291b9eece99c9033cea47fb2243ea43447473a3fc22b29302fa5f185",
+      "package": "packages/com.meterbit.live-football/1.0.0.pxa",
+      "icon": "icons/com.meterbit.live-football.png",
+      "source": "apps/com.meterbit.live-football"
     },
     {
       "id": "com.meterbit.message-board",
@@ -431,6 +507,44 @@
       "source": "apps/com.meterbit.pixel-arcade"
     },
     {
+      "id": "com.meterbit.rss-reader",
+      "name": "RSS Reader",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Headlines from up to seven news feeds you choose: BBC, Al Jazeera, NPR, the Guardian, tech and Nigerian news, or any RSS or Atom feed by its address.",
+      "category": "news",
+      "appID": "1/1",
+      "api": "0.5",
+      "net": [
+        "feeds.arstechnica.com",
+        "feeds.bbci.co.uk",
+        "feeds.bloomberg.com",
+        "feeds.npr.org",
+        "feeds.skynews.com",
+        "hnrss.org",
+        "punchng.com",
+        "rss.nytimes.com",
+        "techcrunch.com",
+        "www.aljazeera.com",
+        "www.cnbc.com",
+        "www.engadget.com",
+        "www.espn.com",
+        "www.nasa.gov",
+        "www.premiumtimesng.com",
+        "www.sciencedaily.com",
+        "www.theguardian.com",
+        "www.theverge.com",
+        "www.vanguardngr.com",
+        "www.wired.com"
+      ],
+      "size": 128742,
+      "sha256": "08b3898649ceebbfdfe149b2db0f4f189a23219a9166cc7aa86bb427416414b6",
+      "package": "packages/com.meterbit.rss-reader/1.0.0.pxa",
+      "icon": "icons/com.meterbit.rss-reader.png",
+      "source": "apps/com.meterbit.rss-reader",
+      "ownerNet": true
+    },
+    {
       "id": "com.meterbit.sky-tonight",
       "name": "Sky Tonight",
       "version": "1.0.0",
@@ -539,6 +653,23 @@
       "source": "apps/com.meterbit.typing-hero"
     },
     {
+      "id": "com.meterbit.uptime-monitor",
+      "name": "Uptime Monitor",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Pixlpal checks up to eight websites or web services every few minutes: up or down, how fast they answer, and how often they were up. When one goes down, Pixlpal shows it in red and sounds an alarm.",
+      "category": "maker",
+      "appID": "22/0",
+      "api": "0.5",
+      "net": [],
+      "size": 90104,
+      "sha256": "ec0c58fc52c1e76ca646e78be29bd718799604db8c4a44fd2d6a1fc1da47defa",
+      "package": "packages/com.meterbit.uptime-monitor/1.0.0.pxa",
+      "icon": "icons/com.meterbit.uptime-monitor.png",
+      "source": "apps/com.meterbit.uptime-monitor",
+      "ownerNet": true
+    },
+    {
       "id": "com.meterbit.world-clock",
       "name": "World Clock",
       "version": "1.0.0",
@@ -555,6 +686,24 @@
       "package": "packages/com.meterbit.world-clock/1.0.0.pxa",
       "icon": "icons/com.meterbit.world-clock.png",
       "source": "apps/com.meterbit.world-clock"
+    },
+    {
+      "id": "com.meterbit.world-flags",
+      "name": "World Flags",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "The flags of 270 countries and territories with their capitals and continents: one flag, a slideshow (the world, a continent or your favourites), or a flag quiz.",
+      "category": "art",
+      "appID": "6/1",
+      "api": "0.5",
+      "net": [
+        "raw.githubusercontent.com"
+      ],
+      "size": 102202,
+      "sha256": "af99816d098cb6c1247d7166dccec748b6d66146f881d3c23e6e19a4a1169e8f",
+      "package": "packages/com.meterbit.world-flags/1.0.0.pxa",
+      "icon": "icons/com.meterbit.world-flags.png",
+      "source": "apps/com.meterbit.world-flags"
     }
   ]
 }

@@ -57,7 +57,8 @@ An app is accepted if it:
 - saves only what it needs, and uses the phone page only for the app itself;
 - if it uses the internet: lists only the hosts it needs in `net`, sends them only what the app needs to work (no
   tracking or analytics), uses services whose terms allow it, and asks owners for their own API key rather than
-  shipping one.
+  shipping one. An `"http://host"` needs a reason (the service has no https), and `"ownerNet"` an app whose purpose
+  is reaching sites its owner chooses (feeds, monitors), which says plainly when a site isn't allowed yet.
 
 Reviews are done by people and take time. Small, clear apps are reviewed fastest.
 
