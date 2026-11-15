@@ -102,11 +102,14 @@ def build(folder, out=None, key=None, quiet=False, keep_wasm=False):
         out = os.path.join(folder, stem + ".pxa")
     compat = manifest.get("kit") == "compat"
     libc = compat or manifest.get("libc") is True or any(s.endswith(".cpp") for s in sources)
+    # Paths the compiler writes into the code (assert's __FILE__) name no folder on the machine that built it: the same
+    # app builds the same anywhere (publish.py check compares the bytes), and a package carries nobody's home folder.
+    maps = [f"-ffile-prefix-map={folder}=app"]
     with tempfile.TemporaryDirectory() as t:
         wasm_path = os.path.join(t, "app.wasm")
         if libc:
             includes = [folder, os.path.join(folder, "include"), SDK_HEADER_DIR]
-            defines = ["-DPIXLPAL_WASM=1"]
+            defines = ["-DPIXLPAL_WASM=1", *maps]
             if compat:
                 c = first_dir(COMPAT_DIRS, "The compat layer")
                 includes = [folder, os.path.join(folder, "include"), os.path.join(c, "include"), SDK_HEADER_DIR,
@@ -115,11 +118,12 @@ def build(folder, out=None, key=None, quiet=False, keep_wasm=False):
                             "-DARDUINOJSON_ENABLE_ARDUINO_STRING=0", "-DARDUINOJSON_ENABLE_PROGMEM=0",
                             "-Wno-unused-function", "-Wno-unused-variable"]
                 sources = sources + sorted(glob.glob(os.path.join(c, "src", "*.cpp")))
+                defines.append(f"-ffile-prefix-map={c}=compat")
                 shared = manifest.get("sharedNvs", [])
                 if shared: defines.append('-DPXL_COMPAT_SHARED_NVS="' + ",".join(shared) + '"')
             compile_libc(sources, includes, defines, wasm_path, t)
         else:
-            r = subprocess.run([find_tool("clang"), *BARE, "-I", SDK_HEADER_DIR, "-o", wasm_path, *sources])
+            r = subprocess.run([find_tool("clang"), *BARE, *maps, "-I", SDK_HEADER_DIR, "-o", wasm_path, *sources])
             if r.returncode: sys.exit("the app did not compile")
         problems = wasm_info.problems(wasm_path)
         if problems: sys.exit("the app would not run on Pixlpal: " + "; ".join(problems))

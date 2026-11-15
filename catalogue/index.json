@@ -1,7 +1,7 @@
 {
   "format": 1,
-  "sequence": 9,
-  "generated": "2026-11-15T15:40:23Z",
+  "sequence": 10,
+  "generated": "2026-11-15T15:50:39Z",
   "baseUrl": "https://raw.githubusercontent.com/Meterbit/pixlpal-apps/main/catalogue/",
   "categories": {
     "clocks": "Clocks & Timers",
@@ -431,16 +431,16 @@
     {
       "id": "com.meterbit.guest-welcome",
       "name": "Guest Welcome",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": "Meterbit Cyb",
       "about": "A personal welcome in the guest's room: their name and room number, a Wi-Fi code their phone can scan to join, checkout time, breakfast hours and the hotel's message of the day. It dims to a quiet clock at night.",
       "category": "travel",
       "appID": "100/12",
       "api": "0.6",
       "net": [],
-      "size": 112141,
-      "sha256": "422e1aa5a698b19a0589ebe86343e74a329dbb1da0de363ff85cf7b2e83a20e5",
-      "package": "packages/com.meterbit.guest-welcome/1.0.0.pxa",
+      "size": 108608,
+      "sha256": "c085429afeca8beb6697a175fe7cb94cefd255f38e4d7e08c6e82b96daec2a81",
+      "package": "packages/com.meterbit.guest-welcome/1.0.1.pxa",
       "icon": "icons/com.meterbit.guest-welcome.png",
       "source": "apps/com.meterbit.guest-welcome"
     },

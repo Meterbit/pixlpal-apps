@@ -15,7 +15,7 @@ static const char GWL_UI_MANIFEST[] = R"json({
   "name": "Guest Welcome",
   "about": "A personal welcome in the guest's room: their name and room number, a Wi-Fi code their phone can scan to join, checkout time, breakfast hours and the hotel's message of the day. It dims to a quiet clock at night.",
   "author": "Meterbit Cyb",
-  "version": "v1.0.0"
+  "version": "v1.0.1"
 })json";
 
 static const char GWL_UI_API[] = R"json({

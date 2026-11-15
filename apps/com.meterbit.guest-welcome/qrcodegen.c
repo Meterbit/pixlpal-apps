@@ -21,6 +21,8 @@
  *   Software.
  */
 
+// PIXLPAL: built without its internal checks (assert would also put this file's path into the app).
+#define NDEBUG
 #include <assert.h>
 #include <limits.h>
 #include <stdlib.h>
