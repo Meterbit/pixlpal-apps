@@ -137,6 +137,11 @@ let icons: [String: (CGContext) -> Void] = [
     c.addLine(to: CGPoint(x: 115, y: 135)); c.closePath(); c.strokePath()
     line(c, [(250, 170), (250, 280)]); circle(c, 250, 335, 14, fill: true)
   },
+  "cmc": { c in   // a price line rising across a coin
+    circle(c, 250, 250, 165)
+    c.move(to: CGPoint(x: 120, y: 330)); c.addLine(to: CGPoint(x: 190, y: 270)); c.addLine(to: CGPoint(x: 245, y: 305)); c.addLine(to: CGPoint(x: 310, y: 215)); c.addLine(to: CGPoint(x: 380, y: 170)); c.strokePath()
+    line(c, [(330, 165), (380, 170), (372, 220)])
+  },
 ]
 let out = CommandLine.arguments[1]
 for (name, draw) in icons { save("\(out)/\(name)_128.png", size: 128, draw); save("\(out)/\(name)_500.png", size: 500, draw) }

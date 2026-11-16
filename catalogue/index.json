@@ -1,7 +1,7 @@
 {
   "format": 1,
-  "sequence": 12,
-  "generated": "2026-11-16T19:28:55Z",
+  "sequence": 13,
+  "generated": "2026-11-16T19:56:09Z",
   "baseUrl": "https://raw.githubusercontent.com/Meterbit/pixlpal-apps/main/catalogue/",
   "categories": {
     "clocks": "Clocks & Timers",
@@ -251,6 +251,24 @@
       "package": "packages/com.meterbit.coincap/1.1.0.pxa",
       "icon": "icons/com.meterbit.coincap.png",
       "source": "apps/com.meterbit.coincap"
+    },
+    {
+      "id": "com.meterbit.coinmarketcap",
+      "name": "CoinMarketCap Crypto",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Your crypto watchlist from CoinMarketCap with your own API key: prices, changes from an hour to 90 days, a 7-day chart where your plan has history, the whole market, Fear & Greed and the day's biggest movers. It reads your plan's credits and paces itself to them.",
+      "category": "markets",
+      "appID": "100/21",
+      "api": "0.6",
+      "net": [
+        "pro-api.coinmarketcap.com"
+      ],
+      "size": 153183,
+      "sha256": "eac18d7ca3edd376801a9f5e75a2c1902a929f54fd5c2b5843d0c45cf336dd3c",
+      "package": "packages/com.meterbit.coinmarketcap/1.0.0.pxa",
+      "icon": "icons/com.meterbit.coinmarketcap.png",
+      "source": "apps/com.meterbit.coinmarketcap"
     },
     {
       "id": "com.meterbit.commute",
