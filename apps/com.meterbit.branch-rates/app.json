@@ -1,0 +1,13 @@
+{
+  "id": "com.meterbit.branch-rates",
+  "name": "Branch Rates",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "markets",
+  "screen": "full",
+  "kit": "compat",
+  "about": "A rates board for a bank branch or bureau de change: what the bank buys and sells each currency at, and its savings and deposit rates, in turn on the screen. Type the rates on the phone, or give a link the bank's system keeps up to date.",
+  "ownerNet": true,
+  "appID": "100/17"
+}

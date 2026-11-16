@@ -113,6 +113,30 @@ let icons: [String: (CGContext) -> Void] = [
     line(c, [(150, 215), (290, 160)]); line(c, [(225, 186), (200, 130)]); line(c, [(225, 186), (255, 235)]); line(c, [(160, 211), (150, 190)])
     line(c, [(310, 160), (360, 160)]); line(c, [(310, 210), (350, 210)])
   },
+  "queue": { c in   // a ticket, and the line of people waiting
+    c.addPath(CGPath(roundedRect: CGRect(x: 140, y: 90, width: 220, height: 110), cornerWidth: 16, cornerHeight: 16, transform: nil)); c.strokePath()
+    line(c, [(185, 130), (315, 130)]); line(c, [(185, 162), (270, 162)])
+    for x: CGFloat in [150, 250, 350] { circle(c, x, 285, 28); arc(c, x, 395, 42, 180, 360) }
+  },
+  "rates": { c in   // a rates board: a row going up and a row going down
+    c.addPath(CGPath(roundedRect: CGRect(x: 80, y: 110, width: 340, height: 280), cornerWidth: 18, cornerHeight: 18, transform: nil)); c.strokePath()
+    line(c, [(80, 250), (420, 250)])
+    line(c, [(125, 180), (245, 180)]); line(c, [(320, 210), (350, 155), (380, 210)])
+    line(c, [(125, 320), (245, 320)]); line(c, [(320, 290), (350, 345), (380, 290)])
+  },
+  "calc": { c in   // a calculator, with a percent key
+    c.addPath(CGPath(roundedRect: CGRect(x: 130, y: 80, width: 240, height: 340), cornerWidth: 24, cornerHeight: 24, transform: nil)); c.strokePath()
+    c.addPath(CGPath(roundedRect: CGRect(x: 170, y: 120, width: 160, height: 60), cornerWidth: 8, cornerHeight: 8, transform: nil)); c.strokePath()
+    for y: CGFloat in [235, 295, 355] { for x: CGFloat in [190, 250] { circle(c, x, y, 13, fill: true) } }
+    line(c, [(285, 360), (335, 230)]); circle(c, 290, 245, 15); circle(c, 330, 345, 15)
+  },
+  "scam": { c in   // a shield with a warning mark
+    c.move(to: CGPoint(x: 250, y: 85)); c.addLine(to: CGPoint(x: 385, y: 135)); c.addLine(to: CGPoint(x: 385, y: 240))
+    c.addCurve(to: CGPoint(x: 250, y: 415), control1: CGPoint(x: 385, y: 330), control2: CGPoint(x: 320, y: 385))
+    c.addCurve(to: CGPoint(x: 115, y: 240), control1: CGPoint(x: 180, y: 385), control2: CGPoint(x: 115, y: 330))
+    c.addLine(to: CGPoint(x: 115, y: 135)); c.closePath(); c.strokePath()
+    line(c, [(250, 170), (250, 280)]); circle(c, 250, 335, 14, fill: true)
+  },
 ]
 let out = CommandLine.arguments[1]
 for (name, draw) in icons { save("\(out)/\(name)_128.png", size: 128, draw); save("\(out)/\(name)_500.png", size: 500, draw) }

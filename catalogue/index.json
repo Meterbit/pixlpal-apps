@@ -1,7 +1,7 @@
 {
   "format": 1,
-  "sequence": 11,
-  "generated": "2026-11-15T21:49:48Z",
+  "sequence": 12,
+  "generated": "2026-11-16T19:28:55Z",
   "baseUrl": "https://raw.githubusercontent.com/Meterbit/pixlpal-apps/main/catalogue/",
   "categories": {
     "clocks": "Clocks & Timers",
@@ -92,6 +92,23 @@
       "package": "packages/com.meterbit.brain-break/1.0.0.pxa",
       "icon": "icons/com.meterbit.brain-break.png",
       "source": "apps/com.meterbit.brain-break"
+    },
+    {
+      "id": "com.meterbit.branch-rates",
+      "name": "Branch Rates",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "A rates board for a bank branch or bureau de change: what the bank buys and sells each currency at, and its savings and deposit rates, in turn on the screen. Type the rates on the phone, or give a link the bank's system keeps up to date.",
+      "category": "markets",
+      "appID": "100/17",
+      "api": "0.6",
+      "net": [],
+      "size": 116197,
+      "sha256": "4b2516521b985ed786cb0d03f225d0833f41de7084bada34cf9ddad1fbd0de71",
+      "package": "packages/com.meterbit.branch-rates/1.0.0.pxa",
+      "icon": "icons/com.meterbit.branch-rates.png",
+      "source": "apps/com.meterbit.branch-rates",
+      "ownerNet": true
     },
     {
       "id": "com.meterbit.build-status",
@@ -566,6 +583,22 @@
       "source": "apps/com.meterbit.live-football"
     },
     {
+      "id": "com.meterbit.loan-calculator",
+      "name": "Loan & Savings Calculator",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "A calculator customers use with the knob while they wait: choose a loan, an amount and a term, and see the monthly payment, the interest and the total to repay; or a monthly saving and see what it grows to. The bank sets its products and rates on the phone.",
+      "category": "tools",
+      "appID": "100/18",
+      "api": "0.6",
+      "net": [],
+      "size": 110906,
+      "sha256": "33c9d25727f790ff540348918b63793e316b865746e51d81ed420d932f3f7338",
+      "package": "packages/com.meterbit.loan-calculator/1.0.0.pxa",
+      "icon": "icons/com.meterbit.loan-calculator.png",
+      "source": "apps/com.meterbit.loan-calculator"
+    },
+    {
       "id": "com.meterbit.message-board",
       "name": "Message Board",
       "version": "1.1.0",
@@ -800,6 +833,22 @@
       "source": "apps/com.meterbit.pixel-arcade"
     },
     {
+      "id": "com.meterbit.queue-board",
+      "name": "Queue Board",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "A queue display for a bank branch or any service counter: the ticket called and its counter in large letters, a chime and a spoken call, each service line's number now serving, how many wait and about how long. Staff call the next ticket with a click or from the phone.",
+      "category": "tools",
+      "appID": "100/19",
+      "api": "0.6",
+      "net": [],
+      "size": 94633,
+      "sha256": "d8f22fec47277290382322b176ffca12d294606e153bc87e589ecb85b73d41d0",
+      "package": "packages/com.meterbit.queue-board/1.0.0.pxa",
+      "icon": "icons/com.meterbit.queue-board.png",
+      "source": "apps/com.meterbit.queue-board"
+    },
+    {
       "id": "com.meterbit.room-sign",
       "name": "Room Sign",
       "version": "1.0.0",
@@ -877,6 +926,22 @@
       "icon": "icons/com.meterbit.sales-gong.png",
       "source": "apps/com.meterbit.sales-gong",
       "ownerNet": true
+    },
+    {
+      "id": "com.meterbit.scam-alerts",
+      "name": "Scam Alerts",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Fraud-awareness tips for a bank branch, in turn on the screen: never share your PIN or one-time code, there is no safe account, fake calls and links. Add the bank's own tips, and put up an urgent alert about a scam going round now.",
+      "category": "notifications",
+      "appID": "100/20",
+      "api": "0.6",
+      "net": [],
+      "size": 91246,
+      "sha256": "2cc1024378e63ccbb7c91284ae3ed8b23e88b6668a0e77365ce3aef5d3670b51",
+      "package": "packages/com.meterbit.scam-alerts/1.0.0.pxa",
+      "icon": "icons/com.meterbit.scam-alerts.png",
+      "source": "apps/com.meterbit.scam-alerts"
     },
     {
       "id": "com.meterbit.sky-tonight",

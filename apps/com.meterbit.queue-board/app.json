@@ -1,0 +1,12 @@
+{
+  "id": "com.meterbit.queue-board",
+  "name": "Queue Board",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "tools",
+  "screen": "full",
+  "kit": "compat",
+  "about": "A queue display for a bank branch or any service counter: the ticket called and its counter in large letters, a chime and a spoken call, each service line's number now serving, how many wait and about how long. Staff call the next ticket with a click or from the phone.",
+  "appID": "100/19"
+}

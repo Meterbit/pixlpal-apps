@@ -1,0 +1,12 @@
+{
+  "id": "com.meterbit.loan-calculator",
+  "name": "Loan & Savings Calculator",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "tools",
+  "screen": "full",
+  "kit": "compat",
+  "about": "A calculator customers use with the knob while they wait: choose a loan, an amount and a term, and see the monthly payment, the interest and the total to repay; or a monthly saving and see what it grows to. The bank sets its products and rates on the phone.",
+  "appID": "100/18"
+}

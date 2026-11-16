@@ -1,0 +1,12 @@
+{
+  "id": "com.meterbit.scam-alerts",
+  "name": "Scam Alerts",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "notifications",
+  "screen": "full",
+  "kit": "compat",
+  "about": "Fraud-awareness tips for a bank branch, in turn on the screen: never share your PIN or one-time code, there is no safe account, fake calls and links. Add the bank's own tips, and put up an urgent alert about a scam going round now.",
+  "appID": "100/20"
+}
