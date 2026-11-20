@@ -11,8 +11,9 @@
  *   void pxl_start(void)                       once, after loading. Set the phone page here (pxl_phone_ui and
  *                                              pxl_phone_values): Pixlpal may start an app only to get its page for
  *                                              the phone, and close it again. Don't draw here.
- *   void pxl_frame(uint32_t ms, uint32_t dt)   every 20 ms: ms since start-up, dt since the last frame. Draw the whole
- *                                              screen here; it is shown when pxl_frame returns.
+ *   void pxl_frame(uint32_t ms, uint32_t dt)   on every second frame of the panel's (about every 21 ms, evenly): ms
+ *                                              since start-up, dt since the last frame. Draw the whole screen here; it
+ *                                              is shown all at once, at the next frame, so it never shows half drawn.
  *   void pxl_input(int kind, int a, int b)     the knob, a USB keyboard or mouse (PXL_IN_...)
  *   int  pxl_command(int command, int length)  a command from the app's phone page: its JSON (length bytes) is in
  *                                              the buffer pxl_inbox() returns. Return 0 if it was used.
@@ -21,7 +22,8 @@
  *   void pxl_http_done(int id, int status, int length)   (0.3) an internet request's answer is in its buffer
  *   void pxl_main(void)                        (0.4) instead of pxl_frame: the app as one loop that calls
  *                                              pxl_yield(ms) to wait (its "delay"), and returns when pxl_yield
- *                                              returns 0. Input and commands arrive inside pxl_yield.
+ *                                              returns 0. Input and commands arrive inside pxl_yield. What it drew
+ *                                              since the last pxl_yield is shown all at once at each pxl_yield.
  *
  * Each call into the app may run about 20 million WebAssembly instructions (roughly a second on Pixlpal). One that
  * runs longer, such as an endless loop, is stopped: Pixlpal closes the app and shows why.

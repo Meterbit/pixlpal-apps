@@ -149,7 +149,7 @@ You write these functions and mark each with `PXL_EXPORT`. Only `pxl_frame` is r
 | Function | When Pixlpal calls it |
 |---|---|
 | `void pxl_start(void)` | Once, after loading. Read your saved data and set up your phone page here. Don't draw: Pixlpal sometimes starts an app only to fetch its phone page, then closes it. |
-| `void pxl_frame(uint32_t ms, uint32_t dt)` | Every 20 ms. `ms` is the time since Pixlpal started, `dt` the time since the last frame. Draw the whole screen each time; Pixlpal shows it when `pxl_frame` returns. |
+| `void pxl_frame(uint32_t ms, uint32_t dt)` | On every second frame of the panel's: about every 21 ms, evenly. `ms` is the time since Pixlpal started, `dt` the time since the last frame. Draw the whole screen each time; Pixlpal shows it all at once at the next frame, so it never shows half drawn. |
 | `void pxl_input(int kind, int a, int b)` | When the knob, a USB keyboard or a USB mouse is used. See below. |
 | `int pxl_command(int command, int length)` | When someone uses your phone page. See [The phone page](#the-phone-page). Return 0 if you used the command. |
 | `char* pxl_inbox(void)` | Return a buffer of `PXL_INBOX_SIZE` (512) bytes. Pixlpal puts each phone command's JSON there before calling `pxl_command`. |
@@ -194,7 +194,7 @@ Pictures are how an app brings icons, sprites and fonts of its own: put them in 
 one-colour picture takes an eighth of the space of a colour one, and can be drawn in any colour.
 
 Each call costs time, so draw big areas with `pxl_rect` rather than many `pxl_pixel`s. Clearing the screen with
-`pxl_fill` takes about 1.5 ms of the 20 ms a frame has.
+`pxl_fill` takes about 1.5 ms of the 21 ms a frame has.
 
 `pxl_blend(a, b, t)` (mix two colours, t from 0 to 1) and `pxl_dim(color, level)` (darken, level 0–255) are helpers
 in `pixlpal.h` and cost nothing.
@@ -395,7 +395,8 @@ PXL_EXPORT("pxl_http_done") void pxl_http_done(int id, int status, int length){
 | Internet | one request at a time, 30 a minute, answers up to 64 KB, POST bodies up to 8 KB, only the hosts in `net` |
 | Speech | 200 characters, once every 2 seconds |
 
-A frame has 20 ms. If yours take longer, the app still works, but runs slower.
+A frame has about 21 ms. If yours take longer, the app still works, but runs slower: its next frame starts at the
+panel's next frame (about every 10.5 ms), so each one is still shown whole.
 
 ## Writing C without a C library
 
