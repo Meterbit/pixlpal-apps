@@ -134,7 +134,8 @@ PXL_IMPORT("save_read")  int pxl_save_read(void* data, int bytes);
 PXL_IMPORT("save_write") int pxl_save_write(const void* data, int bytes);
 
 /* The phone page. pxl_phone_ui (in pxl_start): the page's manifest and widgets, as JSON (the same format as the
- * built-in apps). pxl_phone_values: the values the page shows, as a JSON object; sent when it changes. */
+ * built-in apps; widgets up to 24 KB without the indentation, manifest 2 KB). pxl_phone_values: the values the page
+ * shows, as a JSON object; sent when it changes. */
 PXL_IMPORT("phone_ui")     void pxl_phone_ui(const char* manifest, const char* widgets);
 PXL_IMPORT("phone_values") void pxl_phone_values(const char* json);
 
