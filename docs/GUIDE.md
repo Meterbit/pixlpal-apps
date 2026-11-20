@@ -320,7 +320,9 @@ sent.
 [apps/com.meterbit.pixel-arcade-wasm/arcade.c](../apps/com.meterbit.pixel-arcade-wasm/arcade.c) has a full page:
 status panels, a game choice and a game pad.
 
-Size limits: the manifest 2 KB, the widgets 12 KB, the values 4 KB.
+Size limits: the manifest 2 KB, the widgets 24 KB, the values 4 KB. The widgets are measured compact: Pixlpal
+strips the indentation, so lay the JSON out as you like. A page over a limit, or not valid JSON, is not shown (the
+serial log says which), and the phone gets the page made from the package's manifest.
 
 ## The internet
 
