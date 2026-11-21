@@ -1,0 +1,11 @@
+{
+  "id": "com.meterbit.scoreboard",
+  "name": "Scoreboard",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "sports",
+  "screen": "full",
+  "kit": "compat",
+  "about": "A scoreboard for the games you play: names and colours, the score from the knob or your phone, a game clock with periods and a buzzer, and the scoring rules of volleyball, table tennis, badminton and tennis built in."
+}

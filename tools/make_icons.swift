@@ -23,6 +23,46 @@ func circle(_ c: CGContext, _ x: CGFloat, _ y: CGFloat, _ r: CGFloat, fill: Bool
 func arc(_ c: CGContext, _ x: CGFloat, _ y: CGFloat, _ r: CGFloat, _ a0: CGFloat, _ a1: CGFloat){ c.addArc(center: CGPoint(x: x, y: y), radius: r, startAngle: a0 * .pi / 180, endAngle: a1 * .pi / 180, clockwise: false); c.strokePath() }
 
 let icons: [String: (CGContext) -> Void] = [
+  "training": { c in   // a route: a start, a winding path, and a flag at the end
+    circle(c, 130, 380, 22, fill: true)
+    c.move(to: CGPoint(x: 130, y: 380)); c.addCurve(to: CGPoint(x: 250, y: 280), control1: CGPoint(x: 250, y: 400), control2: CGPoint(x: 140, y: 290))
+    c.addCurve(to: CGPoint(x: 330, y: 160), control1: CGPoint(x: 360, y: 270), control2: CGPoint(x: 230, y: 170)); c.strokePath()
+    line(c, [(330, 160), (330, 75)]); c.move(to: CGPoint(x: 330, y: 75)); c.addLine(to: CGPoint(x: 400, y: 98)); c.addLine(to: CGPoint(x: 330, y: 121)); c.strokePath()
+  },
+  "scoreboard": { c in   // a scoreboard: 3 : 1
+    c.addPath(CGPath(roundedRect: CGRect(x: 80, y: 130, width: 340, height: 240), cornerWidth: 24, cornerHeight: 24, transform: nil)); c.strokePath()
+    line(c, [(130, 190), (200, 190), (200, 250), (150, 250)]); line(c, [(200, 250), (200, 310), (130, 310)])
+    circle(c, 250, 220, 10, fill: true); circle(c, 250, 280, 10, fill: true)
+    line(c, [(320, 205), (345, 190), (345, 310)])
+    line(c, [(170, 130), (150, 85)]); line(c, [(330, 130), (350, 85)])
+  },
+  "leaguetable": { c in   // a table: rows, the top one marked, a trophy above
+    for (k, y) in [CGFloat(215), 275, 335, 395].enumerated() { circle(c, 130, y, k == 0 ? 16 : 10, fill: k == 0); line(c, [(175, y), (k == 0 ? 380 : 360 - CGFloat(k) * 25, y)]) }
+    c.move(to: CGPoint(x: 205, y: 80)); c.addLine(to: CGPoint(x: 295, y: 80)); c.addCurve(to: CGPoint(x: 205, y: 80), control1: CGPoint(x: 295, y: 160), control2: CGPoint(x: 205, y: 160)); c.strokePath()
+    line(c, [(250, 140), (250, 160)]); line(c, [(225, 165), (275, 165)])
+  },
+  "cricket": { c in   // a bat (blade and handle) and a ball with its seam
+    c.saveGState(); c.translateBy(x: 225, y: 245); c.rotate(by: 0.55)
+    c.addPath(CGPath(roundedRect: CGRect(x: -42, y: -60, width: 84, height: 230), cornerWidth: 14, cornerHeight: 14, transform: nil)); c.strokePath()
+    c.addPath(CGPath(roundedRect: CGRect(x: -13, y: -170, width: 26, height: 110), cornerWidth: 10, cornerHeight: 10, transform: nil)); c.strokePath()
+    c.restoreGState()
+    circle(c, 360, 375, 42)
+    c.move(to: CGPoint(x: 330, y: 345)); c.addCurve(to: CGPoint(x: 390, y: 405), control1: CGPoint(x: 365, y: 360), control2: CGPoint(x: 375, y: 370)); c.strokePath()
+  },
+  "chess": { c in   // a knight
+    c.move(to: CGPoint(x: 170, y: 400)); c.addLine(to: CGPoint(x: 330, y: 400)); c.strokePath()
+    c.move(to: CGPoint(x: 190, y: 400)); c.addCurve(to: CGPoint(x: 250, y: 280), control1: CGPoint(x: 190, y: 340), control2: CGPoint(x: 240, y: 320))
+    c.addLine(to: CGPoint(x: 175, y: 290)); c.addLine(to: CGPoint(x: 160, y: 250)); c.addLine(to: CGPoint(x: 235, y: 165))
+    c.addLine(to: CGPoint(x: 240, y: 110)); c.addLine(to: CGPoint(x: 270, y: 145))
+    c.addCurve(to: CGPoint(x: 315, y: 400), control1: CGPoint(x: 350, y: 180), control2: CGPoint(x: 345, y: 320)); c.strokePath()
+    circle(c, 225, 210, 9, fill: true)
+  },
+  "teamtracker": { c in   // a basketball
+    circle(c, 250, 250, 150)
+    line(c, [(250, 100), (250, 400)]); line(c, [(100, 250), (400, 250)])
+    c.move(to: CGPoint(x: 145, y: 145)); c.addCurve(to: CGPoint(x: 145, y: 355), control1: CGPoint(x: 210, y: 200), control2: CGPoint(x: 210, y: 300)); c.strokePath()
+    c.move(to: CGPoint(x: 355, y: 145)); c.addCurve(to: CGPoint(x: 355, y: 355), control1: CGPoint(x: 290, y: 200), control2: CGPoint(x: 290, y: 300)); c.strokePath()
+  },
   "water": { c in   // a glass half full, a drop above it
     line(c, [(150, 190), (175, 410), (325, 410), (350, 190)])
     line(c, [(165, 300), (335, 300)])

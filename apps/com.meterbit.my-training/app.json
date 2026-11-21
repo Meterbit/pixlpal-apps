@@ -1,0 +1,15 @@
+{
+  "id": "com.meterbit.my-training",
+  "name": "My Training",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "sports",
+  "screen": "full",
+  "kit": "compat",
+  "about": "Your week from Strava: distance against a weekly goal, time and climbing, a bar for each day, and your latest run or ride with its pace. Runs, rides, walks and swims, in kilometres or miles.",
+  "net": [
+    "www.strava.com",
+    "pixlpal-accounts.meterbit.workers.dev"
+  ]
+}
