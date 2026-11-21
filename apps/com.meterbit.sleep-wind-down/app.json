@@ -7,5 +7,6 @@
   "category": "health",
   "screen": "full",
   "kit": "compat",
-  "about": "A calmer bedtime: a countdown to the bedtime you choose, a reminder to wind down before it as the panel dims to a warm glow, a dim red clock or darkness at night, and a gentle sunrise light to wake to."
+  "about": "A calmer bedtime: a countdown to the bedtime you choose, a reminder to wind down before it as the panel dims to a warm glow, a dim red clock or darkness at night, and a gentle sunrise light to wake to.",
+  "appID": "100/30"
 }

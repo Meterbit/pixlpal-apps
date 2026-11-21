@@ -11,5 +11,6 @@
   "net": [
     "air-quality-api.open-meteo.com",
     "geocoding-api.open-meteo.com"
-  ]
+  ],
+  "appID": "100/27"
 }

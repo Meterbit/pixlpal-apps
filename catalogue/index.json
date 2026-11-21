@@ -1,7 +1,7 @@
 {
   "format": 1,
-  "sequence": 16,
-  "generated": "2026-11-21T20:32:40Z",
+  "sequence": 17,
+  "generated": "2026-11-21T21:33:33Z",
   "baseUrl": "https://raw.githubusercontent.com/Meterbit/pixlpal-apps/main/catalogue/",
   "categories": {
     "clocks": "Clocks & Timers",
@@ -28,6 +28,25 @@
   },
   "apps": [
     {
+      "id": "com.meterbit.air-uv-pollen",
+      "name": "Air, UV & Pollen",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Today's outdoor conditions where you live: the air quality index, the UV index with the hours to wear sunscreen, and grass, tree and weed pollen (in Europe). Free Open-Meteo data, no key needed.",
+      "category": "health",
+      "appID": "100/27",
+      "api": "0.6",
+      "net": [
+        "air-quality-api.open-meteo.com",
+        "geocoding-api.open-meteo.com"
+      ],
+      "size": 116857,
+      "sha256": "8d8117b76efd915e1ad25783f7fda6f60a51256b6f7eae13fb909fe03b6279f9",
+      "package": "packages/com.meterbit.air-uv-pollen/1.0.0.pxa",
+      "icon": "icons/com.meterbit.air-uv-pollen.png",
+      "source": "apps/com.meterbit.air-uv-pollen"
+    },
+    {
       "id": "com.meterbit.airport-weather",
       "name": "Airport Weather",
       "version": "1.0.0",
@@ -44,6 +63,22 @@
       "package": "packages/com.meterbit.airport-weather/1.0.0.pxa",
       "icon": "icons/com.meterbit.airport-weather.png",
       "source": "apps/com.meterbit.airport-weather"
+    },
+    {
+      "id": "com.meterbit.baby-countdown",
+      "name": "Baby Countdown",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "A countdown to your baby's due date for the whole family: the days to go, and if you like the week, the baby's size and your appointments. Shows as little as you choose, and stops with one tap.",
+      "category": "health",
+      "appID": "100/28",
+      "api": "0.6",
+      "net": [],
+      "size": 107532,
+      "sha256": "b879a057998035799bdb184ffb8300e0a60a28b9c86293ee8a5c7dfcefcfd6b6",
+      "package": "packages/com.meterbit.baby-countdown/1.0.0.pxa",
+      "icon": "icons/com.meterbit.baby-countdown.png",
+      "source": "apps/com.meterbit.baby-countdown"
     },
     {
       "id": "com.meterbit.bell-schedule",
@@ -109,6 +144,22 @@
       "icon": "icons/com.meterbit.branch-rates.png",
       "source": "apps/com.meterbit.branch-rates",
       "ownerNet": true
+    },
+    {
+      "id": "com.meterbit.breathe",
+      "name": "Breathe",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Guided breathing: a shape on the panel grows as you breathe in and shrinks as you breathe out, for one to ten minutes. Box breathing, 4-7-8, slow breathing or a longer breath out, with soft tones if you like.",
+      "category": "health",
+      "appID": "100/29",
+      "api": "0.6",
+      "net": [],
+      "size": 95493,
+      "sha256": "93ca6da63ce905ef2bf1bc3f68a1e37d371933116dfc295b709290edb41b284b",
+      "package": "packages/com.meterbit.breathe/1.0.0.pxa",
+      "icon": "icons/com.meterbit.breathe.png",
+      "source": "apps/com.meterbit.breathe"
     },
     {
       "id": "com.meterbit.build-status",
@@ -1079,6 +1130,22 @@
       "source": "apps/com.meterbit.sky-tonight"
     },
     {
+      "id": "com.meterbit.sleep-wind-down",
+      "name": "Sleep Wind-Down",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "A calmer bedtime: a countdown to the bedtime you choose, a reminder to wind down before it as the panel dims to a warm glow, a dim red clock or darkness at night, and a gentle sunrise light to wake to.",
+      "category": "health",
+      "appID": "100/30",
+      "api": "0.6",
+      "net": [],
+      "size": 91579,
+      "sha256": "350ebcf3b308b5061457a35a539cca1d3610b0c040a4cb825d5ab03ba47f6138",
+      "package": "packages/com.meterbit.sleep-wind-down/1.0.0.pxa",
+      "icon": "icons/com.meterbit.sleep-wind-down.png",
+      "source": "apps/com.meterbit.sleep-wind-down"
+    },
+    {
       "id": "com.meterbit.standup-host",
       "name": "Stand-up Host",
       "version": "1.0.0",
@@ -1233,6 +1300,22 @@
       "icon": "icons/com.meterbit.uptime-monitor.png",
       "source": "apps/com.meterbit.uptime-monitor",
       "ownerNet": true
+    },
+    {
+      "id": "com.meterbit.water-breaks",
+      "name": "Water & Breaks",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "For your desk: glasses of water against a daily goal (click the knob for each), reminders to stand up and stretch, and 20-20-20 eye breaks for screen work, all within your working hours.",
+      "category": "health",
+      "appID": "100/31",
+      "api": "0.6",
+      "net": [],
+      "size": 93326,
+      "sha256": "1937d038712cdbae4aebe771f0e44e3502b8d5959036cb93a60226f056017e34",
+      "package": "packages/com.meterbit.water-breaks/1.0.0.pxa",
+      "icon": "icons/com.meterbit.water-breaks.png",
+      "source": "apps/com.meterbit.water-breaks"
     },
     {
       "id": "com.meterbit.world-clock",
