@@ -5,6 +5,8 @@
  *   Bold     the time in large type, seconds beside it, the weekday and date below
  *   Analog   a dial with hour, minute and second hands, the digital time and date beside it
  *   Words    the time in words to five minutes ("TWENTY PAST SEVEN"), dots for the minutes between
+ * Or, by the Show setting, the time alone across the panel (each face at its largest), or the date alone: the day of
+ * the month in giant digits, the month, weekday and year beside it. Both for reading from across a room.
  */
 #ifndef BGC_UI_H
 #define BGC_UI_H

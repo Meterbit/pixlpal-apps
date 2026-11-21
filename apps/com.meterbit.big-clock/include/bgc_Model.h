@@ -18,6 +18,9 @@ enum Bgc_Theme_t : uint8_t {
     BGC_THEME_CUSTOM, BGC_THEME_COUNT
 };
 enum Bgc_Night_Style_t : uint8_t { BGC_NIGHT_RED = 0, BGC_NIGHT_DIM };
+/** What the panel shows: the face with its date, the time alone across the panel, or the date alone, large (two
+ *  Pixlpals side by side, one a clock and one a calendar, read from across a room). */
+enum Bgc_Show_t : uint8_t { BGC_SHOW_BOTH = 0, BGC_SHOW_CLOCK, BGC_SHOW_CALENDAR, BGC_SHOW_COUNT };
 
 struct Bgc_Settings_t {
     uint32_t magic;
@@ -32,7 +35,12 @@ struct Bgc_Settings_t {
     uint16_t nightFrom;         /**< Minutes after midnight. */
     uint16_t nightTo;
     uint16_t customColor;       /**< RGB565, for BGC_THEME_CUSTOM. */
+    uint8_t show;               /**< Bgc_Show_t. In what was the struct's end padding, so the size is unchanged and
+                                 *   settings saved before it read as 0, the clock with its date. */
 };
+
+// Saved settings must keep their size: a different size reads as nothing saved, and owners would lose theirs.
+static_assert(sizeof(Bgc_Settings_t) == 20, "Big Clock's saved settings changed size");
 
 /** @brief The colours a face uses. */
 struct Bgc_Palette_t {
