@@ -1,7 +1,7 @@
 {
   "format": 1,
-  "sequence": 14,
-  "generated": "2026-11-21T03:40:36Z",
+  "sequence": 15,
+  "generated": "2026-11-21T08:04:38Z",
   "baseUrl": "https://raw.githubusercontent.com/Meterbit/pixlpal-apps/main/catalogue/",
   "categories": {
     "clocks": "Clocks & Timers",
@@ -546,6 +546,26 @@
       "package": "packages/com.meterbit.house-points/1.0.0.pxa",
       "icon": "icons/com.meterbit.house-points.png",
       "source": "apps/com.meterbit.house-points"
+    },
+    {
+      "id": "com.meterbit.hse-board",
+      "name": "HSE Board",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "A site safety board readable across the room: days without a lost-time injury and the best record, injuries, first aid cases, near misses and observations, LTIFR and TRIFR, the message of the week and safety signs. For factories, oil and gas, mining, construction, facilities and warehouses.",
+      "category": "productivity",
+      "appID": "100/22",
+      "api": "0.6",
+      "net": [
+        "docs.google.com",
+        "*.googleusercontent.com"
+      ],
+      "size": 148778,
+      "sha256": "dcafbc13af8c754fa1746f054ecab6ccb295969c4c95f6cfdb399f1b3554bb36",
+      "package": "packages/com.meterbit.hse-board/1.0.0.pxa",
+      "icon": "icons/com.meterbit.hse-board.png",
+      "source": "apps/com.meterbit.hse-board",
+      "ownerNet": true
     },
     {
       "id": "com.meterbit.kids-learning",

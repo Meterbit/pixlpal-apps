@@ -23,6 +23,12 @@ func circle(_ c: CGContext, _ x: CGFloat, _ y: CGFloat, _ r: CGFloat, fill: Bool
 func arc(_ c: CGContext, _ x: CGFloat, _ y: CGFloat, _ r: CGFloat, _ a0: CGFloat, _ a1: CGFloat){ c.addArc(center: CGPoint(x: x, y: y), radius: r, startAngle: a0 * .pi / 180, endAngle: a1 * .pi / 180, clockwise: false); c.strokePath() }
 
 let icons: [String: (CGContext) -> Void] = [
+  "hseboard": { c in   // a hard hat (dome, ridge, peak) above a tick
+    c.move(to: CGPoint(x: 120, y: 262)); c.addCurve(to: CGPoint(x: 360, y: 262), control1: CGPoint(x: 118, y: 118), control2: CGPoint(x: 362, y: 118)); c.strokePath()
+    line(c, [(210, 150), (210, 262)]); line(c, [(270, 150), (270, 262)])
+    line(c, [(95, 262), (360, 262), (425, 280)])
+    line(c, [(180, 350), (230, 398), (322, 305)])
+  },
   "standup": { c in   // three people, a stopwatch above them
     circle(c, 250, 150, 52); line(c, [(250, 150), (250, 118)]); line(c, [(250, 150), (274, 166)]); line(c, [(232, 86), (268, 86)])
     for x: CGFloat in [140, 250, 360] { circle(c, x, 280, 30); arc(c, x, 395, 58, 180, 360) }
