@@ -1,0 +1,17 @@
+{
+  "id": "com.meterbit.cloud-cost",
+  "name": "Cloud Cost Meter",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "maker",
+  "screen": "full",
+  "kit": "compat",
+  "about": "This month's cloud bill so far, from AWS, DigitalOcean, Akamai (Linode) or your own JSON address: up to four accounts, the total, where the month is heading, and each budget. A chime when an account heads over its budget.",
+  "net": [
+    "api.digitalocean.com",
+    "api.linode.com",
+    "ce.us-east-1.amazonaws.com"
+  ],
+  "ownerNet": true
+}

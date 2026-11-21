@@ -23,6 +23,35 @@ func circle(_ c: CGContext, _ x: CGFloat, _ y: CGFloat, _ r: CGFloat, fill: Bool
 func arc(_ c: CGContext, _ x: CGFloat, _ y: CGFloat, _ r: CGFloat, _ a0: CGFloat, _ a1: CGFloat){ c.addArc(center: CGPoint(x: x, y: y), radius: r, startAngle: a0 * .pi / 180, endAngle: a1 * .pi / 180, clockwise: false); c.strokePath() }
 
 let icons: [String: (CGContext) -> Void] = [
+  "prboard": { c in   // a pull request: a branch between two commits, and one coming back with an arrow
+    circle(c, 160, 125, 34); circle(c, 160, 375, 34); circle(c, 340, 375, 34)
+    line(c, [(160, 159), (160, 341)])
+    c.move(to: CGPoint(x: 340, y: 341)); c.addLine(to: CGPoint(x: 340, y: 200)); c.addCurve(to: CGPoint(x: 270, y: 125), control1: CGPoint(x: 340, y: 150), control2: CGPoint(x: 310, y: 125)); c.addLine(to: CGPoint(x: 225, y: 125)); c.strokePath()
+    line(c, [(262, 88), (225, 125), (262, 162)])
+  },
+  "oncall": { c in   // a beacon on its base, with its light and rays
+    c.move(to: CGPoint(x: 145, y: 315)); c.addCurve(to: CGPoint(x: 355, y: 315), control1: CGPoint(x: 145, y: 160), control2: CGPoint(x: 355, y: 160)); c.strokePath()
+    c.addPath(CGPath(roundedRect: CGRect(x: 115, y: 315, width: 270, height: 70), cornerWidth: 14, cornerHeight: 14, transform: nil)); c.strokePath()
+    circle(c, 250, 268, 20, fill: true)
+    line(c, [(250, 85), (250, 130)]); line(c, [(115, 140), (148, 172)]); line(c, [(385, 140), (352, 172)])
+  },
+  "release": { c in   // a rocket lifting off
+    c.move(to: CGPoint(x: 250, y: 80)); c.addCurve(to: CGPoint(x: 302, y: 305), control1: CGPoint(x: 305, y: 130), control2: CGPoint(x: 305, y: 230))
+    c.addLine(to: CGPoint(x: 198, y: 305)); c.addCurve(to: CGPoint(x: 250, y: 80), control1: CGPoint(x: 195, y: 230), control2: CGPoint(x: 195, y: 130)); c.strokePath()
+    circle(c, 250, 190, 26)
+    line(c, [(203, 245), (155, 325), (200, 305)]); line(c, [(297, 245), (345, 325), (300, 305)])
+    line(c, [(222, 345), (250, 415), (278, 345)])
+  },
+  "cloudcost": { c in   // a cloud with a dollar sign
+    c.move(to: CGPoint(x: 135, y: 345)); c.addCurve(to: CGPoint(x: 160, y: 230), control1: CGPoint(x: 70, y: 345), control2: CGPoint(x: 80, y: 235))
+    c.addCurve(to: CGPoint(x: 265, y: 150), control1: CGPoint(x: 170, y: 165), control2: CGPoint(x: 235, y: 135))
+    c.addCurve(to: CGPoint(x: 350, y: 220), control1: CGPoint(x: 305, y: 150), control2: CGPoint(x: 340, y: 180))
+    c.addCurve(to: CGPoint(x: 365, y: 345), control1: CGPoint(x: 430, y: 225), control2: CGPoint(x: 435, y: 345)); c.closePath(); c.strokePath()
+    c.move(to: CGPoint(x: 290, y: 216)); c.addCurve(to: CGPoint(x: 212, y: 230), control1: CGPoint(x: 272, y: 190), control2: CGPoint(x: 215, y: 196))
+    c.addCurve(to: CGPoint(x: 288, y: 278), control1: CGPoint(x: 210, y: 266), control2: CGPoint(x: 292, y: 244))
+    c.addCurve(to: CGPoint(x: 208, y: 290), control1: CGPoint(x: 285, y: 314), control2: CGPoint(x: 225, y: 318)); c.strokePath()
+    line(c, [(250, 183), (250, 316)])
+  },
   "hseboard": { c in   // a hard hat (dome, ridge, peak) above a tick
     c.move(to: CGPoint(x: 120, y: 262)); c.addCurve(to: CGPoint(x: 360, y: 262), control1: CGPoint(x: 118, y: 118), control2: CGPoint(x: 362, y: 118)); c.strokePath()
     line(c, [(210, 150), (210, 262)]); line(c, [(270, 150), (270, 262)])

@@ -1,0 +1,14 @@
+{
+  "id": "com.meterbit.pr-board",
+  "name": "PR Board",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "maker",
+  "screen": "full",
+  "kit": "compat",
+  "about": "Your GitHub work at a glance: pull requests waiting for your review, your own pull requests with their reviews and checks, and the issues assigned to you. A new review request gets a chime.",
+  "net": [
+    "api.github.com"
+  ]
+}
