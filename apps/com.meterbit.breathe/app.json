@@ -1,0 +1,11 @@
+{
+  "id": "com.meterbit.breathe",
+  "name": "Breathe",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "health",
+  "screen": "full",
+  "kit": "compat",
+  "about": "Guided breathing: a shape on the panel grows as you breathe in and shrinks as you breathe out, for one to ten minutes. Box breathing, 4-7-8, slow breathing or a longer breath out, with soft tones if you like."
+}

@@ -23,6 +23,36 @@ func circle(_ c: CGContext, _ x: CGFloat, _ y: CGFloat, _ r: CGFloat, fill: Bool
 func arc(_ c: CGContext, _ x: CGFloat, _ y: CGFloat, _ r: CGFloat, _ a0: CGFloat, _ a1: CGFloat){ c.addArc(center: CGPoint(x: x, y: y), radius: r, startAngle: a0 * .pi / 180, endAngle: a1 * .pi / 180, clockwise: false); c.strokePath() }
 
 let icons: [String: (CGContext) -> Void] = [
+  "water": { c in   // a glass half full, a drop above it
+    line(c, [(150, 190), (175, 410), (325, 410), (350, 190)])
+    line(c, [(165, 300), (335, 300)])
+    c.move(to: CGPoint(x: 250, y: 75)); c.addCurve(to: CGPoint(x: 250, y: 165), control1: CGPoint(x: 215, y: 120), control2: CGPoint(x: 205, y: 165))
+    c.addCurve(to: CGPoint(x: 250, y: 75), control1: CGPoint(x: 295, y: 165), control2: CGPoint(x: 285, y: 120)); c.strokePath()
+  },
+  "breathe": { c in   // three circles, one in another, breathing out
+    circle(c, 250, 250, 55); circle(c, 250, 250, 110)
+    for a: CGFloat in [20, 110, 200, 290] { arc(c, 250, 250, 165, a, a + 50) }
+  },
+  "airuv": { c in   // the sun, and a flower (pollen) below it
+    circle(c, 175, 175, 50)
+    for k in 0..<8 { let a = CGFloat(k) * .pi / 4; line(c, [(175 + 75 * cos(a), 175 + 75 * sin(a)), (175 + 105 * cos(a), 175 + 105 * sin(a))]) }
+    line(c, [(330, 405), (330, 318)]); c.move(to: CGPoint(x: 330, y: 372)); c.addCurve(to: CGPoint(x: 392, y: 340), control1: CGPoint(x: 350, y: 342), control2: CGPoint(x: 372, y: 338)); c.strokePath()
+    circle(c, 330, 268, 18, fill: true)
+    for k in 0..<5 { let a = CGFloat(k) * 2 * .pi / 5 - .pi / 2; circle(c, 330 + 44 * cos(a), 268 + 44 * sin(a), 16) }
+  },
+  "sleep": { c in   // a crescent moon and two small stars
+    c.move(to: CGPoint(x: 300, y: 95)); c.addCurve(to: CGPoint(x: 310, y: 405), control1: CGPoint(x: 90, y: 130), control2: CGPoint(x: 100, y: 400))
+    c.addCurve(to: CGPoint(x: 300, y: 95), control1: CGPoint(x: 240, y: 330), control2: CGPoint(x: 235, y: 170)); c.strokePath()
+    circle(c, 370, 175, 14, fill: true); circle(c, 395, 290, 10, fill: true); circle(c, 330, 250, 8, fill: true)
+  },
+  "baby": { c in   // a calendar page with a heart
+    c.addPath(CGPath(roundedRect: CGRect(x: 110, y: 120, width: 280, height: 270), cornerWidth: 24, cornerHeight: 24, transform: nil)); c.strokePath()
+    line(c, [(110, 190), (390, 190)]); line(c, [(180, 90), (180, 145)]); line(c, [(320, 90), (320, 145)])
+    c.move(to: CGPoint(x: 250, y: 345)); c.addCurve(to: CGPoint(x: 185, y: 250), control1: CGPoint(x: 210, y: 315), control2: CGPoint(x: 185, y: 285))
+    c.addCurve(to: CGPoint(x: 250, y: 245), control1: CGPoint(x: 185, y: 215), control2: CGPoint(x: 235, y: 210))
+    c.addCurve(to: CGPoint(x: 315, y: 250), control1: CGPoint(x: 265, y: 210), control2: CGPoint(x: 315, y: 215))
+    c.addCurve(to: CGPoint(x: 250, y: 345), control1: CGPoint(x: 315, y: 285), control2: CGPoint(x: 290, y: 315)); c.strokePath()
+  },
   "prboard": { c in   // a pull request: a branch between two commits, and one coming back with an arrow
     circle(c, 160, 125, 34); circle(c, 160, 375, 34); circle(c, 340, 375, 34)
     line(c, [(160, 159), (160, 341)])

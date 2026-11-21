@@ -1,0 +1,15 @@
+{
+  "id": "com.meterbit.air-uv-pollen",
+  "name": "Air, UV & Pollen",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "health",
+  "screen": "full",
+  "kit": "compat",
+  "about": "Today's outdoor conditions where you live: the air quality index, the UV index with the hours to wear sunscreen, and grass, tree and weed pollen (in Europe). Free Open-Meteo data, no key needed.",
+  "net": [
+    "air-quality-api.open-meteo.com",
+    "geocoding-api.open-meteo.com"
+  ]
+}
