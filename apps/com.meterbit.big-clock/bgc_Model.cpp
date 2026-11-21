@@ -14,6 +14,7 @@ void bgc_Settings_Default(Bgc_Settings_t& settings){
     settings.nightFrom = 22 * 60;
     settings.nightTo = 7 * 60;
     settings.customColor = MTB_KIT_RGB(255, 80, 160);
+    settings.show = BGC_SHOW_BOTH;
 }
 
 void bgc_Settings_Clamp(Bgc_Settings_t& settings){
@@ -27,6 +28,7 @@ void bgc_Settings_Clamp(Bgc_Settings_t& settings){
     if (settings.nightStyle > BGC_NIGHT_DIM) settings.nightStyle = BGC_NIGHT_RED;
     settings.nightFrom %= 1440;
     settings.nightTo %= 1440;
+    if (settings.show >= BGC_SHOW_COUNT) settings.show = BGC_SHOW_BOTH;
 }
 
 bool bgc_In_Window(uint16_t from, uint16_t to, uint16_t minute){

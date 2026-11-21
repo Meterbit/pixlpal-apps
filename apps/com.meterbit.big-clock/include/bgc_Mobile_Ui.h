@@ -12,6 +12,7 @@
  *   8 {"nightFrom", "nightTo"}      night hours, "HH:MM"
  *   9 {"nightStyle": 0-1}           deep red, or the theme dimmed
  *  10 {}                            set the clock from the network now
+ *  11 {"show": 0-2}                 the clock and date, the clock alone, the calendar alone
  * The argument names are also the keys of the values the app reports, with the status panel's clockText,
  * clockState, nightText, nightState and zone. Success toasts come before failure toasts.
  */
@@ -23,7 +24,7 @@ static const char BGC_UI_MANIFEST[] = R"json({
   "name": "Big Clock",
   "about": "The time across the whole display: giant segments, bold type, a dial or words, in seven colour themes, with a night mode for the bedside.",
   "author": "Meterbit Cyb",
-  "version": "v2.0.0"
+  "version": "v2.1.0"
 })json";
 
 static const char BGC_UI_API[] = R"json({
@@ -36,6 +37,22 @@ static const char BGC_UI_API[] = R"json({
         { "label": "Time zone", "value": "{zone}" },
         { "label": "Night mode", "value": "{nightText}", "state": "{nightState}" }
       ]
+    },
+    {
+      "type": "radioGroup",
+      "title": "Show",
+      "default": 0,
+      "options": [
+        { "label": "Clock and date", "value": 0 },
+        { "label": "Clock only, as large as it goes", "value": 1 },
+        { "label": "Calendar only, as large as it goes", "value": 2 }
+      ],
+      "command": { "app_command": 11, "args": ["show"] }
+    },
+    {
+      "type": "richTextBlock",
+      "blocks": [ { "type": "note", "text": "Two Pixlpals side by side: set one to the clock and the other to the calendar, to read both from across the room." } ],
+      "visibleWhen": { "arg": "show", "notEquals": 0 }
     },
     {
       "type": "radioGroup",
@@ -78,8 +95,8 @@ static const char BGC_UI_API[] = R"json({
       "title": "What to Show",
       "widgets": [
         { "type": "switch", "title": "24-Hour Clock", "default": false, "command": { "app_command": 3, "args": ["hour24"] } },
-        { "type": "switch", "title": "Seconds", "default": true, "command": { "app_command": 4, "args": ["seconds"] } },
-        { "type": "switch", "title": "Date", "default": true, "command": { "app_command": 5, "args": ["date"] } },
+        { "type": "switch", "title": "Seconds", "default": true, "command": { "app_command": 4, "args": ["seconds"] }, "visibleWhen": { "arg": "show", "notEquals": 2 } },
+        { "type": "switch", "title": "Date", "default": true, "command": { "app_command": 5, "args": ["date"] }, "visibleWhen": { "arg": "show", "equals": 0 } },
         {
           "type": "slider",
           "title": "Change Face Every",
@@ -88,7 +105,7 @@ static const char BGC_UI_API[] = R"json({
         },
         {
           "type": "richTextBlock",
-          "blocks": [ { "type": "note", "text": "0 keeps one face. On Pixlpal: click the knob for the next face, double click for the next colours, long press to start or stop faces changing." } ]
+          "blocks": [ { "type": "note", "text": "0 keeps one face. On Pixlpal: click the knob for the next face, double click for the next colours, triple click to switch between clock and date, clock only and calendar only, long press to start or stop faces changing. The calendar uses the Bold face's solid digits, or segment digits for the other faces." } ]
         }
       ]
     },
@@ -134,6 +151,7 @@ static const char BGC_UI_API[] = R"json({
     { "when": { "app_command": 8 }, "text": "Night hours saved" },
     { "when": { "app_command": 9 }, "text": "Saved" },
     { "when": { "app_command": 10 }, "text": "Setting the clock" },
+    { "when": { "app_command": 11 }, "text": "Saved" },
     { "when": { "app_command": 2, "response": 0 }, "text": "Not a colour" },
     { "when": { "app_command": 8, "response": 0 }, "text": "Start and end must differ" },
     { "when": { "app_command": 10, "response": 0 }, "text": "Pixlpal is not online" }

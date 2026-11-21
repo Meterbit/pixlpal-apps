@@ -1,6 +1,7 @@
 /**
  * Big Clock app, ID {0,3}: the time across the whole panel, in four faces (giant segments, bold type, a dial, words)
  * and seven colour themes, with a night mode for the bedside. Runs without the internet once the clock is set.
+ * Show: the face with its date, the time alone, or the date alone (large, for two Pixlpals side by side).
  *
  * The faces are drawn by bgc_Ui.cpp; the settings, palettes and words are in bgc_Model.cpp.
  */
@@ -55,6 +56,7 @@ static void bgc_Ble_Night(JsonDocument& command);
 static void bgc_Ble_Night_Times(JsonDocument& command);
 static void bgc_Ble_Night_Style(JsonDocument& command);
 static void bgc_Ble_Sync(JsonDocument& command);
+static void bgc_Ble_Show(JsonDocument& command);
 
 //##############################################################################################################
 static bool bgc_Read_Saved_Settings(Bgc_Settings_t& settings){
@@ -79,7 +81,8 @@ void bigClock_App_Task(void* dApplication){
     Mtb_Applications *THIS_APP = (Mtb_Applications *)dApplication;
     THIS_APP->mtb_App_Set_EC11_Cb_Fns(bgc_Button, mtb_Brightness_Control);
     THIS_APP->mtb_App_Set_Ble_Comm_Fns(bgc_Ble_Face, bgc_Ble_Theme, bgc_Ble_Color, bgc_Ble_Hour24, bgc_Ble_Seconds, bgc_Ble_Date,
-                                       bgc_Ble_Auto_Face, bgc_Ble_Night, bgc_Ble_Night_Times, bgc_Ble_Night_Style, bgc_Ble_Sync);
+                                       bgc_Ble_Auto_Face, bgc_Ble_Night, bgc_Ble_Night_Times, bgc_Ble_Night_Style, bgc_Ble_Sync,
+                                       bgc_Ble_Show);
     THIS_APP->mtb_App_Init();
     //************************************************************************************ */
     if (!bgc_Read_Saved_Settings(bgcSettings)) bgc_Save_Settings();
@@ -105,7 +108,8 @@ void bigClock_App_Task(void* dApplication){
             redraw = true;
         }
 
-        // The knob: click, next face; double click, next theme; long press, faces rotate or stay.
+        // The knob: click, next face; double click, next theme; triple click, what to show (clock and date, clock,
+        // calendar); long press, faces rotate or stay.
         const uint8_t clicks = clicksRequested;
         if (clicks || longPressRequested){
             clicksRequested = 0;
@@ -117,6 +121,7 @@ void bigClock_App_Task(void* dApplication){
                 bgcSettings.face = face;
                 faceSinceMs = millis();
             } else if (clicks == 2) bgcSettings.theme = (bgcSettings.theme + 1) % BGC_THEME_COUNT;
+            else if (clicks == 3) bgcSettings.show = (bgcSettings.show + 1) % BGC_SHOW_COUNT;
             bgc_Save_Settings();
             redraw = true;
         }
@@ -166,7 +171,7 @@ void bigClock_App_Task(void* dApplication){
 static void bgc_Button(button_event_t button){
     switch (button.type){
         case BUTTON_PRESSED_LONG: longPressRequested = true; break;
-        case BUTTON_CLICKED: if (button.count >= 1 && button.count <= 2) clicksRequested = (uint8_t)button.count; break;
+        case BUTTON_CLICKED: if (button.count >= 1 && button.count <= 3) clicksRequested = (uint8_t)button.count; break;
         default: break;
     }
 }
@@ -199,6 +204,7 @@ static void bgc_Mobile_Ui_Values(JsonObject values){
     values["autoFace"] = s.autoFaceMinutes;
     values["night"] = s.night;
     values["nightStyle"] = s.nightStyle;
+    values["show"] = s.show;
     char clock[8];
     mtb_Kit_Clock_Text(clock, sizeof(clock), s.nightFrom);
     values["nightFrom"] = clock;
@@ -302,6 +308,16 @@ static void bgc_Ble_Night_Style(JsonDocument& command){
     Bgc_Settings_t next;
     bgc_Begin_Change(next);
     next.nightStyle = (uint8_t)value;
+    bgc_End_Change(next);
+}
+
+// Command 11: {"show": 0 the clock and date, 1 the clock alone, 2 the calendar alone}
+static void bgc_Ble_Show(JsonDocument& command){
+    long value;
+    if (!mtb_Kit_Json_Range(command["show"], 0, BGC_SHOW_COUNT - 1, value)){ mtb_Ble_App_Cmd_Reject(); return; }
+    Bgc_Settings_t next;
+    bgc_Begin_Change(next);
+    next.show = (uint8_t)value;
     bgc_End_Change(next);
 }
 

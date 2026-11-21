@@ -1,7 +1,7 @@
 {
   "format": 1,
-  "sequence": 13,
-  "generated": "2026-11-16T19:56:09Z",
+  "sequence": 14,
+  "generated": "2026-11-21T03:40:36Z",
   "baseUrl": "https://raw.githubusercontent.com/Meterbit/pixlpal-apps/main/catalogue/",
   "categories": {
     "clocks": "Clocks & Timers",
@@ -64,16 +64,16 @@
     {
       "id": "com.meterbit.big-clock",
       "name": "Big Clock",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": "Meterbit Cyb",
-      "about": "The time in big digits, in a style you choose, with the date, seconds and your alarms.",
+      "about": "The time in big digits, in a style you choose, with the date, seconds and your alarms. Or the clock alone, or the calendar alone, large enough to read across a room.",
       "category": "clocks",
       "appID": "0/3",
       "api": "0.6",
       "net": [],
-      "size": 107314,
-      "sha256": "d62109b6d233f054a08e9be9f3c1d256f5fb86f14697114304ae5fc911fd89b8",
-      "package": "packages/com.meterbit.big-clock/1.0.0.pxa",
+      "size": 109971,
+      "sha256": "4ba25a27210855eb17ca8ebae5b53368fdd4d1a7220dc0faba80357163961424",
+      "package": "packages/com.meterbit.big-clock/1.1.0.pxa",
       "icon": "icons/com.meterbit.big-clock.png",
       "source": "apps/com.meterbit.big-clock"
     },
