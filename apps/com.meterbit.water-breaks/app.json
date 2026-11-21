@@ -1,0 +1,11 @@
+{
+  "id": "com.meterbit.water-breaks",
+  "name": "Water & Breaks",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "health",
+  "screen": "full",
+  "kit": "compat",
+  "about": "For your desk: glasses of water against a daily goal (click the knob for each), reminders to stand up and stretch, and 20-20-20 eye breaks for screen work, all within your working hours."
+}
