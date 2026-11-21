@@ -1,0 +1,14 @@
+{
+  "id": "com.meterbit.league-table",
+  "name": "League Table",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "sports",
+  "screen": "full",
+  "kit": "compat",
+  "about": "Your football league on the panel: the table with points, goal difference and form, the top scorers, and this round's results and fixtures, with your team highlighted. Premier League, La Liga, Serie A, Bundesliga and more.",
+  "net": [
+    "api.football-data.org"
+  ]
+}
