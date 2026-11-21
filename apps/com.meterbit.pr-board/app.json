@@ -10,5 +10,6 @@
   "about": "Your GitHub work at a glance: pull requests waiting for your review, your own pull requests with their reviews and checks, and the issues assigned to you. A new review request gets a chime.",
   "net": [
     "api.github.com"
-  ]
+  ],
+  "appID": "100/25"
 }
