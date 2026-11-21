@@ -10,5 +10,6 @@
   "about": "A countdown to your next release, code freeze or launch, with the milestones after it, a code freeze sign, and your repository's latest GitHub release and production deploy. Ship day gets a fanfare.",
   "net": [
     "api.github.com"
-  ]
+  ],
+  "appID": "100/26"
 }

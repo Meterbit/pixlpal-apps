@@ -1,7 +1,7 @@
 {
   "format": 1,
-  "sequence": 15,
-  "generated": "2026-11-21T08:04:38Z",
+  "sequence": 16,
+  "generated": "2026-11-21T20:32:40Z",
   "baseUrl": "https://raw.githubusercontent.com/Meterbit/pixlpal-apps/main/catalogue/",
   "categories": {
     "clocks": "Clocks & Timers",
@@ -216,6 +216,27 @@
       "package": "packages/com.meterbit.catholic-daily/1.1.0.pxa",
       "icon": "icons/com.meterbit.catholic-daily.png",
       "source": "apps/com.meterbit.catholic-daily"
+    },
+    {
+      "id": "com.meterbit.cloud-cost",
+      "name": "Cloud Cost Meter",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "This month's cloud bill so far, from AWS, DigitalOcean, Akamai (Linode) or your own JSON address: up to four accounts, the total, where the month is heading, and each budget. A chime when an account heads over its budget.",
+      "category": "maker",
+      "appID": "100/23",
+      "api": "0.6",
+      "net": [
+        "api.digitalocean.com",
+        "api.linode.com",
+        "ce.us-east-1.amazonaws.com"
+      ],
+      "size": 135143,
+      "sha256": "5371e8dbbd8fb12521c9a71f9ca1fb6519784fb8e5a9e0335eea1df95bdd7830",
+      "package": "packages/com.meterbit.cloud-cost/1.0.0.pxa",
+      "icon": "icons/com.meterbit.cloud-cost.png",
+      "source": "apps/com.meterbit.cloud-cost",
+      "ownerNet": true
     },
     {
       "id": "com.meterbit.code-quest",
@@ -816,6 +837,26 @@
       "source": "apps/com.meterbit.oil-price-api"
     },
     {
+      "id": "com.meterbit.on-call",
+      "name": "On-Call Board",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Your team's open incidents from PagerDuty or incident.io and who is on call, readable across the room. A new incident sounds an alarm and flashes red until someone takes it; all clear shows green.",
+      "category": "maker",
+      "appID": "100/24",
+      "api": "0.6",
+      "net": [
+        "api.pagerduty.com",
+        "api.eu.pagerduty.com",
+        "api.incident.io"
+      ],
+      "size": 134766,
+      "sha256": "aa700b52cfe9ead16fa93032b3dd64d451d112d5baa0656ed47b126951233846",
+      "package": "packages/com.meterbit.on-call/1.0.0.pxa",
+      "icon": "icons/com.meterbit.on-call.png",
+      "source": "apps/com.meterbit.on-call"
+    },
+    {
       "id": "com.meterbit.open-meteo",
       "name": "Open-Meteo",
       "version": "1.1.0",
@@ -871,6 +912,24 @@
       "source": "apps/com.meterbit.pixel-arcade"
     },
     {
+      "id": "com.meterbit.pr-board",
+      "name": "PR Board",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Your GitHub work at a glance: pull requests waiting for your review, your own pull requests with their reviews and checks, and the issues assigned to you. A new review request gets a chime.",
+      "category": "maker",
+      "appID": "100/25",
+      "api": "0.6",
+      "net": [
+        "api.github.com"
+      ],
+      "size": 122899,
+      "sha256": "fcbd9dc9e39ef7058ad6d9dfa504d2ab85fd82694be00337940876db480e05d1",
+      "package": "packages/com.meterbit.pr-board/1.0.0.pxa",
+      "icon": "icons/com.meterbit.pr-board.png",
+      "source": "apps/com.meterbit.pr-board"
+    },
+    {
       "id": "com.meterbit.queue-board",
       "name": "Queue Board",
       "version": "1.0.0",
@@ -885,6 +944,24 @@
       "package": "packages/com.meterbit.queue-board/1.0.0.pxa",
       "icon": "icons/com.meterbit.queue-board.png",
       "source": "apps/com.meterbit.queue-board"
+    },
+    {
+      "id": "com.meterbit.release-board",
+      "name": "Release Countdown",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "A countdown to your next release, code freeze or launch, with the milestones after it, a code freeze sign, and your repository's latest GitHub release and production deploy. Ship day gets a fanfare.",
+      "category": "maker",
+      "appID": "100/26",
+      "api": "0.6",
+      "net": [
+        "api.github.com"
+      ],
+      "size": 132794,
+      "sha256": "e2f5fe2decde62c6d74e901889ea080b5a046c5eba094f8b9812d04b29e87945",
+      "package": "packages/com.meterbit.release-board/1.0.0.pxa",
+      "icon": "icons/com.meterbit.release-board.png",
+      "source": "apps/com.meterbit.release-board"
     },
     {
       "id": "com.meterbit.room-sign",
