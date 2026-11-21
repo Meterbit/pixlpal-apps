@@ -1,0 +1,17 @@
+{
+  "id": "com.meterbit.hse-board",
+  "name": "HSE Board",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "productivity",
+  "screen": "full",
+  "kit": "compat",
+  "about": "A site safety board readable across the room: days without a lost-time injury and the best record, injuries, first aid cases, near misses and observations, LTIFR and TRIFR, the message of the week and safety signs. For factories, oil and gas, mining, construction, facilities and warehouses.",
+  "net": [
+    "docs.google.com",
+    "*.googleusercontent.com"
+  ],
+  "ownerNet": true,
+  "appID": "100/22"
+}
