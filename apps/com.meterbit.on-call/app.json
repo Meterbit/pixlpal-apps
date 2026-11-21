@@ -1,0 +1,16 @@
+{
+  "id": "com.meterbit.on-call",
+  "name": "On-Call Board",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "maker",
+  "screen": "full",
+  "kit": "compat",
+  "about": "Your team's open incidents from PagerDuty or incident.io and who is on call, readable across the room. A new incident sounds an alarm and flashes red until someone takes it; all clear shows green.",
+  "net": [
+    "api.pagerduty.com",
+    "api.eu.pagerduty.com",
+    "api.incident.io"
+  ]
+}
