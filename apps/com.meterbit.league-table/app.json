@@ -10,5 +10,6 @@
   "about": "Your football league on the panel: the table with points, goal difference and form, the top scorers, and this round's results and fixtures, with your team highlighted. Premier League, La Liga, Serie A, Bundesliga and more.",
   "net": [
     "api.football-data.org"
-  ]
+  ],
+  "appID": "100/34"
 }

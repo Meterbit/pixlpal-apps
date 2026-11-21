@@ -10,5 +10,6 @@
   "about": "Live cricket: runs, wickets and overs for every innings, what the chasing side needs, and today's matches and results, with your team first. A wicket in your team's match gets a call. From CricketData.org with your free key.",
   "net": [
     "api.cricapi.com"
-  ]
+  ],
+  "appID": "100/33"
 }

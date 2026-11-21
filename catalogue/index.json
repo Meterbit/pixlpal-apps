@@ -1,7 +1,7 @@
 {
   "format": 1,
-  "sequence": 17,
-  "generated": "2026-11-21T21:33:33Z",
+  "sequence": 18,
+  "generated": "2026-11-21T22:43:32Z",
   "baseUrl": "https://raw.githubusercontent.com/Meterbit/pixlpal-apps/main/catalogue/",
   "categories": {
     "clocks": "Clocks & Timers",
@@ -269,6 +269,24 @@
       "source": "apps/com.meterbit.catholic-daily"
     },
     {
+      "id": "com.meterbit.chess",
+      "name": "Chess",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "A live game from Lichess TV on the board as it is played: the moves, the players, their ratings and clocks, and the result, then the next game. Add your Lichess name for a page of your ratings. No key needed.",
+      "category": "sports",
+      "appID": "100/32",
+      "api": "0.6",
+      "net": [
+        "lichess.org"
+      ],
+      "size": 111678,
+      "sha256": "ef853b8043ea91ec80e271327a37401bc471d77fc62a5a7b3ba97594ff562efe",
+      "package": "packages/com.meterbit.chess/1.0.0.pxa",
+      "icon": "icons/com.meterbit.chess.png",
+      "source": "apps/com.meterbit.chess"
+    },
+    {
       "id": "com.meterbit.cloud-cost",
       "name": "Cloud Cost Meter",
       "version": "1.0.0",
@@ -362,6 +380,24 @@
       "package": "packages/com.meterbit.commute/1.1.0.pxa",
       "icon": "icons/com.meterbit.commute.png",
       "source": "apps/com.meterbit.commute"
+    },
+    {
+      "id": "com.meterbit.cricket-live",
+      "name": "Cricket Live",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Live cricket: runs, wickets and overs for every innings, what the chasing side needs, and today's matches and results, with your team first. A wicket in your team's match gets a call. From CricketData.org with your free key.",
+      "category": "sports",
+      "appID": "100/33",
+      "api": "0.6",
+      "net": [
+        "api.cricapi.com"
+      ],
+      "size": 115676,
+      "sha256": "4a0eda5b761e1e7c4b3abe7ab27fe0500d672aece6d4883572a95c22f2579243",
+      "package": "packages/com.meterbit.cricket-live/1.0.0.pxa",
+      "icon": "icons/com.meterbit.cricket-live.png",
+      "source": "apps/com.meterbit.cricket-live"
     },
     {
       "id": "com.meterbit.currency-exchange",
@@ -674,6 +710,24 @@
       "source": "apps/com.meterbit.kobo-terminal"
     },
     {
+      "id": "com.meterbit.league-table",
+      "name": "League Table",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Your football league on the panel: the table with points, goal difference and form, the top scorers, and this round's results and fixtures, with your team highlighted. Premier League, La Liga, Serie A, Bundesliga and more.",
+      "category": "sports",
+      "appID": "100/34",
+      "api": "0.6",
+      "net": [
+        "api.football-data.org"
+      ],
+      "size": 129004,
+      "sha256": "c8c944330126b505aafcdff03ab61aa399c565d1bc2ab39bee6604901308f820",
+      "package": "packages/com.meterbit.league-table/1.0.0.pxa",
+      "icon": "icons/com.meterbit.league-table.png",
+      "source": "apps/com.meterbit.league-table"
+    },
+    {
       "id": "com.meterbit.live-football",
       "name": "Live Football",
       "version": "1.1.0",
@@ -782,6 +836,25 @@
       "package": "packages/com.meterbit.my-flight/1.0.0.pxa",
       "icon": "icons/com.meterbit.my-flight.png",
       "source": "apps/com.meterbit.my-flight"
+    },
+    {
+      "id": "com.meterbit.my-training",
+      "name": "My Training",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Your week from Strava: distance against a weekly goal, time and climbing, a bar for each day, and your latest run or ride with its pace. Runs, rides, walks and swims, in kilometres or miles.",
+      "category": "sports",
+      "appID": "100/35",
+      "api": "0.6",
+      "net": [
+        "www.strava.com",
+        "pixlpal-accounts.meterbit.workers.dev"
+      ],
+      "size": 139552,
+      "sha256": "880af280a8f3dfafbebabf373b31cde6ce56caa926e3f1c20c5f4775fe3ba04a",
+      "package": "packages/com.meterbit.my-training/1.0.0.pxa",
+      "icon": "icons/com.meterbit.my-training.png",
+      "source": "apps/com.meterbit.my-training"
     },
     {
       "id": "com.meterbit.name-picker",
@@ -1110,6 +1183,22 @@
       "source": "apps/com.meterbit.scam-alerts"
     },
     {
+      "id": "com.meterbit.scoreboard",
+      "name": "Scoreboard",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "A scoreboard for the games you play: names and colours, the score from the knob or your phone, a game clock with periods and a buzzer, and the scoring rules of volleyball, table tennis, badminton and tennis built in.",
+      "category": "sports",
+      "appID": "100/36",
+      "api": "0.6",
+      "net": [],
+      "size": 100931,
+      "sha256": "0fe6b05d8329f308c0c7872166cfef6b065f436caa41b5a8413b55d19dff865b",
+      "package": "packages/com.meterbit.scoreboard/1.0.0.pxa",
+      "icon": "icons/com.meterbit.scoreboard.png",
+      "source": "apps/com.meterbit.scoreboard"
+    },
+    {
       "id": "com.meterbit.sky-tonight",
       "name": "Sky Tonight",
       "version": "1.1.0",
@@ -1194,6 +1283,30 @@
       "package": "packages/com.meterbit.team-world/1.0.0.pxa",
       "icon": "icons/com.meterbit.team-world.png",
       "source": "apps/com.meterbit.team-world"
+    },
+    {
+      "id": "com.meterbit.team-tracker",
+      "name": "Team Tracker",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Your teams beyond football: the live score, the next game and the last result for up to four teams in basketball, American football, rugby, ice hockey, baseball, handball or volleyball. From API-Sports with your free key.",
+      "category": "sports",
+      "appID": "100/37",
+      "api": "0.6",
+      "net": [
+        "v1.basketball.api-sports.io",
+        "v1.american-football.api-sports.io",
+        "v1.rugby.api-sports.io",
+        "v1.hockey.api-sports.io",
+        "v1.baseball.api-sports.io",
+        "v1.handball.api-sports.io",
+        "v1.volleyball.api-sports.io"
+      ],
+      "size": 127154,
+      "sha256": "3935874ca18e687b46e17f113546b1f466dde22d8a7a3742ddaaf2df1ff5362b",
+      "package": "packages/com.meterbit.team-tracker/1.0.0.pxa",
+      "icon": "icons/com.meterbit.team-tracker.png",
+      "source": "apps/com.meterbit.team-tracker"
     },
     {
       "id": "com.meterbit.tell-the-time",

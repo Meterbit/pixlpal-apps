@@ -11,5 +11,6 @@
   "net": [
     "www.strava.com",
     "pixlpal-accounts.meterbit.workers.dev"
-  ]
+  ],
+  "appID": "100/35"
 }

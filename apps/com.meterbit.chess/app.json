@@ -10,5 +10,6 @@
   "about": "A live game from Lichess TV on the board as it is played: the moves, the players, their ratings and clocks, and the result, then the next game. Add your Lichess name for a page of your ratings. No key needed.",
   "net": [
     "lichess.org"
-  ]
+  ],
+  "appID": "100/32"
 }

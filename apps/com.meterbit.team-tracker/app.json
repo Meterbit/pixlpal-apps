@@ -16,5 +16,6 @@
     "v1.baseball.api-sports.io",
     "v1.handball.api-sports.io",
     "v1.volleyball.api-sports.io"
-  ]
+  ],
+  "appID": "100/37"
 }
