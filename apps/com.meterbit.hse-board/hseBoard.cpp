@@ -9,8 +9,8 @@
  *   - Man-hours without a lost-time injury and the year's LTIFR and TRIFR, from the man-hours worked a day (per
  *     1,000,000 hours, or per 200,000 as OSHA counts).
  *   - The safety message of the week.
- *   - A safety reminder for the sector (manufacturing, oil and gas, mining, construction, facility management,
- *     warehouse, or general) as an ISO 7010-style sign.
+ *   - A safety reminder for the sectors chosen (manufacturing, oil and gas, mining, construction, facility
+ *     management, warehouse, general: one or more, their reminders in turn) as an ISO 7010-style sign.
  *   - On a milestone day (30, 100, 365... days), a celebration, with a chime when it comes.
  *
  * The figures are recorded from the phone (an event today, or corrections), or read from a sheet (CSV or JSON: names
@@ -55,7 +55,7 @@ EXT_RAM_BSS_ATTR Mtb_Applications_FullScreen* hseBoard_App;
 Mtb_Applications* hseBoard_App_GetInstance(){
     if (!hseBoard_App){
         hseBoard_App = new Mtb_Applications_FullScreen(hseBoard_App_Task, &hseBoard_Task_H, "HSE Board", {0,0}, 8192);
-        hseBoard_App->mtb_App_Set_Mobile_UI(HSE_UI_MANIFEST, HSE_UI_API, nullptr, hse_Values);
+        hseBoard_App->mtb_App_Set_Mobile_UI(HSE_UI_MANIFEST, HSE_UI_API, HSE_UI_DATA, hse_Values);
     }
     return hseBoard_App;
 }
@@ -63,7 +63,8 @@ MTB_REGISTER_APP(hseBoard_App, 0, 0)          // the catalogue gives the app its
 
 struct Hse_Save_t {
     uint32_t magic;
-    uint8_t sector, reminders, sound, seconds, minutes, rateBase, undoKind, spare;
+    uint8_t sector, reminders, sound, seconds, minutes, rateBase, undoKind;
+    uint8_t sectors;                // bit N: sector N's reminders are shown (0 in 1.0.0's saves: just `sector`)
     int32_t lastLti;                // the day of the last lost-time injury (days since 1970-01-01); 0: none recorded
     uint32_t record;                // the best run, in days
     uint32_t hoursPerDay;           // man-hours worked a day, on average; 0: no hours or rates
@@ -104,10 +105,31 @@ static void read_Save(Hse_Save_t& s){
     mtb_Read_Nvs_Struct(NVS_KEY, &s, sizeof(s));
     if (s.magic != SAVE_MAGIC) defaults(s);
     if (s.sector >= HSE_SECTOR_COUNT) s.sector = 0;
+    s.sectors &= (uint8_t)((1u << HSE_SECTOR_COUNT) - 1);
+    if (!s.sectors) s.sectors = (uint8_t)(1u << s.sector);
     if (s.seconds < 5 || s.seconds > 60) s.seconds = 10;
     if (s.minutes < 1 || s.minutes > 60) s.minutes = 10;
     s.rateBase = s.rateBase ? 1 : 0;
     s.site[SITE_LEN - 1] = s.message[MSG_LEN - 1] = s.url[URL_LEN - 1] = '\0';
+}
+
+// The sectors chosen: their reminders one after another; one sector's slogan, or the General one for several.
+static uint8_t reminder_Count(const Hse_Save_t& s){
+    unsigned n = 0;
+    for (unsigned i = 0; i < HSE_SECTOR_COUNT; i++) if (s.sectors >> i & 1) n += HSE_SECTORS[i].count;
+    return (uint8_t)n;
+}
+static const Hse_Reminder_t& reminder_At(const Hse_Save_t& s, unsigned index){
+    for (unsigned i = 0; i < HSE_SECTOR_COUNT; i++){
+        if (!(s.sectors >> i & 1)) continue;
+        if (index < HSE_SECTORS[i].count) return HSE_SECTORS[i].reminders[index];
+        index -= HSE_SECTORS[i].count;
+    }
+    return HSE_SECTORS[0].reminders[0];
+}
+static const char* slogan(const Hse_Save_t& s){
+    for (unsigned i = 0; i < HSE_SECTOR_COUNT; i++) if (s.sectors == (1u << i)) return HSE_SECTORS[i].slogan;
+    return HSE_SECTORS[0].slogan;
 }
 
 // Days -----------------------------------------------------------------------------------------------------------------
@@ -383,10 +405,25 @@ static void cmd_Text(JsonDocument& c){
     } else { mtb_Ble_App_Cmd_Reject(); return; }
     phoneChanged = true;
 }
+// Command 3: {"sectors": ["General", "Oil and gas"]} (names, or numbers 0-6), one or more; or 1.0.0's {"sector": 0-6}.
 static void cmd_Sector(JsonDocument& c){
+    uint8_t mask = 0;
     long v;
-    if (!mtb_Kit_Json_Range(c["sector"], 0, HSE_SECTOR_COUNT - 1, v)){ mtb_Ble_App_Cmd_Reject(); return; }
-    save.sector = (uint8_t)v;
+    if (c["sectors"].is<JsonArrayConst>()){
+        for (JsonVariantConst item : c["sectors"].as<JsonArrayConst>()){
+            int found = -1;
+            if (mtb_Kit_Json_Range(item, 0, HSE_SECTOR_COUNT - 1, v)) found = (int)v;
+            else if (item.is<const char*>())
+                for (unsigned i = 0; i < HSE_SECTOR_COUNT; i++) if (!strcmp(item.as<const char*>(), HSE_SECTORS[i].name)) found = (int)i;
+            if (found < 0){ mtb_Ble_App_Cmd_Reject(); return; }
+            mask |= (uint8_t)(1u << found);
+        }
+    } else if (mtb_Kit_Json_Range(c["sector"], 0, HSE_SECTOR_COUNT - 1, v)) mask = (uint8_t)(1u << v);
+    if (!mask){ mtb_Ble_App_Cmd_Reject(); return; }
+    portENTER_CRITICAL(&lock);
+    save.sectors = mask;
+    for (unsigned i = 0; i < HSE_SECTOR_COUNT; i++) if (mask >> i & 1){ save.sector = (uint8_t)i; break; }   // the first, as 1.0.0 kept it
+    portEXIT_CRITICAL(&lock);
     phoneChanged = true;
 }
 static bool whole_Number(JsonVariantConst field, long low, long high, long& out){
@@ -485,7 +522,7 @@ enum Page_t : uint8_t { P_DAYS = 0, P_STATS, P_RATES, P_MESSAGE, P_REMINDER, P_M
 static void header(const Hse_Save_t& s, bool timeOk, const pxl_time_t& t){
     mtb_Panel_Fill_Rect(0, 0, W - 1, 10, C_HEAD);
     char left[SITE_LEN + 4], fit[SITE_LEN + 4];
-    snprintf(left, sizeof(left), "%s", s.site[0] ? s.site : HSE_SECTORS[s.sector].slogan);
+    snprintf(left, sizeof(left), "%s", s.site[0] ? s.site : slogan(s));
     mtb_Kit_Upper(left);
     mtb_Kit_Fit(fit, sizeof(fit), Terminal6x8, left, 170);
     mtb_Kit_Text(3, 2, Terminal6x8, C_SAFE, fit, C_HEAD);
@@ -727,7 +764,7 @@ static void hseBoard_App_Task(void* dApplication){
         else if (ms - pageSince >= (uint32_t)s->seconds * 1000u){ step++; pageSince = ms; }
         page = (step % 2 == 0) ? P_DAYS : others[(step / 2) % n];
         if (page != shownPage){
-            if (page == P_REMINDER) reminder = (uint8_t)((reminder + 1) % HSE_SECTORS[s->sector].count);
+            if (page == P_REMINDER) reminder = (uint8_t)((reminder + 1) % reminder_Count(*s));
             shownPage = page;
             redraw = true;
         }
@@ -743,7 +780,7 @@ static void hseBoard_App_Task(void* dApplication){
                 case P_STATS: draw_Stats(*s, timeOk, t); break;
                 case P_RATES: draw_Rates(*s, days, t); break;
                 case P_MESSAGE: draw_Message(*s); break;
-                case P_REMINDER: draw_Reminder(HSE_SECTORS[s->sector].reminders[reminder % HSE_SECTORS[s->sector].count]); break;
+                case P_REMINDER: draw_Reminder(reminder_At(*s, reminder % reminder_Count(*s))); break;
                 case P_MILESTONE: draw_Milestone(days, ms); break;
                 default: draw_Days(*s, days, day); break;
             }
@@ -780,6 +817,8 @@ static void hse_Values(JsonObject values){
     values["message"] = s->message;
     values["url"] = s->url;
     values["sector"] = s->sector;
+    JsonArray sectors = values["sectors"].to<JsonArray>();
+    for (unsigned i = 0; i < HSE_SECTOR_COUNT; i++) if (s->sectors >> i & 1) sectors.add(HSE_SECTORS[i].name);
     values["hours"] = s->hoursPerDay;
     values["rateBase"] = s->rateBase;
     values["seconds"] = s->seconds;

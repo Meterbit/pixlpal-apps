@@ -8,8 +8,10 @@
  *                                          4 a safety observation
  *   1 {}                                   undo the last event recorded here
  *   2 {"site"} | {"message"} | {"url"}     the site's name; the safety message of the week; the sheet (empty: none)
- *   3 {"sector": 0-6}                      general, manufacturing, oil and gas, mining, construction, facilities,
- *                                          warehouse: the slogan and the reminders shown
+ *   3 {"sectors": [names]}                 one or more of the "sectors" dataset's names (general, manufacturing, oil
+ *                                          and gas, mining, construction, facilities, warehouse): their reminders in
+ *                                          turn, and one sector's slogan (several: the General one). 1.0.0's
+ *                                          {"sector": 0-6} still works.
  *   4 {"hours": 0-10000000}                man-hours worked a day (0: no hours and rates shown)
  *   5 {"rateBase": 0|1}                    rates per 1,000,000 hours, or per 200,000 (OSHA)
  *   6 {"seconds": 5-60}                    seconds per page
@@ -26,7 +28,7 @@ static const char HSE_UI_MANIFEST[] = R"json({
   "name": "HSE Board",
   "about": "A safety board for the site: days without a lost-time injury in large figures with the best record, this month's and year's injuries, medical treatment and first aid cases, near misses and safety observations, man-hours and injury rates, the safety message of the week, and safety reminders for the sector. For manufacturing, oil and gas, mining, construction, facility management and warehouses. Record events from the phone, or keep every board on site in step from one sheet.",
   "author": "Meterbit Cyb",
-  "version": "v1.0.0"
+  "version": "v1.0.1"
 })json";
 
 static const char HSE_UI_API[] = R"json({
@@ -56,21 +58,7 @@ static const char HSE_UI_API[] = R"json({
       "title": "Site",
       "widgets": [
         { "type": "textField", "title": "Site Name", "emptyHint": "Ikeja Plant", "filledHint": "Change the name (empty: the sector's slogan)", "command": { "app_command": 2, "args": ["site"] } },
-        {
-          "type": "radioGroup",
-          "title": "Sector",
-          "default": 0,
-          "options": [
-            { "label": "General", "value": 0 },
-            { "label": "Manufacturing", "value": 1 },
-            { "label": "Oil and gas", "value": 2 },
-            { "label": "Mining and minerals", "value": 3 },
-            { "label": "Construction", "value": 4 },
-            { "label": "Building and facility management", "value": 5 },
-            { "label": "Warehouse and logistics", "value": 6 }
-          ],
-          "command": { "app_command": 3, "args": ["sector"] }
-        },
+        { "type": "dropDownList", "title": "Sectors", "dataset": "sectors", "buttonLabel": "CHOOSE ONE OR MORE", "sendAs": "array", "command": { "app_command": 3, "args": ["sectors"] } },
         { "type": "textField", "title": "Man-Hours Worked a Day", "emptyHint": "1200 (an average for every day of the week)", "filledHint": "Change it (0: no hours and rates)", "command": { "app_command": 4, "args": ["hours"] } },
         {
           "type": "radioGroup",
@@ -80,7 +68,7 @@ static const char HSE_UI_API[] = R"json({
           "command": { "app_command": 5, "args": ["rateBase"] }
         },
         { "type": "slider", "title": "Each Page For", "min": 5, "max": 60, "default": 10, "step": 5, "suffix": " s", "command": { "app_command": 6, "args": ["seconds"] } },
-        { "type": "switch", "title": "Safety Reminders for the Sector", "default": true, "command": { "app_command": 7, "args": ["reminders"] } },
+        { "type": "switch", "title": "Safety Reminders for the Sectors", "default": true, "command": { "app_command": 7, "args": ["reminders"] } },
         { "type": "switch", "title": "Chime at Milestones", "default": true, "command": { "app_command": 7, "args": ["sound"] } }
       ]
     },
@@ -130,6 +118,8 @@ static const char HSE_UI_API[] = R"json({
     { "when": { "app_command": 1, "response": 0 }, "text": "Nothing to undo" },
     { "when": { "app_command": 2 }, "text": "Saved" },
     { "when": { "app_command": 2, "response": 0 }, "text": "That doesn't fit: check the text or the web address" },
+    { "when": { "app_command": 3 }, "text": "Sectors saved" },
+    { "when": { "app_command": 3, "response": 0 }, "text": "Choose at least one sector" },
     { "when": { "app_command": 4 }, "text": "Saved" },
     { "when": { "app_command": 4, "response": 0 }, "text": "Write a whole number" },
     { "when": { "app_command": 8 }, "text": "Saved" },
@@ -138,6 +128,21 @@ static const char HSE_UI_API[] = R"json({
     { "when": { "app_command": 9, "response": 0 }, "text": "Write a whole number" },
     { "when": { "app_command": 10, "response": 0 }, "text": "Open HSE Board on Pixlpal first, and give it a sheet" }
   ]
+})json";
+
+// The "sectors" list (hse_Sectors.h's names, in its order).
+static const char HSE_UI_DATA[] = R"json({
+  "datasets": {
+    "sectors": [
+      { "name": "General", "value": "General" },
+      { "name": "Manufacturing", "value": "Manufacturing" },
+      { "name": "Oil and gas", "value": "Oil and gas" },
+      { "name": "Mining and minerals", "value": "Mining and minerals" },
+      { "name": "Construction", "value": "Construction" },
+      { "name": "Building and facility management", "value": "Building and facility management" },
+      { "name": "Warehouse and logistics", "value": "Warehouse and logistics" }
+    ]
+  }
 })json";
 
 #endif
