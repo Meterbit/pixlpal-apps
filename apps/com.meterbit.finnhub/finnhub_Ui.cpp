@@ -109,7 +109,7 @@ static void fh_Draw_Triangle(int16_t x, int16_t y, int16_t size, bool up, uint16
 
 //************************************************************************************ */
 void fh_Ui_Clear_Content(void){
-    mtb_Panel_Fill_Rect(0, HERO_Y1, PANEL_RES_X - 1, PANEL_RES_Y - 1, BLACK);
+    mtb_Panel_Fill_Rect(0, HERO_Y1, PANEL_RES_X - 1, NEWS_RULE_Y, BLACK);   // not the ticker below: Pixlpal scrolls it
     mtb_Panel_Draw_HLine(HERO_RULE_Y, 0, PANEL_RES_X - 1, C_LINE);
     mtb_Panel_Draw_HLine(WATCH_RULE_Y, 0, PANEL_RES_X - 1, C_LINE);
     mtb_Panel_Draw_HLine(NEWS_RULE_Y, 0, PANEL_RES_X - 1, C_LINE);

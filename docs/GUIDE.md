@@ -476,6 +476,20 @@ static void fetch(void* arg){
 /* in pxl_start or pxl_main: */ pxl_task_start(fetch, 0, stack, sizeof stack);
 ```
 
+**Tickers (0.7)**: `pxl_ticker(x, y, w, font, color, background, speed, passes, text)` scrolls text right to left
+across a strip of the screen, `w` pixels wide and the font's height tall, by Pixlpal itself, as its built-in apps'
+tickers are. It moves one pixel every `speed` ms (10 to 1000) in step with the panel, `passes` times, whatever your
+app is doing meanwhile; scrolling you draw yourself moves only when your app waits, so it stutters through a request or
+a long redraw. A ticker is known by its position: a new text at the same `(x, y)` replaces it. `pxl_ticker_active(x, y)`
+says whether it is still going, and `pxl_ticker_stop(x, y)` stops it and clears the strip. Up to 4 per app, up to 1000
+characters each. Don't draw over the strip while it scrolls. `pxl_ticker` returns 0 if it couldn't start (then draw
+the text yourself). A compat app's `Mtb_ScrollText_t` uses it once the app says `"api": "0.7"`.
+
+```c
+if (!pxl_ticker_active(0, 120))
+    pxl_ticker(0, 120, PXL_W, PXL_FONT_NORMAL, PXL_RGB(255, 255, 0), PXL_BLACK, 20, 1, "BTC 64,210  ETH 3,105");
+```
+
 **Apps written for Pixlpal's firmware** build almost unchanged with `"kit": "compat"`: the compat layer provides the
 firmware's app framework on the API. [sdk/compat/README.md](../sdk/compat/README.md) explains it; the catalogue's
 `com.meterbit.*` apps are all built that way.
@@ -498,7 +512,9 @@ firmware's app framework on the API. [sdk/compat/README.md](../sdk/compat/README
 | `name` | yes | What owners see (at most 39 bytes) |
 | `version` | yes | Numbers and dots, like `1.2.0`. Raise it with every change you publish. |
 | `author` | yes | You or your team (at most 31 bytes) |
-| `api` | yes | The Pixlpal App API version the app was written for: `0.6` (or older, for an app that uses nothing newer; an app built with `"kit": "compat"` needs `0.6`). A Pixlpal with older software refuses an app that needs a newer API, and asks its owner to update. |
+| `api` | yes | The Pixlpal App API version the app was written for: `0.7` (or older, for an app that uses nothing newer; an app built with `"kit": "compat"` needs `0.6` or newer, and
+`0.7` for its `Mtb_ScrollText_t` to be scrolled by Pixlpal). The build refuses an app that uses a function newer than
+its `api`. A Pixlpal with older software refuses an app that needs a newer API, and asks its owner to update. |
 | `about` | catalogue | One or two sentences on what it does |
 | `category` | catalogue | Where the phone app lists it, beside the built-in apps of that category: `clocks`, `calendars`, `news`, `weather`, `sports`, `audio`, `kids`, `games`, `productivity`, `ai`, `notifications`, `markets`, `art`, `maker`, `home`, `learning`, `travel`, `faith`, `health`, `tools` or `other` (only under Installed on Pixlpal). Personal apps can have one too. |
 | `net` | no | The hosts the app reaches over the internet: `["api.example.com", "*.example.org"]`, and (0.5) `"http://host"` for one with no https. Up to 8 (24 with `api` 0.5). |

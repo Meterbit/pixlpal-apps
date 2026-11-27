@@ -51,14 +51,31 @@ API = {"fill", "rect", "frame", "pixel", "circle", "triangle", "text", "text_wid
        # 0.5
        "image", "image_size", "image_pixels",
        # 0.6
-       "task_start", "task_wait", "task_id"}
+       "task_start", "task_wait", "task_id",
+       # 0.7
+       "ticker", "ticker_active", "ticker_stop"}
+# The functions added after 0.2, by the API version that added them: an app that says an older "api" can be installed
+# on a Pixlpal that hasn't them, and stops there when it calls one.
+SINCE = {**{f: "0.3" for f in ("time", "clock_24h", "line", "round_rect", "bitmap", "bitmap_mono", "say", "silent",
+                               "http_request", "json_float", "json_count")},
+         **{f: "0.4" for f in ("yield", "sound_busy", "open_app", "open_previous_app", "usb_state", "brightness",
+                               "set_brightness", "brightness_step", "file_read", "file_write", "file_remove", "file_list",
+                               "phone_search", "phone_send", "phone_data", "status_text")},
+         **{f: "0.5" for f in ("image", "image_size", "image_pixels")},
+         **{f: "0.6" for f in ("task_start", "task_wait", "task_id")},
+         **{f: "0.7" for f in ("ticker", "ticker_active", "ticker_stop")}}
 # The WASI functions Pixlpal provides, for the C library (the time, random numbers, stdout into the log).
 WASI = {"clock_time_get", "fd_write", "fd_close", "fd_seek", "fd_fdstat_get", "fd_prestat_get", "fd_prestat_dir_name",
         "environ_sizes_get", "environ_get", "args_sizes_get", "args_get", "random_get", "sched_yield", "proc_exit"}
 
 
-def problems(path):
-    """Why the module would not run on Pixlpal, as a list of sentences (empty: it would)."""
+def version_key(v):
+    return tuple(int(x) for x in v.split("."))
+
+
+def problems(path, api=None):
+    """Why the module would not run on Pixlpal, as a list of sentences (empty: it would). With @p api (the manifest's),
+    also a function newer than that API version."""
     imports, exports = info(path)
     out = []
     outside = [f"{m}.{f}" for m, f, k in imports if m != "pixlpal" and not (m == "wasi_snapshot_preview1" and f in WASI)]
@@ -66,6 +83,10 @@ def problems(path):
                            + " (a C library function that needs files, sockets or threads: Pixlpal has none of those)")
     unknown = [f for m, f, k in imports if m == "pixlpal" and (f not in API or k != 0)]
     if unknown: out.append("it imports pixlpal functions that don't exist: " + ", ".join(unknown))
+    if api:
+        newer = sorted({(SINCE[f], f) for m, f, k in imports if m == "pixlpal" and f in SINCE and version_key(SINCE[f]) > version_key(api)})
+        if newer: out.append(f"app.json says \"api\": \"{api}\", but it uses " + ", ".join(f"pxl_{f} ({v})" for v, f in newer)
+                             + f": set \"api\" to \"{newer[-1][0]}\"")
     names = {f for f, k in exports}
     if "pxl_frame" not in names and "pxl_main" not in names:
         out.append("it exports neither pxl_frame nor pxl_main (PXL_EXPORT(\"pxl_frame\"))")

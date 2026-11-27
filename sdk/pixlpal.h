@@ -1,8 +1,8 @@
 /**
  * @file pixlpal.h
- * @brief The Pixlpal App API for WebAssembly apps, draft version 0.6. An app includes this file only; it reaches
+ * @brief The Pixlpal App API for WebAssembly apps, draft version 0.7. An app includes this file only; it reaches
  *        Pixlpal through nothing else. Set "api" in app.json to the version whose additions it uses (marked "0.3",
- *        "0.4", "0.5", "0.6" below); apps written for an older version run unchanged.
+ *        "0.4", "0.5", "0.6", "0.7" below); apps written for an older version run unchanged.
  *
  * The screen is 256 x 128 pixels. Colours are RGB565 (PXL_RGB(r, g, b) makes one). Coordinates outside the screen
  * are clipped.
@@ -252,6 +252,24 @@ PXL_IMPORT("task_start") int pxl_task_start(void (*fn)(void* arg), void* arg, vo
 PXL_IMPORT("task_wait")  int pxl_task_wait(int ms);
 /** 0 in the app's main code, the task's number (1, 2) in a task. */
 PXL_IMPORT("task_id")    int pxl_task_id(void);
+
+/* Tickers (0.7): text scrolled right to left across a strip of the screen by Pixlpal itself, as its built-in apps'
+ * tickers are. It moves on evenly, one pixel every speed ms (10 to 1000, in step with the panel's frames), whatever
+ * the app is doing meanwhile: waiting for an internet answer, a long redraw. (Scrolling an app draws itself moves
+ * only when the app waits.) The strip is w pixels from (x, y), the font's height tall; the text comes in from the
+ * right and leaves at the left, passes times (1 to 1000). Up to 1000 characters, ' ' to '~'.
+ *
+ * A ticker is known by its position (x, y): a new text at the same place replaces it. An app has up to 4. Don't
+ * draw over the strip while it scrolls (what the app draws there shows over the ticker until its next step). It
+ * pauses while the app is paused and ends when the app closes.
+ * pxl_ticker returns 1 if it started, 0 if not (a bad strip, 4 already, or none of Pixlpal's scrolling free): then
+ * the app can draw the text itself. */
+PXL_IMPORT("ticker")        int  pxl_ticker(int x, int y, int w, int font, int color, int background, int speed,
+                                            int passes, const char* text);
+/** 1 while the app's ticker at (x, y) is still scrolling: 0 once it has gone through all its passes. */
+PXL_IMPORT("ticker_active") int  pxl_ticker_active(int x, int y);
+/** Stops the app's ticker at (x, y) and clears its strip to its background. */
+PXL_IMPORT("ticker_stop")   void pxl_ticker_stop(int x, int y);
 
 /* A line in Pixlpal's log (the serial monitor). */
 PXL_IMPORT("log")       void pxl_log(const char* text);
