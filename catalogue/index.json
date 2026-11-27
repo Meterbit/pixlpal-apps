@@ -1,7 +1,7 @@
 {
   "format": 1,
-  "sequence": 19,
-  "generated": "2026-11-24T22:42:18Z",
+  "sequence": 20,
+  "generated": "2026-11-27T13:57:44Z",
   "baseUrl": "https://raw.githubusercontent.com/Meterbit/pixlpal-apps/main/catalogue/",
   "categories": {
     "clocks": "Clocks & Timers",
@@ -326,19 +326,19 @@
     {
       "id": "com.meterbit.coincap",
       "name": "CoinCap Crypto",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "author": "Meterbit Cyb",
       "about": "Your crypto watchlist from CoinCap: prices, 24-hour change, a 7-day chart, market numbers, supply, the top gainers and crypto news, paced to your CoinCap plan's credits. Needs your CoinCap key.",
       "category": "markets",
       "appID": "4/1",
-      "api": "0.6",
+      "api": "0.7",
       "net": [
         "rest.coincap.io",
         "raw.githubusercontent.com"
       ],
-      "size": 178633,
-      "sha256": "96cd30a9237ba74a459f5701f4a99d201352547be87d33037cd35e60fddfbf25",
-      "package": "packages/com.meterbit.coincap/1.1.0.pxa",
+      "size": 182769,
+      "sha256": "afc578279c09d09b19b12f48c1f17aed33a73c258dc33928ce366f81647bb775",
+      "package": "packages/com.meterbit.coincap/1.1.1.pxa",
       "icon": "icons/com.meterbit.coincap.png",
       "source": "apps/com.meterbit.coincap"
     },
@@ -476,19 +476,19 @@
     {
       "id": "com.meterbit.finnhub",
       "name": "Finnhub Stocks",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "author": "Meterbit Cyb",
       "about": "A stock market terminal for your watchlist: live prices, the session chart, returns, fundamentals, the 52-week range, analysts, earnings and news, from Finnhub. Needs your free Finnhub key.",
       "category": "markets",
       "appID": "4/0",
-      "api": "0.6",
+      "api": "0.7",
       "net": [
         "finnhub.io",
         "raw.githubusercontent.com"
       ],
-      "size": 192546,
-      "sha256": "6d7adbfc6eee12cbb0cb610e203e3e410f100fb2e42c6c2883c3e6364f0f9f9c",
-      "package": "packages/com.meterbit.finnhub/1.1.0.pxa",
+      "size": 196682,
+      "sha256": "8b467b813aaae172b2228c62b289af61e265386a8cf23eebd29b95733ae27b85",
+      "package": "packages/com.meterbit.finnhub/1.1.1.pxa",
       "icon": "icons/com.meterbit.finnhub.png",
       "source": "apps/com.meterbit.finnhub"
     },
@@ -927,36 +927,36 @@
     {
       "id": "com.meterbit.oil-price",
       "name": "Oil Price",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "author": "Meterbit Cyb",
       "about": "Brent and WTI crude prices with their charts and the week's news, from the U.S. Energy Information Administration. Needs your free EIA key.",
       "category": "markets",
       "appID": "4/4",
-      "api": "0.6",
+      "api": "0.7",
       "net": [
         "api.eia.gov"
       ],
-      "size": 139431,
-      "sha256": "766255ce5268148c15b59045fc112722459f4a3dc93c5021ae063044df2986ac",
-      "package": "packages/com.meterbit.oil-price/1.1.0.pxa",
+      "size": 143568,
+      "sha256": "bc768b4b1f530e6d06702e525cb937711acddce9a638228dbf3f37596a92c9d3",
+      "package": "packages/com.meterbit.oil-price/1.1.1.pxa",
       "icon": "icons/com.meterbit.oil-price.png",
       "source": "apps/com.meterbit.oil-price"
     },
     {
       "id": "com.meterbit.oil-price-api",
       "name": "Oil Price API",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "author": "Meterbit Cyb",
       "about": "Crude oil, gas and fuel prices as they move, with charts, from OilPriceAPI. Needs your OilPriceAPI key.",
       "category": "markets",
       "appID": "4/5",
-      "api": "0.6",
+      "api": "0.7",
       "net": [
         "api.oilpriceapi.com"
       ],
-      "size": 199199,
-      "sha256": "4ac6188fcacb50a2352094a93516463dd6e14c4daa140e5d80a89946caa29845",
-      "package": "packages/com.meterbit.oil-price-api/1.1.0.pxa",
+      "size": 203335,
+      "sha256": "b725036f7122c2f23d7848fda1bc69a541f9b1996ebc19a751e4bcaa4d276425",
+      "package": "packages/com.meterbit.oil-price-api/1.1.1.pxa",
       "icon": "icons/com.meterbit.oil-price-api.png",
       "source": "apps/com.meterbit.oil-price-api"
     },
