@@ -158,7 +158,7 @@ void opa_Ui_Plan_Name(char* dest, size_t size, const Opa_Account_t& account, boo
 
 //##############################################################################################################
 void opa_Ui_Clear(void){
-    mtb_Panel_Fill_Rect(0, HERO_Y1, PANEL_RES_X - 1, PANEL_RES_Y - 1, BLACK);
+    mtb_Panel_Fill_Rect(0, HERO_Y1, PANEL_RES_X - 1, TICKER_RULE_Y, BLACK);   // not the ticker below: Pixlpal scrolls it
     mtb_Panel_Draw_HLine(HERO_RULE_Y, 0, PANEL_RES_X - 1, C_LINE);
     mtb_Panel_Draw_HLine(STRIP_RULE_Y, 0, PANEL_RES_X - 1, C_LINE);
     mtb_Panel_Draw_HLine(TICKER_RULE_Y, 0, PANEL_RES_X - 1, C_LINE);

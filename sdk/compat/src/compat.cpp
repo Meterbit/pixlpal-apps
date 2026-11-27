@@ -806,9 +806,22 @@ uint8_t mtb_Decode_Jpg_RGB888(const uint8_t*, size_t, uint8_t** rgb, uint16_t*, 
 #include "mtb_kit_ui.h"
 static Mtb_ScrollText_t* tickers[4];
 static void tickers_Step(void){ for (auto t : tickers) if (t) t->step(); }
+#if defined(PXL_APP_API) && PXL_APP_API >= 7
+// Pixlpal's font for this one (the compat fonts are copies of the firmware's), or -1 if it hasn't it.
+static int host_Font(const uint8_t* f){
+    const uint8_t* fonts[3] = {Terminal4x6, Terminal6x8, Terminal8x12};
+    const size_t sizes[3] = {sizeof(Terminal4x6), sizeof(Terminal6x8), sizeof(Terminal8x12)};
+    for (int i = 0; i < 3; i++)
+        if (f == fonts[i] || (memcmp(f, fonts[i], 8) == 0 && memcmp(f, fonts[i], sizes[i]) == 0)) return i;   // PXL_FONT_SMALL, NORMAL, LARGE
+    return -1;
+}
+#endif
 Mtb_ScrollText_t::Mtb_ScrollText_t(uint16_t x, uint16_t y, uint16_t w, const uint8_t* f, uint16_t c, uint16_t sp, uint16_t passes)
     : xPos(x), yPos(y), width(w), height(f ? f[6] : 8), color(c), speed(sp ? sp : 20), pass(passes ? passes : 1), font(f) {}
 Mtb_ScrollText_t::~Mtb_ScrollText_t(){
+#if defined(PXL_APP_API) && PXL_APP_API >= 7
+    if (host_) pxl_ticker_stop(xPos, yPos);
+#endif
     for (auto& t : tickers) if (t == this) t = nullptr;
     free(bits_);
 }
@@ -816,6 +829,12 @@ void Mtb_ScrollText_t::mtb_Scroll_This_Text(const char* text){ mtb_Scroll_This_T
 void Mtb_ScrollText_t::mtb_Scroll_This_Text(const char* text, uint16_t c){
     free(bits_); bits_ = nullptr;
     if (!text || !font) return;
+#if defined(PXL_APP_API) && PXL_APP_API >= 7
+    // Pixlpal scrolls it if it can (a new text at the same place replaces the one there); if not, it's drawn here.
+    const int hostFont = host_Font(font);
+    host_ = hostFont >= 0 && pxl_ticker(xPos, yPos, width, hostFont, c, backgroundColor, speed, pass, text);
+    if (host_) return;
+#endif
     const int tw = mtb_Kit_Text_Width(font, text);
     length_ = width + tw + width;                         // blank, the text, blank: it comes in and goes out
     stride_ = (length_ + 7) / 8;
@@ -832,6 +851,14 @@ void Mtb_ScrollText_t::mtb_Scroll_This_Text(const char* text, uint16_t c){
     add_Frame_Step(tickers_Step);
 }
 bool Mtb_ScrollText_t::mtb_Scroll_Active(uint8_t check_or_stop){
+#if defined(PXL_APP_API) && PXL_APP_API >= 7
+    if (host_){
+        if (check_or_stop == STOP_SCROLL) pxl_ticker_stop(xPos, yPos);     // also clears its strip
+        else if (pxl_ticker_active(xPos, yPos)) return true;
+        host_ = false;
+        return false;
+    }
+#endif
     if (check_or_stop == STOP_SCROLL){
         free(bits_); bits_ = nullptr; left_ = 0;
         pxl_rect(xPos, yPos, width, height, backgroundColor);

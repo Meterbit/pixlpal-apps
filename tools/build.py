@@ -105,6 +105,10 @@ def build(folder, out=None, key=None, quiet=False, keep_wasm=False):
     # Paths the compiler writes into the code (assert's __FILE__) name no folder on the machine that built it: the same
     # app builds the same anywhere (publish.py check compares the bytes), and a package carries nobody's home folder.
     maps = [f"-ffile-prefix-map={folder}=app"]
+    # The API version the app says it was written for, as a number (0.7 is 7, 1.2 would be 102): the compat layer
+    # uses the newer functions only for an app that says so (on an older Pixlpal it isn't offered at all).
+    major, minor = ([int(x) for x in manifest["api"].split(".")] + [0])[:2]
+    maps.append(f"-DPXL_APP_API={major * 100 + minor}")
     with tempfile.TemporaryDirectory() as t:
         wasm_path = os.path.join(t, "app.wasm")
         if libc:
@@ -125,7 +129,7 @@ def build(folder, out=None, key=None, quiet=False, keep_wasm=False):
         else:
             r = subprocess.run([find_tool("clang"), *BARE, *maps, "-I", SDK_HEADER_DIR, "-o", wasm_path, *sources])
             if r.returncode: sys.exit("the app did not compile")
-        problems = wasm_info.problems(wasm_path)
+        problems = wasm_info.problems(wasm_path, manifest["api"])
         if problems: sys.exit("the app would not run on Pixlpal: " + "; ".join(problems))
         wasm = open(wasm_path, "rb").read()
     if keep_wasm: open(os.path.splitext(out)[0] + ".wasm", "wb").write(wasm)

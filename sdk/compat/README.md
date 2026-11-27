@@ -23,7 +23,7 @@ with the C and C++ libraries, this layer (`include/`, `src/`) and ArduinoJson.
 | `mtb_Kit_Http_Get` / `_Send`, `HTTPClient`, `WiFiClientSecure` | `pxl_http_*`, waited for (the loop pauses; input keeps arriving). GET and POST, app.json's `net` hosts |
 | `snd_Play`, `snd_Say`, `mtb_Silent_Mode`, `mtb_Clock_24h`, time, `localtime_r` | `pxl_sound`, `pxl_say`, `pxl_silent`, `pxl_clock_24h`, `pxl_time` |
 | USB keyboard and mouse (`mtb_Usb_Input_Read`...) | A queue `pxl_input` fills |
-| Brightness, opening other apps, `statusBarNotif`, `Mtb_ScrollText_t`, `Mtb_FixedText_t` | `pxl_brightness*`, `pxl_open_app`, `pxl_status_text`; the ticker and text widget drawn by the layer |
+| Brightness, opening other apps, `statusBarNotif`, `Mtb_ScrollText_t`, `Mtb_FixedText_t` | `pxl_brightness*`, `pxl_open_app`, `pxl_status_text`; the ticker scrolled by Pixlpal (`pxl_ticker`) in an app that says `"api": "0.7"`, otherwise drawn by the layer; the text widget drawn by the layer |
 | Tasks (`xTaskCreatePinnedToCore`) | Pixlpal tasks (`pxl_task_start`, API 0.6): see below |
 | FreeRTOS queues, semaphores, critical sections, task notifications | Work as the tasks take turns (a wait hands the turn on) |
 | FreeRTOS software timers (`xTimerCreate`...) | Their callbacks run at the app's waits once due |

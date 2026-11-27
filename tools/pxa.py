@@ -28,7 +28,7 @@ MAX_WASM = 512 * 1024
 # The device keeps these in fixed fields (mtb_app_package.h): longer ones would be cut.
 LIMITS = {"id": 47, "name": 39, "version": 15, "author": 31}
 HOST_FORMAT = re.compile(r"^(http://)?(\*\.)?[a-z0-9-]+(\.[a-z0-9-]+)+$")    # api.example.com, *.example.org, http://plain.example.net
-API_VERSION = "0.6"                                                  # the newest Pixlpal App API
+API_VERSION = "0.7"                                                  # the newest Pixlpal App API
 ID_FORMAT = re.compile(r"^[a-z0-9]+(\.[a-z0-9][a-z0-9-]*)+$")      # com.example.weather
 VERSION_FORMAT = re.compile(r"^\d+(\.\d+){0,3}$")                 # 1.0.0
 # "category": where the phone app lists the app, beside the built-in apps of that category (the phone's

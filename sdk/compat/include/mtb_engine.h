@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <initializer_list>
 #include <ArduinoJson.h>
 #include "pixlpal.h"
 #include "freertos/FreeRTOS.h"
@@ -86,6 +87,9 @@ public:
         for (int i = 0; i < 12; i++) bleAppComServiceFns[i] = f[i];
     }
     void mtb_App_Set_Ble_Comm_Fn(uint8_t index, bleCom_Parser_Fns_Ptr fn){ if (index < 32) bleAppComServiceFns[index] = fn; }
+    /** The firmware's list of commands that need the internet. Here nothing to do: when an installed app's request is
+     *  refused because Pixlpal is offline just after a phone command, Pixlpal tells the phone itself. */
+    void mtb_App_Set_Online_Cmds(std::initializer_list<uint8_t>){}
     void mtb_App_Set_Mobile_UI(const char* manifest, const char* uiApi, const char* data, mtb_Mobile_UI_Values_Fn_t valuesFn);
     /** Sends the phone page and its values (the firmware: and starts the app's display). */
     void mtb_App_Init();
@@ -148,6 +152,8 @@ esp_err_t mtb_Erase_Nvs_Key(const char* key);
 
 /** Inside a phone command's handler: the command is refused (the phone shows it failed). */
 void mtb_Ble_App_Cmd_Reject(void);
+/** As the firmware's: here the same as mtb_Ble_App_Cmd_Reject (Pixlpal tells the phone it is offline itself). */
+inline void mtb_Ble_App_Cmd_Reject_Offline(void){ mtb_Ble_App_Cmd_Reject(); }
 /** A message of the app's own to its phone page (its route is the only one it can reach). Returns its length. */
 #include "WString.h"
 int bleApplicationComSend(const char* route, const String& message);
