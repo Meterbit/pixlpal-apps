@@ -1,0 +1,14 @@
+{
+  "id": "com.meterbit.space-launches",
+  "name": "Space Launches",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.7",
+  "category": "news",
+  "screen": "full",
+  "kit": "compat",
+  "about": "A countdown to the next rocket launch anywhere in the world: the rocket, the mission, the pad and whether it is go, with the launches after it. From The Space Devs' Launch Library. No key needed.",
+  "net": [
+    "ll.thespacedevs.com"
+  ]
+}

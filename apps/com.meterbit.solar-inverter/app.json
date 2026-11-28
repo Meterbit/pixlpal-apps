@@ -1,0 +1,15 @@
+{
+  "id": "com.meterbit.solar-inverter",
+  "name": "Solar Inverter",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "home",
+  "screen": "full",
+  "kit": "compat",
+  "about": "Your solar power flow, live: what the panels make, what the house uses, the battery's charge, and whether you are buying from or selling to the grid, with today's energy. For SolarEdge (your key), Fronius, or any inverter or hub that gives JSON.",
+  "net": [
+    "monitoringapi.solaredge.com"
+  ],
+  "ownerNet": true
+}

@@ -1,0 +1,15 @@
+{
+  "id": "com.meterbit.iss-tracker",
+  "name": "ISS Tracker",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "weather",
+  "screen": "full",
+  "kit": "compat",
+  "about": "The International Space Station on a world map with day and night: where it is, its track ahead, and when it passes over your place, with the passes you can see with your own eyes. No key needed.",
+  "net": [
+    "api.wheretheiss.at",
+    "geocoding-api.open-meteo.com"
+  ]
+}
