@@ -7,5 +7,6 @@
   "category": "art",
   "screen": "full",
   "kit": "compat",
-  "about": "Living patterns that grow, move and die by simple rules: Conway's Game of Life, HighLife, Day & Night, Seeds, Maze, Brian's Brain and the one-line rules 30, 90 and 110. It seeds itself again when a world settles. Works offline."
+  "about": "Living patterns that grow, move and die by simple rules: Conway's Game of Life, HighLife, Day & Night, Seeds, Maze, Brian's Brain and the one-line rules 30, 90 and 110. It seeds itself again when a world settles. Works offline.",
+  "appID": "100/40"
 }

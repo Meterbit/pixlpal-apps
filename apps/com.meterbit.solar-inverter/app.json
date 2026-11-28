@@ -11,5 +11,6 @@
   "net": [
     "monitoringapi.solaredge.com"
   ],
-  "ownerNet": true
+  "ownerNet": true,
+  "appID": "100/43"
 }

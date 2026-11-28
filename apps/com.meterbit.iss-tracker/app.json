@@ -11,5 +11,6 @@
   "net": [
     "api.wheretheiss.at",
     "geocoding-api.open-meteo.com"
-  ]
+  ],
+  "appID": "100/39"
 }

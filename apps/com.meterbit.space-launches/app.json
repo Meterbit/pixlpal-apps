@@ -10,5 +10,6 @@
   "about": "A countdown to the next rocket launch anywhere in the world: the rocket, the mission, the pad and whether it is go, with the launches after it. From The Space Devs' Launch Library. No key needed.",
   "net": [
     "ll.thespacedevs.com"
-  ]
+  ],
+  "appID": "100/44"
 }

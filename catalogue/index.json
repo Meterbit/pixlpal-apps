@@ -1,7 +1,7 @@
 {
   "format": 1,
-  "sequence": 20,
-  "generated": "2026-11-27T13:57:44Z",
+  "sequence": 21,
+  "generated": "2026-11-28T08:47:04Z",
   "baseUrl": "https://raw.githubusercontent.com/Meterbit/pixlpal-apps/main/catalogue/",
   "categories": {
     "clocks": "Clocks & Timers",
@@ -27,6 +27,23 @@
     "other": "Other"
   },
   "apps": [
+    {
+      "id": "com.meterbit.printer-status",
+      "name": "3D Printer Status",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Your 3D printer at a glance: how far the print is, the time left and when it will be done, the nozzle and bed temperatures, and a chime when it finishes. For OctoPrint and Klipper (Mainsail, Fluidd) on your own network.",
+      "category": "maker",
+      "appID": "100/42",
+      "api": "0.6",
+      "net": [],
+      "size": 121718,
+      "sha256": "52103e747f631692705eb9f7216b0b0aeb66a4de57b851912262f2dc3d27d29a",
+      "package": "packages/com.meterbit.printer-status/1.0.0.pxa",
+      "icon": "icons/com.meterbit.printer-status.png",
+      "source": "apps/com.meterbit.printer-status",
+      "ownerNet": true
+    },
     {
       "id": "com.meterbit.air-uv-pollen",
       "name": "Air, UV & Pollen",
@@ -527,6 +544,47 @@
       "source": "apps/com.meterbit.focus-list"
     },
     {
+      "id": "com.meterbit.follower-counter",
+      "name": "Follower Counter",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Your follower counts as big numbers that roll up when they change: YouTube subscribers (your own key), GitHub followers and stars, Bluesky and Mastodon followers. Up to four, with today's gain and confetti at each milestone.",
+      "category": "maker",
+      "appID": "100/38",
+      "api": "0.6",
+      "net": [
+        "www.googleapis.com",
+        "api.github.com",
+        "public.api.bsky.app",
+        "mastodon.social",
+        "mastodon.online",
+        "mstdn.social",
+        "mas.to",
+        "mastodon.world",
+        "fosstodon.org",
+        "hachyderm.io",
+        "infosec.exchange",
+        "techhub.social",
+        "mastodon.art",
+        "mstdn.jp",
+        "universeodon.com",
+        "social.vivaldi.net",
+        "mastodon.ie",
+        "aus.social",
+        "mastodon.nz",
+        "toot.community",
+        "sfba.social",
+        "piaille.fr",
+        "mastodon.uno",
+        "chaos.social"
+      ],
+      "size": 129486,
+      "sha256": "623438ee400196ec3daad4594f7fc6d81ac9be06c99e87bf629858333eed2b2a",
+      "package": "packages/com.meterbit.follower-counter/1.0.0.pxa",
+      "icon": "icons/com.meterbit.follower-counter.png",
+      "source": "apps/com.meterbit.follower-counter"
+    },
+    {
       "id": "com.meterbit.fx-markets",
       "name": "FX Markets",
       "version": "1.1.0",
@@ -676,6 +734,25 @@
       "ownerNet": true
     },
     {
+      "id": "com.meterbit.iss-tracker",
+      "name": "ISS Tracker",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "The International Space Station on a world map with day and night: where it is, its track ahead, and when it passes over your place, with the passes you can see with your own eyes. No key needed.",
+      "category": "weather",
+      "appID": "100/39",
+      "api": "0.6",
+      "net": [
+        "api.wheretheiss.at",
+        "geocoding-api.open-meteo.com"
+      ],
+      "size": 126335,
+      "sha256": "3dba428cd940b2eb19139d8a29aa177ff496bd305d6d7a1cffebabec144ef110",
+      "package": "packages/com.meterbit.iss-tracker/1.0.0.pxa",
+      "icon": "icons/com.meterbit.iss-tracker.png",
+      "source": "apps/com.meterbit.iss-tracker"
+    },
+    {
       "id": "com.meterbit.kids-learning",
       "name": "Kids Learning",
       "version": "1.1.0",
@@ -726,6 +803,22 @@
       "package": "packages/com.meterbit.league-table/1.0.0.pxa",
       "icon": "icons/com.meterbit.league-table.png",
       "source": "apps/com.meterbit.league-table"
+    },
+    {
+      "id": "com.meterbit.life-automata",
+      "name": "Life & Automata",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Living patterns that grow, move and die by simple rules: Conway's Game of Life, HighLife, Day & Night, Seeds, Maze, Brian's Brain and the one-line rules 30, 90 and 110. It seeds itself again when a world settles. Works offline.",
+      "category": "art",
+      "appID": "100/40",
+      "api": "0.6",
+      "net": [],
+      "size": 84563,
+      "sha256": "fb0edbb15e015448c3ff0f8f00b11a71650070d7aab1db29848fb96e44650f9a",
+      "package": "packages/com.meterbit.life-automata/1.0.0.pxa",
+      "icon": "icons/com.meterbit.life-automata.png",
+      "source": "apps/com.meterbit.life-automata"
     },
     {
       "id": "com.meterbit.live-football",
@@ -959,6 +1052,24 @@
       "package": "packages/com.meterbit.oil-price-api/1.1.1.pxa",
       "icon": "icons/com.meterbit.oil-price-api.png",
       "source": "apps/com.meterbit.oil-price-api"
+    },
+    {
+      "id": "com.meterbit.on-this-day",
+      "name": "On This Day",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "What happened on today's date in history, from Wikipedia's front page: each event with its year, who was born and who died, and the day's observances. No key needed.",
+      "category": "learning",
+      "appID": "100/41",
+      "api": "0.7",
+      "net": [
+        "en.wikipedia.org"
+      ],
+      "size": 110826,
+      "sha256": "6cb1ef15efcfc1e3a6d788e1e09c62b03cea5cd648f544f3448cc3050bab046a",
+      "package": "packages/com.meterbit.on-this-day/1.0.0.pxa",
+      "icon": "icons/com.meterbit.on-this-day.png",
+      "source": "apps/com.meterbit.on-this-day"
     },
     {
       "id": "com.meterbit.on-call",
@@ -1235,6 +1346,43 @@
       "source": "apps/com.meterbit.sleep-wind-down"
     },
     {
+      "id": "com.meterbit.solar-inverter",
+      "name": "Solar Inverter",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "Your solar power flow, live: what the panels make, what the house uses, the battery's charge, and whether you are buying from or selling to the grid, with today's energy. For SolarEdge (your key), Fronius, or any inverter or hub that gives JSON.",
+      "category": "home",
+      "appID": "100/43",
+      "api": "0.6",
+      "net": [
+        "monitoringapi.solaredge.com"
+      ],
+      "size": 114082,
+      "sha256": "2c78ad6b765ee906ec4c6fa7801036c828b0d4715a3816b852843f9b493adb7b",
+      "package": "packages/com.meterbit.solar-inverter/1.0.0.pxa",
+      "icon": "icons/com.meterbit.solar-inverter.png",
+      "source": "apps/com.meterbit.solar-inverter",
+      "ownerNet": true
+    },
+    {
+      "id": "com.meterbit.space-launches",
+      "name": "Space Launches",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "A countdown to the next rocket launch anywhere in the world: the rocket, the mission, the pad and whether it is go, with the launches after it. From The Space Devs' Launch Library. No key needed.",
+      "category": "news",
+      "appID": "100/44",
+      "api": "0.7",
+      "net": [
+        "ll.thespacedevs.com"
+      ],
+      "size": 135919,
+      "sha256": "90eef595da41c8aa2bb63940ee5a5dcc4287b8126e94cb70fbf7a4d35ea2bcf0",
+      "package": "packages/com.meterbit.space-launches/1.0.0.pxa",
+      "icon": "icons/com.meterbit.space-launches.png",
+      "source": "apps/com.meterbit.space-launches"
+    },
+    {
       "id": "com.meterbit.standup-host",
       "name": "Stand-up Host",
       "version": "1.0.0",
@@ -1380,6 +1528,24 @@
       "package": "packages/com.meterbit.treasure-hunt/1.1.0.pxa",
       "icon": "icons/com.meterbit.treasure-hunt.png",
       "source": "apps/com.meterbit.treasure-hunt"
+    },
+    {
+      "id": "com.meterbit.trivia-night",
+      "name": "Trivia Night",
+      "version": "1.0.0",
+      "author": "Meterbit Cyb",
+      "about": "A quiz for one to four players, with questions from the Open Trivia Database on films, science, history, sport and more. Turn the knob to choose an answer, click to lock it in, and see who wins the round. No key needed.",
+      "category": "games",
+      "appID": "100/45",
+      "api": "0.6",
+      "net": [
+        "opentdb.com"
+      ],
+      "size": 104558,
+      "sha256": "0d82fed1f8fa0c8568e49e05b3c8025bb2e9d7d44c8f0d6da02faeef85f8d49c",
+      "package": "packages/com.meterbit.trivia-night/1.0.0.pxa",
+      "icon": "icons/com.meterbit.trivia-night.png",
+      "source": "apps/com.meterbit.trivia-night"
     },
     {
       "id": "com.meterbit.typing-hero",

@@ -10,5 +10,6 @@
   "about": "A quiz for one to four players, with questions from the Open Trivia Database on films, science, history, sport and more. Turn the knob to choose an answer, click to lock it in, and see who wins the round. No key needed.",
   "net": [
     "opentdb.com"
-  ]
+  ],
+  "appID": "100/45"
 }

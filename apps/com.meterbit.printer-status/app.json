@@ -8,5 +8,6 @@
   "screen": "full",
   "kit": "compat",
   "about": "Your 3D printer at a glance: how far the print is, the time left and when it will be done, the nozzle and bed temperatures, and a chime when it finishes. For OctoPrint and Klipper (Mainsail, Fluidd) on your own network.",
-  "ownerNet": true
+  "ownerNet": true,
+  "appID": "100/42"
 }
