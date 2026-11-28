@@ -1,0 +1,12 @@
+{
+  "id": "com.meterbit.printer-status",
+  "name": "3D Printer Status",
+  "version": "1.0.0",
+  "author": "Meterbit Cyb",
+  "api": "0.6",
+  "category": "maker",
+  "screen": "full",
+  "kit": "compat",
+  "about": "Your 3D printer at a glance: how far the print is, the time left and when it will be done, the nozzle and bed temperatures, and a chime when it finishes. For OctoPrint and Klipper (Mainsail, Fluidd) on your own network.",
+  "ownerNet": true
+}

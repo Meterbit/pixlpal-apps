@@ -23,229 +23,55 @@ func circle(_ c: CGContext, _ x: CGFloat, _ y: CGFloat, _ r: CGFloat, fill: Bool
 func arc(_ c: CGContext, _ x: CGFloat, _ y: CGFloat, _ r: CGFloat, _ a0: CGFloat, _ a1: CGFloat){ c.addArc(center: CGPoint(x: x, y: y), radius: r, startAngle: a0 * .pi / 180, endAngle: a1 * .pi / 180, clockwise: false); c.strokePath() }
 
 let icons: [String: (CGContext) -> Void] = [
-  "training": { c in   // a route: a start, a winding path, and a flag at the end
-    circle(c, 130, 380, 22, fill: true)
-    c.move(to: CGPoint(x: 130, y: 380)); c.addCurve(to: CGPoint(x: 250, y: 280), control1: CGPoint(x: 250, y: 400), control2: CGPoint(x: 140, y: 290))
-    c.addCurve(to: CGPoint(x: 330, y: 160), control1: CGPoint(x: 360, y: 270), control2: CGPoint(x: 230, y: 170)); c.strokePath()
-    line(c, [(330, 160), (330, 75)]); c.move(to: CGPoint(x: 330, y: 75)); c.addLine(to: CGPoint(x: 400, y: 98)); c.addLine(to: CGPoint(x: 330, y: 121)); c.strokePath()
+  "iss": { c in   // the space station: a truss, two pairs of solar wings and the modules
+    line(c, [(150, 250), (350, 250)])
+    for x: CGFloat in [70, 340] { for y: CGFloat in [160, 270] { c.addPath(CGPath(rect: CGRect(x: x, y: y, width: 90, height: 70), transform: nil)); c.strokePath(); line(c, [(x + 45, y), (x + 45, y + 70)]) } }
+    c.addPath(CGPath(roundedRect: CGRect(x: 215, y: 215, width: 70, height: 70), cornerWidth: 12, cornerHeight: 12, transform: nil)); c.strokePath()
   },
-  "scoreboard": { c in   // a scoreboard: 3 : 1
-    c.addPath(CGPath(roundedRect: CGRect(x: 80, y: 130, width: 340, height: 240), cornerWidth: 24, cornerHeight: 24, transform: nil)); c.strokePath()
-    line(c, [(130, 190), (200, 190), (200, 250), (150, 250)]); line(c, [(200, 250), (200, 310), (130, 310)])
-    circle(c, 250, 220, 10, fill: true); circle(c, 250, 280, 10, fill: true)
-    line(c, [(320, 205), (345, 190), (345, 310)])
-    line(c, [(170, 130), (150, 85)]); line(c, [(330, 130), (350, 85)])
+  "onthisday": { c in   // a calendar page with a star: a day to remember
+    c.addPath(CGPath(roundedRect: CGRect(x: 100, y: 110, width: 300, height: 290), cornerWidth: 26, cornerHeight: 26, transform: nil)); c.strokePath()
+    line(c, [(100, 185), (400, 185)]); line(c, [(180, 80), (180, 140)]); line(c, [(320, 80), (320, 140)])
+    var pts: [(CGFloat, CGFloat)] = []
+    for k in 0..<10 { let a = -CGFloat.pi / 2 + CGFloat(k) * .pi / 5; let r: CGFloat = k % 2 == 0 ? 78 : 32; pts.append((250 + r * cos(a), 298 + r * sin(a))) }
+    pts.append(pts[0]); line(c, pts)
   },
-  "leaguetable": { c in   // a table: rows, the top one marked, a trophy above
-    for (k, y) in [CGFloat(215), 275, 335, 395].enumerated() { circle(c, 130, y, k == 0 ? 16 : 10, fill: k == 0); line(c, [(175, y), (k == 0 ? 380 : 360 - CGFloat(k) * 25, y)]) }
-    c.move(to: CGPoint(x: 205, y: 80)); c.addLine(to: CGPoint(x: 295, y: 80)); c.addCurve(to: CGPoint(x: 205, y: 80), control1: CGPoint(x: 295, y: 160), control2: CGPoint(x: 205, y: 160)); c.strokePath()
-    line(c, [(250, 140), (250, 160)]); line(c, [(225, 165), (275, 165)])
+  "launches": { c in   // a rocket rising, with its flame
+    c.move(to: CGPoint(x: 250, y: 70)); c.addCurve(to: CGPoint(x: 290, y: 320), control1: CGPoint(x: 320, y: 140), control2: CGPoint(x: 300, y: 250))
+    c.addLine(to: CGPoint(x: 210, y: 320)); c.addCurve(to: CGPoint(x: 250, y: 70), control1: CGPoint(x: 200, y: 250), control2: CGPoint(x: 180, y: 140)); c.strokePath()
+    circle(c, 250, 190, 22)
+    line(c, [(212, 270), (165, 335), (210, 320)]); line(c, [(288, 270), (335, 335), (290, 320)])
+    line(c, [(230, 345), (225, 395)]); line(c, [(250, 345), (250, 420)]); line(c, [(270, 345), (275, 395)])
   },
-  "cricket": { c in   // a bat (blade and handle) and a ball with its seam
-    c.saveGState(); c.translateBy(x: 225, y: 245); c.rotate(by: 0.55)
-    c.addPath(CGPath(roundedRect: CGRect(x: -42, y: -60, width: 84, height: 230), cornerWidth: 14, cornerHeight: 14, transform: nil)); c.strokePath()
-    c.addPath(CGPath(roundedRect: CGRect(x: -13, y: -170, width: 26, height: 110), cornerWidth: 10, cornerHeight: 10, transform: nil)); c.strokePath()
+  "printer": { c in   // a 3D printer: the frame, the gantry and nozzle, a part growing layer by layer
+    c.addPath(CGPath(roundedRect: CGRect(x: 100, y: 80, width: 300, height: 340), cornerWidth: 18, cornerHeight: 18, transform: nil)); c.strokePath()
+    line(c, [(100, 160), (400, 160)])
+    c.move(to: CGPoint(x: 225, y: 160)); c.addLine(to: CGPoint(x: 275, y: 160)); c.addLine(to: CGPoint(x: 250, y: 205)); c.closePath(); c.fillPath()
+    line(c, [(170, 370), (330, 370)]); line(c, [(185, 335), (315, 335)]); line(c, [(205, 300), (295, 300)]); line(c, [(225, 265), (275, 265)])
+  },
+  "solar": { c in   // the sun above a solar panel
+    circle(c, 170, 155, 50)
+    for k in 0..<8 { let a = CGFloat(k) * .pi / 4; line(c, [(170 + 75 * cos(a), 155 + 75 * sin(a)), (170 + 100 * cos(a), 155 + 100 * sin(a))]) }
+    c.move(to: CGPoint(x: 190, y: 300)); c.addLine(to: CGPoint(x: 400, y: 300)); c.addLine(to: CGPoint(x: 430, y: 410)); c.addLine(to: CGPoint(x: 160, y: 410)); c.closePath(); c.strokePath()
+    line(c, [(175, 355), (415, 355)]); line(c, [(260, 300), (255, 410)]); line(c, [(330, 300), (345, 410)])
+  },
+  "followers": { c in   // a person, and a count going up
+    circle(c, 200, 200, 58)
+    c.addArc(center: CGPoint(x: 200, y: 400), radius: 110, startAngle: .pi, endAngle: 2 * .pi, clockwise: false); c.strokePath()
+    line(c, [(340, 300), (340, 130)]); line(c, [(290, 180), (340, 130), (390, 180)])
+  },
+  "trivia": { c in   // a question mark in a speech bubble
+    c.addPath(CGPath(roundedRect: CGRect(x: 90, y: 90, width: 320, height: 250), cornerWidth: 50, cornerHeight: 50, transform: nil)); c.strokePath()
+    line(c, [(170, 340), (150, 410), (240, 340)])
+    arc(c, 250, 175, 45, 180, 90)
+    line(c, [(250, 220), (250, 255)])
+    circle(c, 250, 295, 12, fill: true)
+  },
+  "life": { c in   // a glider of the Game of Life on its grid
+    let cells: [(CGFloat, CGFloat)] = [(1, 0), (2, 1), (0, 2), (1, 2), (2, 2)]
+    for (x, y) in cells { c.fill(CGRect(x: 130 + x * 85, y: 130 + y * 85, width: 70, height: 70)) }
+    c.saveGState(); c.setLineWidth(6)
+    for k in 0...3 { let v = 122 + CGFloat(k) * 85; line(c, [(v, 122), (v, 377)]); line(c, [(122, v), (377, v)]) }
     c.restoreGState()
-    circle(c, 360, 375, 42)
-    c.move(to: CGPoint(x: 330, y: 345)); c.addCurve(to: CGPoint(x: 390, y: 405), control1: CGPoint(x: 365, y: 360), control2: CGPoint(x: 375, y: 370)); c.strokePath()
-  },
-  "chess": { c in   // a knight
-    c.move(to: CGPoint(x: 170, y: 400)); c.addLine(to: CGPoint(x: 330, y: 400)); c.strokePath()
-    c.move(to: CGPoint(x: 190, y: 400)); c.addCurve(to: CGPoint(x: 250, y: 280), control1: CGPoint(x: 190, y: 340), control2: CGPoint(x: 240, y: 320))
-    c.addLine(to: CGPoint(x: 175, y: 290)); c.addLine(to: CGPoint(x: 160, y: 250)); c.addLine(to: CGPoint(x: 235, y: 165))
-    c.addLine(to: CGPoint(x: 240, y: 110)); c.addLine(to: CGPoint(x: 270, y: 145))
-    c.addCurve(to: CGPoint(x: 315, y: 400), control1: CGPoint(x: 350, y: 180), control2: CGPoint(x: 345, y: 320)); c.strokePath()
-    circle(c, 225, 210, 9, fill: true)
-  },
-  "teamtracker": { c in   // a basketball
-    circle(c, 250, 250, 150)
-    line(c, [(250, 100), (250, 400)]); line(c, [(100, 250), (400, 250)])
-    c.move(to: CGPoint(x: 145, y: 145)); c.addCurve(to: CGPoint(x: 145, y: 355), control1: CGPoint(x: 210, y: 200), control2: CGPoint(x: 210, y: 300)); c.strokePath()
-    c.move(to: CGPoint(x: 355, y: 145)); c.addCurve(to: CGPoint(x: 355, y: 355), control1: CGPoint(x: 290, y: 200), control2: CGPoint(x: 290, y: 300)); c.strokePath()
-  },
-  "water": { c in   // a glass half full, a drop above it
-    line(c, [(150, 190), (175, 410), (325, 410), (350, 190)])
-    line(c, [(165, 300), (335, 300)])
-    c.move(to: CGPoint(x: 250, y: 75)); c.addCurve(to: CGPoint(x: 250, y: 165), control1: CGPoint(x: 215, y: 120), control2: CGPoint(x: 205, y: 165))
-    c.addCurve(to: CGPoint(x: 250, y: 75), control1: CGPoint(x: 295, y: 165), control2: CGPoint(x: 285, y: 120)); c.strokePath()
-  },
-  "breathe": { c in   // three circles, one in another, breathing out
-    circle(c, 250, 250, 55); circle(c, 250, 250, 110)
-    for a: CGFloat in [20, 110, 200, 290] { arc(c, 250, 250, 165, a, a + 50) }
-  },
-  "airuv": { c in   // the sun, and a flower (pollen) below it
-    circle(c, 175, 175, 50)
-    for k in 0..<8 { let a = CGFloat(k) * .pi / 4; line(c, [(175 + 75 * cos(a), 175 + 75 * sin(a)), (175 + 105 * cos(a), 175 + 105 * sin(a))]) }
-    line(c, [(330, 405), (330, 318)]); c.move(to: CGPoint(x: 330, y: 372)); c.addCurve(to: CGPoint(x: 392, y: 340), control1: CGPoint(x: 350, y: 342), control2: CGPoint(x: 372, y: 338)); c.strokePath()
-    circle(c, 330, 268, 18, fill: true)
-    for k in 0..<5 { let a = CGFloat(k) * 2 * .pi / 5 - .pi / 2; circle(c, 330 + 44 * cos(a), 268 + 44 * sin(a), 16) }
-  },
-  "sleep": { c in   // a crescent moon and two small stars
-    c.move(to: CGPoint(x: 300, y: 95)); c.addCurve(to: CGPoint(x: 310, y: 405), control1: CGPoint(x: 90, y: 130), control2: CGPoint(x: 100, y: 400))
-    c.addCurve(to: CGPoint(x: 300, y: 95), control1: CGPoint(x: 240, y: 330), control2: CGPoint(x: 235, y: 170)); c.strokePath()
-    circle(c, 370, 175, 14, fill: true); circle(c, 395, 290, 10, fill: true); circle(c, 330, 250, 8, fill: true)
-  },
-  "baby": { c in   // a calendar page with a heart
-    c.addPath(CGPath(roundedRect: CGRect(x: 110, y: 120, width: 280, height: 270), cornerWidth: 24, cornerHeight: 24, transform: nil)); c.strokePath()
-    line(c, [(110, 190), (390, 190)]); line(c, [(180, 90), (180, 145)]); line(c, [(320, 90), (320, 145)])
-    c.move(to: CGPoint(x: 250, y: 345)); c.addCurve(to: CGPoint(x: 185, y: 250), control1: CGPoint(x: 210, y: 315), control2: CGPoint(x: 185, y: 285))
-    c.addCurve(to: CGPoint(x: 250, y: 245), control1: CGPoint(x: 185, y: 215), control2: CGPoint(x: 235, y: 210))
-    c.addCurve(to: CGPoint(x: 315, y: 250), control1: CGPoint(x: 265, y: 210), control2: CGPoint(x: 315, y: 215))
-    c.addCurve(to: CGPoint(x: 250, y: 345), control1: CGPoint(x: 315, y: 285), control2: CGPoint(x: 290, y: 315)); c.strokePath()
-  },
-  "prboard": { c in   // a pull request: a branch between two commits, and one coming back with an arrow
-    circle(c, 160, 125, 34); circle(c, 160, 375, 34); circle(c, 340, 375, 34)
-    line(c, [(160, 159), (160, 341)])
-    c.move(to: CGPoint(x: 340, y: 341)); c.addLine(to: CGPoint(x: 340, y: 200)); c.addCurve(to: CGPoint(x: 270, y: 125), control1: CGPoint(x: 340, y: 150), control2: CGPoint(x: 310, y: 125)); c.addLine(to: CGPoint(x: 225, y: 125)); c.strokePath()
-    line(c, [(262, 88), (225, 125), (262, 162)])
-  },
-  "oncall": { c in   // a beacon on its base, with its light and rays
-    c.move(to: CGPoint(x: 145, y: 315)); c.addCurve(to: CGPoint(x: 355, y: 315), control1: CGPoint(x: 145, y: 160), control2: CGPoint(x: 355, y: 160)); c.strokePath()
-    c.addPath(CGPath(roundedRect: CGRect(x: 115, y: 315, width: 270, height: 70), cornerWidth: 14, cornerHeight: 14, transform: nil)); c.strokePath()
-    circle(c, 250, 268, 20, fill: true)
-    line(c, [(250, 85), (250, 130)]); line(c, [(115, 140), (148, 172)]); line(c, [(385, 140), (352, 172)])
-  },
-  "release": { c in   // a rocket lifting off
-    c.move(to: CGPoint(x: 250, y: 80)); c.addCurve(to: CGPoint(x: 302, y: 305), control1: CGPoint(x: 305, y: 130), control2: CGPoint(x: 305, y: 230))
-    c.addLine(to: CGPoint(x: 198, y: 305)); c.addCurve(to: CGPoint(x: 250, y: 80), control1: CGPoint(x: 195, y: 230), control2: CGPoint(x: 195, y: 130)); c.strokePath()
-    circle(c, 250, 190, 26)
-    line(c, [(203, 245), (155, 325), (200, 305)]); line(c, [(297, 245), (345, 325), (300, 305)])
-    line(c, [(222, 345), (250, 415), (278, 345)])
-  },
-  "cloudcost": { c in   // a cloud with a dollar sign
-    c.move(to: CGPoint(x: 135, y: 345)); c.addCurve(to: CGPoint(x: 160, y: 230), control1: CGPoint(x: 70, y: 345), control2: CGPoint(x: 80, y: 235))
-    c.addCurve(to: CGPoint(x: 265, y: 150), control1: CGPoint(x: 170, y: 165), control2: CGPoint(x: 235, y: 135))
-    c.addCurve(to: CGPoint(x: 350, y: 220), control1: CGPoint(x: 305, y: 150), control2: CGPoint(x: 340, y: 180))
-    c.addCurve(to: CGPoint(x: 365, y: 345), control1: CGPoint(x: 430, y: 225), control2: CGPoint(x: 435, y: 345)); c.closePath(); c.strokePath()
-    c.move(to: CGPoint(x: 290, y: 216)); c.addCurve(to: CGPoint(x: 212, y: 230), control1: CGPoint(x: 272, y: 190), control2: CGPoint(x: 215, y: 196))
-    c.addCurve(to: CGPoint(x: 288, y: 278), control1: CGPoint(x: 210, y: 266), control2: CGPoint(x: 292, y: 244))
-    c.addCurve(to: CGPoint(x: 208, y: 290), control1: CGPoint(x: 285, y: 314), control2: CGPoint(x: 225, y: 318)); c.strokePath()
-    line(c, [(250, 183), (250, 316)])
-  },
-  "hseboard": { c in   // a hard hat (dome, ridge, peak) above a tick
-    c.move(to: CGPoint(x: 120, y: 262)); c.addCurve(to: CGPoint(x: 360, y: 262), control1: CGPoint(x: 118, y: 118), control2: CGPoint(x: 362, y: 118)); c.strokePath()
-    line(c, [(210, 150), (210, 262)]); line(c, [(270, 150), (270, 262)])
-    line(c, [(95, 262), (360, 262), (425, 280)])
-    line(c, [(180, 350), (230, 398), (322, 305)])
-  },
-  "standup": { c in   // three people, a stopwatch above them
-    circle(c, 250, 150, 52); line(c, [(250, 150), (250, 118)]); line(c, [(250, 150), (274, 166)]); line(c, [(232, 86), (268, 86)])
-    for x: CGFloat in [140, 250, 360] { circle(c, x, 280, 30); arc(c, x, 395, 58, 180, 360) }
-  },
-  "roomsign": { c in   // a sign hanging on its strings: a status dot and two lines
-    line(c, [(150, 200), (250, 100), (350, 200)]); circle(c, 250, 100, 12, fill: true)
-    c.addPath(CGPath(roundedRect: CGRect(x: 95, y: 200, width: 310, height: 190), cornerWidth: 26, cornerHeight: 26, transform: nil)); c.strokePath()
-    circle(c, 165, 295, 34, fill: true); line(c, [(230, 265), (350, 265)]); line(c, [(230, 325), (320, 325)])
-  },
-  "build": { c in   // a branch, and a tick
-    line(c, [(160, 160), (160, 340)]); circle(c, 160, 125, 32); circle(c, 160, 375, 32); circle(c, 300, 175, 32)
-    c.move(to: CGPoint(x: 300, y: 207)); c.addCurve(to: CGPoint(x: 160, y: 330), control1: CGPoint(x: 300, y: 280), control2: CGPoint(x: 170, y: 260)); c.strokePath()
-    line(c, [(255, 330), (300, 375), (385, 285)])
-  },
-  "gong": { c in   // a gong in its frame
-    line(c, [(110, 400), (110, 110), (390, 110), (390, 400)]); line(c, [(80, 400), (140, 400)]); line(c, [(360, 400), (420, 400)])
-    line(c, [(205, 110), (220, 160)]); line(c, [(295, 110), (280, 160)])
-    circle(c, 250, 260, 100); circle(c, 250, 260, 40, fill: true)
-  },
-  "team": { c in   // a globe
-    circle(c, 250, 250, 150)
-    c.strokeEllipse(in: CGRect(x: 190, y: 100, width: 120, height: 300)); line(c, [(250, 100), (250, 400)])
-    line(c, [(100, 250), (400, 250)]); arc(c, 250, -40, 250, 62, 118); arc(c, 250, 540, 250, 242, 298)
-  },
-  "quiet": { c in   // a level gauge: green, amber, red, and the needle
-    arc(c, 250, 320, 150, 180, 360)
-    for a in stride(from: 180.0, through: 360.0, by: 30.0){ let r = a * .pi / 180; line(c, [(250 + 118 * cos(r), 320 + 118 * sin(r)), (250 + 96 * cos(r), 320 + 96 * sin(r))]) }
-    line(c, [(250, 320), (314, 256)]); circle(c, 250, 320, 22, fill: true); line(c, [(130, 390), (370, 390)])
-  },
-  "bell": { c in   // a school bell
-    c.move(to: CGPoint(x: 140, y: 340)); c.addCurve(to: CGPoint(x: 170, y: 190), control1: CGPoint(x: 165, y: 310), control2: CGPoint(x: 160, y: 240))
-    c.addCurve(to: CGPoint(x: 330, y: 190), control1: CGPoint(x: 185, y: 110), control2: CGPoint(x: 315, y: 110))
-    c.addCurve(to: CGPoint(x: 360, y: 340), control1: CGPoint(x: 340, y: 240), control2: CGPoint(x: 335, y: 310)); c.strokePath()
-    line(c, [(115, 340), (385, 340)]); line(c, [(250, 120), (250, 95)]); circle(c, 250, 382, 26, fill: true)
-  },
-  "picker": { c in   // a name card on a reel, arrows above and below
-    c.addPath(CGPath(roundedRect: CGRect(x: 100, y: 195, width: 300, height: 110), cornerWidth: 24, cornerHeight: 24, transform: nil)); c.strokePath()
-    line(c, [(160, 250), (340, 250)]); line(c, [(200, 140), (250, 95), (300, 140)]); line(c, [(200, 360), (250, 405), (300, 360)])
-  },
-  "points": { c in   // podium bars, the leader crowned
-    line(c, [(100, 400), (400, 400)])
-    c.stroke(CGRect(x: 120, y: 290, width: 70, height: 110)); c.stroke(CGRect(x: 215, y: 210, width: 70, height: 190)); c.stroke(CGRect(x: 310, y: 330, width: 70, height: 70))
-    line(c, [(215, 175), (215, 120), (235, 145), (250, 110), (265, 145), (285, 120), (285, 175), (215, 175)])
-  },
-  "exam": { c in   // a paper and pencil, and a stopwatch
-    c.addPath(CGPath(roundedRect: CGRect(x: 90, y: 110, width: 190, height: 260), cornerWidth: 16, cornerHeight: 16, transform: nil)); c.strokePath()
-    line(c, [(130, 170), (240, 170)]); line(c, [(130, 220), (240, 220)]); line(c, [(130, 270), (200, 270)])
-    circle(c, 330, 320, 70); line(c, [(330, 320), (330, 280)]); line(c, [(330, 320), (360, 340)]); line(c, [(310, 235), (350, 235)])
-  },
-  "nownext": { c in   // now, an arrow, next
-    c.addPath(CGPath(roundedRect: CGRect(x: 70, y: 140, width: 160, height: 220), cornerWidth: 20, cornerHeight: 20, transform: nil)); c.strokePath()
-    circle(c, 150, 220, 40, fill: true); line(c, [(110, 310), (190, 310)])
-    c.addPath(CGPath(roundedRect: CGRect(x: 320, y: 180, width: 110, height: 150), cornerWidth: 16, cornerHeight: 16, transform: nil)); c.strokePath()
-    line(c, [(255, 255), (300, 255)]); line(c, [(285, 235), (305, 255), (285, 275)])
-  },
-  "brainbreak": { c in   // a figure doing a star jump
-    circle(c, 250, 130, 34); line(c, [(250, 168), (250, 290)])
-    line(c, [(250, 200), (150, 120)]); line(c, [(250, 200), (350, 120)]); line(c, [(250, 290), (165, 400)]); line(c, [(250, 290), (335, 400)])
-    line(c, [(110, 240), (140, 250)]); line(c, [(390, 240), (360, 250)])
-  },
-  "events": { c in   // a signpost
-    line(c, [(250, 110), (250, 410)]); line(c, [(190, 410), (310, 410)])
-    line(c, [(130, 140), (330, 140), (370, 175), (330, 210), (130, 210), (130, 140)])
-    line(c, [(370, 245), (170, 245), (130, 280), (170, 315), (370, 315), (370, 245)])
-  },
-  "welcome": { c in   // a door, and the Wi-Fi above it
-    c.addPath(CGPath(roundedRect: CGRect(x: 170, y: 200, width: 160, height: 220), cornerWidth: 10, cornerHeight: 10, transform: nil)); c.strokePath()
-    circle(c, 295, 315, 12, fill: true)
-    arc(c, 250, 175, 30, 225, 315); arc(c, 250, 175, 70, 225, 315); arc(c, 250, 175, 110, 225, 315); circle(c, 250, 175, 10, fill: true)
-  },
-  "airwx": { c in   // a windsock on its pole
-    line(c, [(130, 410), (130, 110)])
-    c.move(to: CGPoint(x: 140, y: 130)); c.addLine(to: CGPoint(x: 380, y: 165)); c.addLine(to: CGPoint(x: 380, y: 225)); c.addLine(to: CGPoint(x: 140, y: 260)); c.closePath(); c.strokePath()
-    line(c, [(220, 142), (220, 248)]); line(c, [(300, 153), (300, 237)]); line(c, [(90, 410), (170, 410)])
-  },
-  "board": { c in   // a board of rows
-    c.addPath(CGPath(roundedRect: CGRect(x: 80, y: 120, width: 340, height: 260), cornerWidth: 16, cornerHeight: 16, transform: nil)); c.strokePath()
-    for y: CGFloat in [180, 245, 310] { line(c, [(120, y), (180, y)]); line(c, [(215, y), (330, y)]); circle(c, 375, y, 10, fill: true) }
-  },
-  "myflight": { c in   // a plane on its route
-    c.move(to: CGPoint(x: 110, y: 380)); c.addCurve(to: CGPoint(x: 390, y: 380), control1: CGPoint(x: 150, y: 150), control2: CGPoint(x: 350, y: 150)); c.setLineDash(phase: 0, lengths: [2, 34]); c.strokePath(); c.setLineDash(phase: 0, lengths: [])
-    circle(c, 110, 385, 18, fill: true); circle(c, 390, 385, 18, fill: true)
-    line(c, [(205, 230), (305, 180)]); line(c, [(250, 208), (225, 140)]); line(c, [(250, 208), (290, 250)]); line(c, [(212, 226), (195, 205)])
-  },
-  "gate": { c in   // a gate sign, with a plane taking off
-    c.addPath(CGPath(roundedRect: CGRect(x: 90, y: 100, width: 320, height: 170), cornerWidth: 18, cornerHeight: 18, transform: nil)); c.strokePath()
-    line(c, [(250, 270), (250, 400)]); line(c, [(190, 400), (310, 400)])
-    line(c, [(150, 215), (290, 160)]); line(c, [(225, 186), (200, 130)]); line(c, [(225, 186), (255, 235)]); line(c, [(160, 211), (150, 190)])
-    line(c, [(310, 160), (360, 160)]); line(c, [(310, 210), (350, 210)])
-  },
-  "queue": { c in   // a ticket, and the line of people waiting
-    c.addPath(CGPath(roundedRect: CGRect(x: 140, y: 90, width: 220, height: 110), cornerWidth: 16, cornerHeight: 16, transform: nil)); c.strokePath()
-    line(c, [(185, 130), (315, 130)]); line(c, [(185, 162), (270, 162)])
-    for x: CGFloat in [150, 250, 350] { circle(c, x, 285, 28); arc(c, x, 395, 42, 180, 360) }
-  },
-  "rates": { c in   // a rates board: a row going up and a row going down
-    c.addPath(CGPath(roundedRect: CGRect(x: 80, y: 110, width: 340, height: 280), cornerWidth: 18, cornerHeight: 18, transform: nil)); c.strokePath()
-    line(c, [(80, 250), (420, 250)])
-    line(c, [(125, 180), (245, 180)]); line(c, [(320, 210), (350, 155), (380, 210)])
-    line(c, [(125, 320), (245, 320)]); line(c, [(320, 290), (350, 345), (380, 290)])
-  },
-  "calc": { c in   // a calculator, with a percent key
-    c.addPath(CGPath(roundedRect: CGRect(x: 130, y: 80, width: 240, height: 340), cornerWidth: 24, cornerHeight: 24, transform: nil)); c.strokePath()
-    c.addPath(CGPath(roundedRect: CGRect(x: 170, y: 120, width: 160, height: 60), cornerWidth: 8, cornerHeight: 8, transform: nil)); c.strokePath()
-    for y: CGFloat in [235, 295, 355] { for x: CGFloat in [190, 250] { circle(c, x, y, 13, fill: true) } }
-    line(c, [(285, 360), (335, 230)]); circle(c, 290, 245, 15); circle(c, 330, 345, 15)
-  },
-  "scam": { c in   // a shield with a warning mark
-    c.move(to: CGPoint(x: 250, y: 85)); c.addLine(to: CGPoint(x: 385, y: 135)); c.addLine(to: CGPoint(x: 385, y: 240))
-    c.addCurve(to: CGPoint(x: 250, y: 415), control1: CGPoint(x: 385, y: 330), control2: CGPoint(x: 320, y: 385))
-    c.addCurve(to: CGPoint(x: 115, y: 240), control1: CGPoint(x: 180, y: 385), control2: CGPoint(x: 115, y: 330))
-    c.addLine(to: CGPoint(x: 115, y: 135)); c.closePath(); c.strokePath()
-    line(c, [(250, 170), (250, 280)]); circle(c, 250, 335, 14, fill: true)
-  },
-  "cmc": { c in   // a price line rising across a coin
-    circle(c, 250, 250, 165)
-    c.move(to: CGPoint(x: 120, y: 330)); c.addLine(to: CGPoint(x: 190, y: 270)); c.addLine(to: CGPoint(x: 245, y: 305)); c.addLine(to: CGPoint(x: 310, y: 215)); c.addLine(to: CGPoint(x: 380, y: 170)); c.strokePath()
-    line(c, [(330, 165), (380, 170), (372, 220)])
   },
 ]
 let out = CommandLine.arguments[1]
